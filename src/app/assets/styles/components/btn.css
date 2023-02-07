@@ -3,14 +3,22 @@
     @apply inline-flex items-center justify-center px-4 py-2 text-base font-medium transform border border-transparent rounded-md shadow whitespace-nowrap focus:outline-none active:scale-95 active:ring-2 active:ring-offset-2 active:ring-white ;
 } */
 
+/* Les variables (primary, secondary) se trouvent dans le fichier tailwind.config.js */
 
+.btn {
+    @apply border-2 border-gray-400 bg-white text-primary rounded-lg
+}
+
+.btn-hover {
+    @apply hover:bg-gradient-to-r from-gradient-first via-gradient-second to-gradient-third hover:text-white
+}
 
 .btn-link-primary{
     @apply font-medium text-primary hover:text-primary-dark ;
 }
 
 .btn-primary{
-    @apply text-white bg-primary hover:bg-primary-dark hover:text-white active:ring-primary ;
+    @apply  bg-primary hover:bg-primary-dark hover:text-white active:ring-primary ;
 }
 
 .btn-secondary{

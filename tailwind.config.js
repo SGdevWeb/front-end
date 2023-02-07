@@ -5,14 +5,19 @@ module.exports = {
             colors: {
                 primary: {
                     light: '#4da6ff',
-                    DEFAULT: '#0B84FF',
-                    dark: '#0066cc',
+                    DEFAULT: '#0067ef',
+                    dark: '#3549c2',
                 },
                 secondary: {
                     light: '#f39e58',
                     DEFAULT: '#ed7410',
                     dark: '#bf5d0d',
                 },
+                gradient: {
+                    first: '#0067EF',
+                    second: '#79527C',
+                    third: '#E86308'
+                }
             },
             
         },
