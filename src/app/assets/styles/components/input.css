@@ -5,7 +5,7 @@
 } */
 
 .input {
-    @apply appearance-none w-4/5 placeholder-gray-500 rounded-md
+    @apply border-none appearance-none w-4/5 placeholder-gray-500 rounded-md
 }
 
 .input-error {

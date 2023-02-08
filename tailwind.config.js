@@ -18,7 +18,7 @@ module.exports = {
                     second: '#79527C',
                     third: '#E86308'
                 },
-                'gray-1': '#D9D9D9'
+                'gray-1': '#ECECEC'
             },
             
         },

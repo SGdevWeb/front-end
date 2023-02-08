@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Button({title, width}) {
+function Button({title, className}) {
     return (
-      <div className='flex'>
-          <div className='p-1 btn-border rounded-lg'>
-              <button className={`btn btn-hover w-${width}`}>{title}</button>
+      <div className={className}>
+          <div className={`p-1 btn-border rounded-lg w-full`}>
+              <button className='btn btn-hover w-full'>{title}</button>
           </div>
       </div>
     )
