@@ -15,7 +15,7 @@ Les variables des couleurs se trouvent dans le fichier tailwind.config.js
 function LoginCard() {
   return (
     <div className='bg-gray-1 w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col  items-center'>
-      <div className='bg-transparent w-full sm:w-4/5 md:w-4/5 lg:w-4/5 2xl:w-4/5 m-2 rounded-lg flex flex-col justify-center items-center'>
+      <div className='p-2 bg-transparent w-full sm:w-4/5 md:w-4/5 lg:w-4/5 2xl:w-4/5 m-2 rounded-lg flex flex-col justify-center items-center'>
         <h2 className='my-8 text-2xl sm:text-3xl lg:text-4xl'>S'identifier</h2>
         <InputDescription
           type='email'
