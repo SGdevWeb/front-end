@@ -20,6 +20,7 @@ module.exports = {
                 },
                 'gray-1': '#D9D9D9'
             },
+            
         },
     },
     plugins: [require('@tailwindcss/forms')],
