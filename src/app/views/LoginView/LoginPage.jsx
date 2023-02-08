@@ -4,7 +4,7 @@ import './LoginPage.css'
 
 function LoginPage() {
   return (
-    <div className='flex justify-center items-center'>
+    <div className='bg-white flex justify-center items-center h-full'>
         <LoginCard />
     </div>
   )

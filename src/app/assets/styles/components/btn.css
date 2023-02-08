@@ -6,7 +6,11 @@
 /* Les variables (primary, secondary) se trouvent dans le fichier tailwind.config.js */
 
 .btn {
-    @apply border-2 border-gray-400 bg-white text-primary rounded-lg
+    @apply bg-white text-primary rounded-md px-4 py-2
+}
+
+.btn-border {
+    @apply bg-gradient-to-r from-gradient-first via-gradient-second to-gradient-third
 }
 
 .btn-hover {
