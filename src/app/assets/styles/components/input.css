@@ -27,3 +27,7 @@
 .radio-error{
     @apply border-red-500 border-2
 }
+
+.error {
+    @apply text-red-500 font-semibold w-full;
+}

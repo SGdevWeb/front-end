@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Button({title, className}) {
+function Button({title, className, type, disabled}) {
     return (
       <div className={className}>
           <div className={`p-1 btn-border rounded-lg w-full`}>
-              <button className='btn btn-hover w-full'>{title}</button>
+              <button type={type} disabled={disabled} className='btn btn-hover w-full'>{title}</button>
           </div>
       </div>
     )
