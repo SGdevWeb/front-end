@@ -2,9 +2,9 @@ import React from 'react'
 import './LoginCard.css'
 import { Link } from 'react-router-dom'
 import Button from '../../../components/theme/Button'
-import InputDescription from '../../../components/theme/InputDescription'
+import Input from '../../../components/theme/Input'
 import Captcha from '../../../components/theme/Captcha'
-import { useFormik } from 'formik';
+import { useFormik } from 'formik'
 import validationSchema from '../../../utils/validationSchema'
 import { register } from '../../../utils/fakeApi'
 
@@ -43,13 +43,13 @@ function LoginCard() {
             setFieldError(key, errors[key]);
         }
     }
-}
+  }
 
   return (
     <div className='bg-gray-1 w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col  items-center'>
       <form onSubmit={handleSubmit} className='p-2 bg-transparent w-full sm:w-4/5 md:w-4/5 lg:w-4/5 2xl:w-4/5 m-2 rounded-lg flex flex-col justify-center items-center'>
         <h2 className='my-8 text-2xl sm:text-3xl lg:text-4xl'>S'identifier</h2>
-        <InputDescription
+        <Input
           type='email'
           placeholder='exemple@gmail.com'
           description="Adresse mail enregistrée lors de l'inscription"
@@ -61,7 +61,7 @@ function LoginCard() {
         { touched.email && errors.email && 
           <small className="error">{ errors.email }</small>
         }
-        <InputDescription
+        <Input
           type='password'
           placeholder='********'
           description="Vous avez oublié votre mot de passe"
