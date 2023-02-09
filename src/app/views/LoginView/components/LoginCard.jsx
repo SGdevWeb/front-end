@@ -76,7 +76,7 @@ function LoginCard() {
         <Captcha />
         <Button
           className='w-full sm:w-4/5' 
-          title='CONNEXION'
+          title="CONNEXION"
           type="submit"
           disabled={isSubmitting || ! isValid}
         />
