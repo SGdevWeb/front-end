@@ -3,9 +3,8 @@ import './LoginCard.css'
 import { Link } from 'react-router-dom'
 import Button from '../../../components/theme/Button'
 import Input from '../../../components/theme/Input'
-import Captcha from '../../../components/theme/Captcha'
 import { useFormik } from 'formik'
-import validationSchema from '../../../utils/validationSchema'
+import validationSchemaLogin from '../../../utils/validationSchemaLogin'
 import { register } from '../../../utils/fakeApi'
 
 /* Les composants sont dans le dossier assets/components/theme
@@ -28,7 +27,7 @@ function LoginCard() {
     handleSubmit, setFieldError,
     resetForm, errors } = useFormik({
     initialValues,
-    validationSchema,
+    validationSchemaLogin,
     onSubmit
   });
 
@@ -73,7 +72,6 @@ function LoginCard() {
         { touched.password && errors.password && 
           <small className="error">{ errors.password }</small>
         }
-        <Captcha />
         <Button
           className="w-full sm:w-4/5"
           title="S'INSCRIRE"
