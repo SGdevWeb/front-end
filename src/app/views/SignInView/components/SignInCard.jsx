@@ -4,7 +4,7 @@ import Button from "../../../components/theme/Button";
 import Input from "../../../components/theme/Input";
 import { useFormik } from "formik";
 import { register } from "../../../utils/fakeApi";
-import validationSchema from "../../../utils/validationSchema";
+import validationSchema from "../../../utils/registerSchema";
 import ReCAPTCHA from "react-google-recaptcha";
 import Welcome from "./Welcome";
 
@@ -23,8 +23,8 @@ function SignInCard() {
   const [isRegister, setIsRegister] = useState(false)
 
   const captchagoogle = useRef (null);
+
   const onChange = () => {
-    
     if(captchagoogle.current.getValue()){
       setcaptchaValidate(true)
       console.log("Vous n'êtes pas un robot")
@@ -78,107 +78,103 @@ function SignInCard() {
       setFormValidate(false)
       setcaptchaValidate(false)
     }
-
   }
 
   return (
     <div className="bg-gray-100 w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col  items-center">
       { isRegister ? ( <Welcome /> ) : (
         <>
-        <form
-        onSubmit={handleSubmit}
-        className="p-2 bg-transparent w-full sm:w-4/5 md:w-4/5 lg:w-4/5 2xl:w-4/5 m-2 rounded-lg flex flex-col justify-center items-center"
-      >
-        <h2 className="my-8 text-2xl sm:text-3xl lg:text-4xl">Inscription</h2>
-        <Input
-          type="email"
-          placeholder="exemple@gmail.com"
-          description="Adresse mail enregistrée lors de l'inscription"
-          name="email"
-          value={values.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.email && errors.email && (
-          <small className="error">{errors.email}</small>
-        )}
-        <Input
-          type="text"
-          placeholder="Nom"
-          name="lastname"
-          value={values.lastname}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.lastname && errors.lastname && (
-          <small className="error">{errors.lastname}</small>
-        )}
-        <Input
-          type="text"
-          placeholder="Prénom"
-          name="firstname"
-          value={values.firstname}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.firstname && errors.firstname && (
-          <small className="error">{errors.firstname}</small>
-        )}
-        <Input
-          type="text"
-          placeholder="Nom d'utilisateur"
-          description="Votre identité auprès des membres de Tree-up"
-          name="username"
-          value={values.username}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.username && errors.username && (
-          <small className="error">{errors.username}</small>
-        )}
-        <Input
-          type="password"
-          placeholder="********"
-          name="password"
-          value={values.password}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.password && errors.password && (
-          <small className="error">{errors.password}</small>
-        )}
-        <Input
-          type="password"
-          placeholder="********"
-          name="passwordConfirmation"
-          value={values.passwordConfirmation}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.passwordConfirmation && errors.passwordConfirmation && (
-          <small className="error">{errors.passwordConfirmation}</small>
-        )}
-        <ReCAPTCHA className="my-4" ref={captchagoogle} sitekey="6Lc43mskAAAAAPGuj5wsQMpI-Bkcvy1cpXJusonn" onChange={onChange} />
-        {captchaValidate === false &&
-          <p className="w-full text-red-600">Etes-vous un robot ? Merci de valider le captcha</p>
-        }
-        <Button
-          className="w-full sm:w-4/5"
-          title="S'INSCRIRE"
-          type="submit"
-          disabled={isSubmitting || !isValid}
-        />
-      </form>
-      <div className="mb-4 w-full flex justify-end">
-        <Link className="mr-4 mt-4" to="/">
-          Vous avez déjà un compte ?
-        </Link>
-      </div>
-      </>
-      )
-
+          <form
+            onSubmit={handleSubmit}
+            className="p-2 bg-transparent w-full sm:w-4/5 md:w-4/5 lg:w-4/5 2xl:w-4/5 m-2 rounded-lg flex flex-col justify-center items-center"
+          >
+            <h2 className="my-8 text-2xl sm:text-3xl lg:text-4xl">Inscription</h2>
+            <Input
+              type="email"
+              placeholder="exemple@gmail.com"
+              description="Adresse mail enregistrée lors de l'inscription"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.email && errors.email && (
+              <small className="error">{errors.email}</small>
+            )}
+            <Input
+              type="text"
+              placeholder="Nom"
+              name="lastname"
+              value={values.lastname}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.lastname && errors.lastname && (
+              <small className="error">{errors.lastname}</small>
+            )}
+            <Input
+              type="text"
+              placeholder="Prénom"
+              name="firstname"
+              value={values.firstname}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.firstname && errors.firstname && (
+              <small className="error">{errors.firstname}</small>
+            )}
+            <Input
+              type="text"
+              placeholder="Nom d'utilisateur"
+              description="Votre identité auprès des membres de Tree-up"
+              name="username"
+              value={values.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.username && errors.username && (
+              <small className="error">{errors.username}</small>
+            )}
+            <Input
+              type="password"
+              placeholder="********"
+              name="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.password && errors.password && (
+              <small className="error">{errors.password}</small>
+            )}
+            <Input
+              type="password"
+              placeholder="********"
+              name="passwordConfirmation"
+              value={values.passwordConfirmation}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.passwordConfirmation && errors.passwordConfirmation && (
+              <small className="error">{errors.passwordConfirmation}</small>
+            )}
+            <ReCAPTCHA className="my-4" ref={captchagoogle} sitekey="6Lc43mskAAAAAPGuj5wsQMpI-Bkcvy1cpXJusonn" onChange={onChange} />
+            {captchaValidate === false &&
+              <p className="w-full text-red-600 text-center mb-4">Etes-vous un robot ? Merci de valider le captcha</p>
+            }
+            <Button
+              className="w-full sm:w-4/5"
+              title="S'INSCRIRE"
+              type="submit"
+              disabled={isSubmitting || !isValid}
+            />
+          </form>
+          <div className="mb-4 w-full flex justify-end">
+            <Link className="mr-4 mt-4" to="/">
+              Vous avez déjà un compte ?
+            </Link>
+          </div>
+        </>)
       }
-
     </div>
   );
 }
