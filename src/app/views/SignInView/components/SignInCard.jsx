@@ -1,12 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../components/theme/Button";
 import Input from "../../../components/theme/Input";
-import Captcha from "../../../components/theme/Captcha";
 import { useFormik } from "formik";
 import { register } from "../../../utils/fakeApi";
 import validationSchema from "../../../utils/validationSchema";
 import ReCAPTCHA from "react-google-recaptcha";
+import Welcome from "./Welcome";
 
 /*
 Un message d'erreur apparaît lorsque l'utilisateur change de champ
@@ -17,11 +17,20 @@ Le composant est responsive
 */
 
 function SignInCard() {
+
+  const [captchaValidate, setcaptchaValidate] = useState(null)
+  const [formValidate, setFormValidate] = useState(null)
+  const [isRegister, setIsRegister] = useState(false)
+
   const captchagoogle = useRef (null);
   const onChange = () => {
     
     if(captchagoogle.current.getValue()){
-      console.log('el usuario no es un robot')
+      setcaptchaValidate(true)
+      console.log("Vous n'êtes pas un robot")
+    } else {
+      setcaptchaValidate(false)
+      console.log("Vous êtes un robot ?")
     }
   }
 
@@ -53,20 +62,30 @@ function SignInCard() {
 
   async function onSubmit(formValues) {
     console.log(formValues);
-    try {
-      await register(formValues);
-      resetForm();
-      alert("Inscription effectuée avec succès :)");
-    } catch ({ errors }) {
-      for (let key in errors) {
-        setFieldError(key, errors[key]);
+    if(captchagoogle.current.getValue()) {
+      setFormValidate(true)
+      setcaptchaValidate(true)
+      try {
+        await register(formValues);
+        resetForm();
+        setIsRegister(true)
+      } catch ({ errors }) {
+        for (let key in errors) {
+          setFieldError(key, errors[key]);
+        }
       }
+    } else {
+      setFormValidate(false)
+      setcaptchaValidate(false)
     }
+
   }
 
   return (
     <div className="bg-gray-100 w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col  items-center">
-      <form
+      { isRegister ? ( <Welcome /> ) : (
+        <>
+        <form
         onSubmit={handleSubmit}
         className="p-2 bg-transparent w-full sm:w-4/5 md:w-4/5 lg:w-4/5 2xl:w-4/5 m-2 rounded-lg flex flex-col justify-center items-center"
       >
@@ -139,8 +158,10 @@ function SignInCard() {
         {touched.passwordConfirmation && errors.passwordConfirmation && (
           <small className="error">{errors.passwordConfirmation}</small>
         )}
-        {/* <Captcha /> */}
-        <ReCAPTCHA ref={captchagoogle} sitekey="6Lc43mskAAAAAPGuj5wsQMpI-Bkcvy1cpXJusonn" onChange={onChange} />,
+        <ReCAPTCHA className="my-4" ref={captchagoogle} sitekey="6Lc43mskAAAAAPGuj5wsQMpI-Bkcvy1cpXJusonn" onChange={onChange} />
+        {captchaValidate === false &&
+          <p className="w-full text-red-600">Etes-vous un robot ? Merci de valider le captcha</p>
+        }
         <Button
           className="w-full sm:w-4/5"
           title="S'INSCRIRE"
@@ -153,6 +174,11 @@ function SignInCard() {
           Vous avez déjà un compte ?
         </Link>
       </div>
+      </>
+      )
+
+      }
+
     </div>
   );
 }

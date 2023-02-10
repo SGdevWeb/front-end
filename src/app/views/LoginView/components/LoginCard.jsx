@@ -75,14 +75,14 @@ function LoginCard() {
         }
         <Captcha />
         <Button
-          className='w-full sm:w-4/5' 
-          title="CONNEXION"
+          className="w-full sm:w-4/5"
+          title="S'INSCRIRE"
           type="submit"
-          disabled={isSubmitting || ! isValid}
+          disabled={isSubmitting || !isValid}
         />
       </form>
       <div className='mb-4 w-full flex justify-end'>
-        <Link className='mr-4 mt-4' to='/'>Créer un compte</Link>
+        <Link className='mr-4 mt-4' to='/register'>Créer un compte</Link>
       </div>
     </div>
   )
