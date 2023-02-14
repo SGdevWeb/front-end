@@ -41,7 +41,7 @@ const App = () => {
             <div className="flex h-full cursor-default relative flex-col bg-gray-100">
                 {isLogged && <IdleTimerCustom />}
                 <Navbar />  
-                <main className="mt-24 grow">
+                <main className="grow">
                     <Routes />
                 </main>
                 <ToastContainer
