@@ -13,6 +13,6 @@ export function register(data) {
                     success: true,
                 })
             }
-        }, 2000)
+        }, 200)
     })
 }

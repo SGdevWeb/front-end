@@ -1,12 +1,11 @@
-import React from 'react'
-import './LoginCard.css'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../../../components/theme/Button'
 import Input from '../../../components/theme/Input'
-import Captcha from '../../../components/theme/Captcha'
 import { useFormik } from 'formik'
-import validationSchema from '../../../utils/validationSchema'
 import { register } from '../../../utils/fakeApi'
+import validationSchema from '../../../utils/loginSchema'
+import ReCAPTCHA from "react-google-recaptcha";
 
 /* Les composants sont dans le dossier assets/components/theme
 Le style des composants se trouve dans le dossier assets/styles/components
@@ -16,6 +15,28 @@ Les variables des couleurs se trouvent dans le fichier tailwind.config.js
 */
 
 function LoginCard() {
+
+  const navigate = useNavigate()
+
+  const [captchaValidate, setcaptchaValidate] = useState(null)
+  const [formValidate, setFormValidate] = useState(null)
+  const [isLogin, setIsLogin] = useState(false)
+
+  useEffect(() => {
+    isLogin && navigate('/register')
+  }, [isLogin])
+
+  const captchagoogle = useRef (null);
+
+  const onChange = () => {
+    if(captchagoogle.current.getValue()){
+      setcaptchaValidate(true)
+      console.log("Vous n'êtes pas un robot")
+    } else {
+      setcaptchaValidate(false)
+      console.log("Vous êtes un robot ?")
+    }
+  }
 
   const initialValues = {
     email: '',
@@ -32,16 +53,24 @@ function LoginCard() {
     onSubmit
   });
 
-  async function onSubmit (formValues){
-    console.log(formValues)
-    try {
+  async function onSubmit(formValues) {
+    console.log(formValues);
+    if(captchagoogle.current.getValue()) {
+      setFormValidate(true)
+      setcaptchaValidate(true)
+      try {
         await register(formValues);
         resetForm();
-        alert("Inscription effectuée avec succès :)")
-    } catch ({ errors }) {
-        for(let key in errors) {
-            setFieldError(key, errors[key]);
+        console.log('Connexion réussie')
+        setIsLogin(true)
+      } catch ({ errors }) {
+        for (let key in errors) {
+          setFieldError(key, errors[key]);
         }
+      }
+    } else {
+      setFormValidate(false)
+      setcaptchaValidate(false)
     }
   }
 
@@ -73,16 +102,19 @@ function LoginCard() {
         { touched.password && errors.password && 
           <small className="error">{ errors.password }</small>
         }
-        <Captcha />
+        <ReCAPTCHA className="my-4" ref={captchagoogle} sitekey="6Lc43mskAAAAAPGuj5wsQMpI-Bkcvy1cpXJusonn" onChange={onChange} />
+        {captchaValidate === false &&
+          <p className="w-full text-red-600 text-center mb-4">Etes-vous un robot ? Merci de valider le captcha</p>
+        }
         <Button
-          className='w-full sm:w-4/5' 
-          title='CONNEXION'
+          className="w-full sm:w-4/5"
+          title="CONNEXION"
           type="submit"
-          disabled={isSubmitting || ! isValid}
+          disabled={isSubmitting || !isValid}
         />
       </form>
       <div className='mb-4 w-full flex justify-end'>
-        <Link className='mr-4 mt-4' to='/'>Créer un compte</Link>
+        <Link className='mr-4 mt-4' to='/register'>Créer un compte</Link>
       </div>
     </div>
   )
