@@ -1,13 +1,16 @@
-import React from "react";
+import * as URL from "../constants/urls/urlFrontEnd";
+
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 
-import { ROLE_ADMIN } from "../constants/rolesConstant";
-import * as URL from "../constants/urls/urlFrontEnd";
 import AdminHomeView from "../views/AdminHomeView";
+import EditProfile from "../views/EditProfile/EditProfile";
 import HomeView from "../views/HomeView";
-import LoginView from "../views/LoginView";
 import LoginPage from "../views/LoginView/LoginPage";
+import LoginView from "../views/LoginView";
 import { PrivateRoute } from "./PrivateRoute";
+import Profile from "../views/Profile/Profile";
+import { ROLE_ADMIN } from "../constants/rolesConstant";
+import React from "react";
 
 /**
  * Routes of the application
@@ -35,7 +38,9 @@ const Routes = () => {
         }
       />
       {/* <Route path={URL.URL_LOGIN} element={<LoginView />} /> */}
-      /* <Route path={URL.URL_LOGIN} element={<LoginPage />} /> */
+      <Route path={URL.URL_LOGIN} element={<LoginPage />} />
+      <Route path={URL.URL_PROFILE} element ={<Profile />} />
+      <Route path={URL.URL_EDITPROFILE} element ={<EditProfile />} />
     </RoutesContainer>
   );
 };

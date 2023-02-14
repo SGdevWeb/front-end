@@ -1,12 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectIsLogged } from "./../../redux-store/authenticationSlice";
 import {
-  URL_HOME,
   URL_LOGIN,
+  URL_PROFILE,
   URL_REGISTER,
 } from "../../constants/urls/urlFrontEnd";
+
+import { Link } from "react-router-dom";
+import React from "react";
+import { selectIsLogged } from "./../../redux-store/authenticationSlice";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const isLoggued = useSelector(selectIsLogged);
@@ -15,7 +16,7 @@ const Navbar = () => {
     <div className="absolute mx-auto w-full bg-white px-4 shadow-sm sm:px-6">
       <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
         <div>
-          <Link to={URL_HOME}>
+          <Link to={URL_PROFILE}>
             <img
               className="h-8 w-auto cursor-pointer sm:h-10"
               src="https://insy2s.com/insy2s/images/Logo-insy2s-INLINE-2021.svg"
