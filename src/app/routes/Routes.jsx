@@ -4,8 +4,7 @@ import { Route, Routes as RoutesContainer } from "react-router-dom";
 import { ROLE_ADMIN } from "../constants/rolesConstant";
 import * as URL from "../constants/urls/urlFrontEnd";
 import AdminHomeView from "../views/AdminHomeView";
-import HomeView from "../views/HomeView";
-import LoginView from "../views/LoginView";
+import HomePage from "../views/HomeView/HomePage";
 import LoginPage from "../views/LoginView/LoginPage";
 import { PrivateRoute } from "./PrivateRoute";
 
@@ -18,14 +17,7 @@ import { PrivateRoute } from "./PrivateRoute";
 const Routes = () => {
   return (
     <RoutesContainer>
-      <Route
-        path={URL.URL_HOME}
-        element={
-          <PrivateRoute>
-            <HomeView />
-          </PrivateRoute>
-        }
-      />
+      <Route path={URL.URL_HOME} element={<HomePage />} />
       <Route
         path={URL.URL_ADMIN_HOME}
         element={
