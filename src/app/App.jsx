@@ -24,6 +24,7 @@ const contextClass = {
  *
  * @author Peter Mollet
  */
+
 const App = () => {
     const isLogged = useSelector(selectIsLogged);
     const dispatch = useDispatch();
