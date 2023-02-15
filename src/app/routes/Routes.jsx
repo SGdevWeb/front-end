@@ -4,13 +4,13 @@ import { Route, Routes as RoutesContainer } from "react-router-dom";
 
 import AdminHomeView from "../views/AdminHomeView";
 import EditProfile from "../views/EditProfile/EditProfile";
-import HomeView from "../views/HomeView";
+import HomePage from '../views/HomeView/HomePage'
 import LoginPage from "../views/LoginView/LoginPage";
-import LoginView from "../views/LoginView";
 import { PrivateRoute } from "./PrivateRoute";
 import Profile from "../views/Profile/Profile";
 import { ROLE_ADMIN } from "../constants/rolesConstant";
 import React from "react";
+import SignInPage from "../views/SignInView/SignInPage"
 
 /**
  * Routes of the application
@@ -30,7 +30,6 @@ const Routes = () => {
           </PrivateRoute>
         }
       />
-      {/* <Route path={URL.URL_LOGIN} element={<LoginView />} /> */}
       <Route path={URL.URL_LOGIN} element={<LoginPage />} />
       <Route path={URL.URL_REGISTER} element={<SignInPage />} />
       <Route path={URL.URL_PROFILE} element ={<Profile />} />
