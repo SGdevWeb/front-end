@@ -1,4 +1,4 @@
-import Button from "../theme/Button";
+import Button from "../base/Button";
 import { Link } from "react-router-dom";
 import React from "react";
 import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";

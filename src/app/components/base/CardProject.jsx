@@ -1,6 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import PileTechnologie from "./PileTechnologie";
+import React from "react";
 
 const CardProject = ({ project }) => {
 	const { uuid, name, type, description, collaborator, technologies, image } = project;
