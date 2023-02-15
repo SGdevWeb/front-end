@@ -22,6 +22,7 @@ function LoginCard() {
   const [captchaValidate, setcaptchaValidate] = useState(null)
   const [formValidate, setFormValidate] = useState(null)
   const [isLogin, setIsLogin] = useState(false)
+  const [errorLog, setErrorLog] = useState(false)
 
   useEffect(() => {
     isLogin && navigate('/')
@@ -58,8 +59,14 @@ function LoginCard() {
     const user = values
     axios
       .post("http://localhost:8000/tree-up-api/login", user)
-      .then(response => console.log(response))
-      .catch(error => console.log(error)) 
+      .then(response => {
+        console.log('requête login ok')
+        setIsLogin(true)
+      })
+      .catch(error => {
+        console.log('erreur requête login')
+        setErrorLog(true)
+      }) 
     console.log('requête terminée')
   }
 
@@ -71,7 +78,7 @@ function LoginCard() {
       login(formValues);
       resetForm();
       console.log('Connexion réussie')
-      setIsLogin(true)
+      // setIsLogin(true)
     } else {
       setFormValidate(false)
       setcaptchaValidate(false)
@@ -116,6 +123,9 @@ function LoginCard() {
           type="submit"
           disabled={isSubmitting || !isValid}
         />
+        { errorLog && 
+          <small className="error text-center mt-4">Paire login / mot de passe incorrecte</small>
+        }
       </form>
       <div className='mb-4 w-full flex justify-end'>
         <Link className='mr-4 mt-4' to='/register'>Créer un compte</Link>
