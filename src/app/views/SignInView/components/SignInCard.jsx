@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../components/theme/Button";
 import Input from "../../../components/theme/Input";
 import { useFormik } from "formik";
-import { register } from "../../../utils/fakeApi";
 import validationSchema from "../../../utils/registerSchema";
 import ReCAPTCHA from "react-google-recaptcha";
 import Welcome from "./Welcome";
+import axios from "axios";
 
 /*
 Un message d'erreur apparaît lorsque l'utilisateur change de champ
@@ -43,37 +43,28 @@ function SignInCard() {
     passwordConfirmation: "",
   };
 
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    isSubmitting,
-    isValid,
-    touched,
-    handleSubmit,
-    setFieldError,
-    resetForm,
-    errors,
-  } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit,
-  });
+  const {values, handleChange,handleBlur,isSubmitting,isValid,touched,handleSubmit,setFieldError,
+resetForm,errors } = useFormik({ initialValues,validationSchema,onSubmit});
+
+  const register = (values) => {
+    delete values.passwordConfirmation
+    const user = values
+    console.log('user :',user)
+    axios
+      .post("http://localhost:8000/tree-up-api/newuser", user)
+      .then(response => console.log(response))
+      .catch(error => console.log(error)) 
+    console.log('requête terminée')
+  }
 
   async function onSubmit(formValues) {
     console.log(formValues);
     if(captchagoogle.current.getValue()) {
       setFormValidate(true)
       setcaptchaValidate(true)
-      try {
-        await register(formValues);
-        resetForm();
-        setIsRegister(true)
-      } catch ({ errors }) {
-        for (let key in errors) {
-          setFieldError(key, errors[key]);
-        }
-      }
+      register(formValues);
+      resetForm();
+      setIsRegister(true)
     } else {
       setFormValidate(false)
       setcaptchaValidate(false)
