@@ -1,12 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import Button from "../theme/Button";
+import Logo from "../../assets/img/LogoTreeUp100x100.png";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectIsLogged } from "./../../redux-store/authenticationSlice";
-import {
-  URL_HOME,
-  URL_LOGIN,
-  URL_REGISTER,
-} from "../../constants/urls/urlFrontEnd";
 
 const Navbar = () => {
 	const [enableDropdown, setEnableDropdown] = useState(false);
@@ -17,20 +12,14 @@ const Navbar = () => {
 		image: Logo,
 	};
 
-  return (
-    <div className="absolute mx-auto w-full bg-white px-4 shadow-sm sm:px-6">
-      <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
-        <div>
-          <Link to={URL_HOME}>
-            <img
-              className="h-8 w-auto cursor-pointer sm:h-10"
-              src="https://insy2s.com/insy2s/images/Logo-insy2s-INLINE-2021.svg"
-              alt=""
-              width={200}
-              height={60}
-            />
-          </Link>
-        </div>
+	return (
+		<div>
+			<div className="bg-gray-1 p-3">
+				<div className="container mx-auto">
+					<div className="flex justify-between items-center">
+						<Link to="/">
+							<img className="shadow-sm hover:shadow-inner shadow-dark rounded-2xl m-1 border-gradient-v" src={Logo} alt="Logo de TreeUp" width={60} />
+						</Link>
 
 						{isLoggued ? (
 							<div className="flex items-center">
