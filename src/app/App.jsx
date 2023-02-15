@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import Navbar from './components/layouts/Navbar';
+import SideBar from './components/layouts/SideBar';
 import { selectIsLogged, signIn } from './redux-store/authenticationSlice';
 import Routes from './routes/Routes';
 import { getToken } from './services/tokenServices';
@@ -39,10 +40,14 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className="flex h-full cursor-default relative flex-col bg-gray-100">
-                {isLogged && <IdleTimerCustom />}
                 <Navbar />  
-                <main className="grow">
-                    <Routes />
+                <main className="main container flex mx-auto">
+                    <div className="lg:w-2/6 xl:w-1/6">
+						<SideBar />
+					</div>
+					<div className="lg:w-4/6 xl:w-5/6">
+						<Routes />
+					</div>
                 </main>
                 <ToastContainer
                     toastClassName={({ type }) =>

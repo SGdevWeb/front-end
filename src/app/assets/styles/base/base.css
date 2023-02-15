@@ -9,6 +9,9 @@
         @apply h-full
     }
 
+    main{
+        height: calc(100vh - 102px);
+    }
     
     /* TYPOGRAPHIE */
     h1{
