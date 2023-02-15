@@ -33,10 +33,8 @@ const App = () => {
             <div className="flex h-full cursor-default relative flex-col bg-gray-100">
                 <Navbar />  
                 <main className="main container flex mx-auto">
-                    <div className="lg:w-2/6 xl:w-1/6">
 						<SideBar />
-					</div>
-					<div className="lg:w-4/6 xl:w-5/6">
+					<div className="md:w-4/6 xl:w-5/6 ">
 						<Routes />
 					</div>
                 </main>

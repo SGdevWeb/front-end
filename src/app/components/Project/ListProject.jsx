@@ -1,14 +1,9 @@
-import "../../views/Profile/Scrollbar.css";
-
-import CardProject from "../Project/CardProject"
+import CardProject from "./CardProject";
 import { Link } from "react-router-dom";
-import { PlusIcon } from "@heroicons/react/solid";
 import React from "react";
-import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
 
-const ProfileProject = () => {
-
-  const FakeData = [
+const ListProject = () => {
+  const fakeData = [
     {
       uuid: "e73bab9a-7d74-4e18-a647-040c16742467",
       name: "Stronghold",
@@ -141,21 +136,29 @@ const ProfileProject = () => {
     },
   ];
 
-
   return (
-    <div className="flex ml-7">
-      <div className="">
-        <Link to={URL_EDITPROFILE}>
-          <PlusIcon className="border-2 w-24 rounded-md h-full mr-5 shadow-xl bg-white" />
+    <div className="flex flex-wrap justify-center overflow-y-scroll h-full gap-10">
+      <div className="border-gradient-v rounded-3xl p-3">
+        <p>
+          Tree-Up vous permets de partager et d’échanger sur les divers projets
+          d’actualité postés par nos jeunes développeurs !{" "}
+        </p>
+        <p>
+          N’hésitez pas à faire un tour sur nos projets récents et de partager
+          votre avis dans la section commentaires !{" "}
+        </p>
+        <Link to="" className="text-primary-light">
+          Cliquez ici
         </Link>
+        <p className="inline-block ml-1">
+          si vous souhaitez créer un projet afin de le mettre en avant !{" "}
+        </p>
       </div>
-      <div className="flex gap-3 overflow-x-scroll w-auto border-red-500">
-      {FakeData.map((project) => (
+      {fakeData.map((project) => (
         <CardProject key={project.uuid} project={project} />
       ))}
-      </div>
     </div>
   );
 };
 
-export default ProfileProject;
+export default ListProject;

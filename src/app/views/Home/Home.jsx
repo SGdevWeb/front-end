@@ -1,4 +1,4 @@
-import ListProject from "../../components/base/ListProject";
+import ListProject from "../../components/Project/ListProject";
 import React from "react";
 
 const Home = () => {

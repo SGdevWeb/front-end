@@ -81,7 +81,7 @@ function LoginCard() {
   }
 
   return (
-    <div className="bg-gray-1 w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col  items-center">
+    <div className="bg-gray-1 shadow-lg w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col items-center">
       <form
         onSubmit={handleSubmit}
         className="p-2 bg-transparent w-full sm:w-4/5 md:w-4/5 lg:w-4/5 2xl:w-4/5 m-2 rounded-lg flex flex-col justify-center items-center"

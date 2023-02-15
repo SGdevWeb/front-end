@@ -5,7 +5,7 @@ import React from "react";
 
 function Login() {
   return (
-    <div className="bg-white flex justify-center items-center h-full">
+    <div className="flex justify-center items-center h-full">
       <LoginCard />
     </div>
   );

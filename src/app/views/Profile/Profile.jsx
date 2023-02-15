@@ -11,7 +11,7 @@ import profileData from "../../fakeData/ProfileData";
 export default function Profile() {
   const singleProfileData = profileData[0];
   return (
-    <div className="bg-[#ececec]">
+    <div className="bg-[#ececec] justify-center flex-col">
       <ProfileDescription
         key={singleProfileData.fakeid}
         username={singleProfileData.username}

@@ -50,7 +50,7 @@ const SideBar = () => {
   return (
     <>
       {!blacklistRoutes.includes(location.pathname) && (
-        <div className="flex absolute w-fit h-fit md:relative transition-all">
+        <div className="flex absolute h-fit md:relative transition-all md:w-2/6 xl:w-1/6">
           <div
             className={`flex flex-col justify-between shadow-lg bg-gray-1 p-2 rounded-md h-full w-full ${
               !show && "hidden"
@@ -76,8 +76,8 @@ const SideBar = () => {
                 <h6>Type de projets</h6>
                 {fakeProjectType.map(({ uuid, type }) => (
                   <CheckBox
+                    key={uuid}
                     text={type}
-                    id={uuid}
                     value={uuid}
                     onChange={toggleFilter.typeProject}
                   />
@@ -88,8 +88,8 @@ const SideBar = () => {
                 <h6>Technologies utilisées</h6>
                 {fakeTechnologiesType.map(({ uuid, type }) => (
                   <CheckBox
+                    key={uuid}
                     text={type}
-                    id={uuid}
                     value={uuid}
                     onChange={toggleFilter.typeTechnologie}
                   />
