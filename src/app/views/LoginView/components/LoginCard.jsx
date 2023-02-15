@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import Button from '../../../components/theme/Button'
 import Input from '../../../components/theme/Input'
 import { useFormik } from 'formik'
-import { register } from '../../../utils/fakeApi'
 import validationSchema from '../../../utils/loginSchema'
 import ReCAPTCHA from "react-google-recaptcha";
+import axios from "axios";
+
 
 /* Les composants sont dans le dossier assets/components/theme
 Le style des composants se trouve dans le dossier assets/styles/components
@@ -23,7 +24,7 @@ function LoginCard() {
   const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => {
-    isLogin && navigate('/register')
+    isLogin && navigate('/')
   }, [isLogin])
 
   const captchagoogle = useRef (null);
@@ -53,21 +54,24 @@ function LoginCard() {
     onSubmit
   });
 
+  const login = (values) => {
+    const user = values
+    axios
+      .post("http://localhost:8000/tree-up-api/login", user)
+      .then(response => console.log(response))
+      .catch(error => console.log(error)) 
+    console.log('requête terminée')
+  }
+
   async function onSubmit(formValues) {
     console.log(formValues);
     if(captchagoogle.current.getValue()) {
       setFormValidate(true)
       setcaptchaValidate(true)
-      try {
-        await register(formValues);
-        resetForm();
-        console.log('Connexion réussie')
-        setIsLogin(true)
-      } catch ({ errors }) {
-        for (let key in errors) {
-          setFieldError(key, errors[key]);
-        }
-      }
+      login(formValues);
+      resetForm();
+      console.log('Connexion réussie')
+      setIsLogin(true)
     } else {
       setFormValidate(false)
       setcaptchaValidate(false)
