@@ -1,5 +1,5 @@
 # Template React Project
-test
+test 2
 
 This project is a template of React Project.
 
