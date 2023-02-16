@@ -1,12 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
-
-import Button from "../../components/base/Button";
-import Input from "../../components/base/Input";
+import { Link, useNavigate } from 'react-router-dom'
+import Button from '../../components/base/Button'
+import Input from '../../components/base/Input'
+import { useFormik } from 'formik'
+import validationSchema from '../../utils/loginSchema'
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
-import { useFormik } from "formik";
-import validationSchema from "../../utils/loginSchema";
+// import { setToken } from '../../services/tokenServices'
 
 /* Les composants sont dans le dossier assets/components/theme
 Le style des composants se trouve dans le dossier assets/styles/components
@@ -16,10 +16,11 @@ Les variables des couleurs se trouvent dans le fichier tailwind.config.js
 */
 
 function LoginCard() {
-  const navigate = useNavigate();
-  
+
+  const navigate = useNavigate()
+
   const [captchaValidate, setcaptchaValidate] = useState(null)
-  const [formValidate, setFormValidate] = useState(null)
+  // const [formValidate, setFormValidate] = useState(null)
   const [isLogin, setIsLogin] = useState(false)
   const [errorLog, setErrorLog] = useState(false)
 
@@ -27,28 +28,27 @@ function LoginCard() {
     isLogin && navigate('/')
   }, [isLogin])
 
-  const captchagoogle = useRef(null);
+  const captchagoogle = useRef (null);
 
   const onChange = () => {
-    if (captchagoogle.current.getValue()) {
-      setcaptchaValidate(true);
-      console.log("Vous n'êtes pas un robot");
+    if(captchagoogle.current.getValue()){
+      setcaptchaValidate(true)
+      console.log("Vous n'êtes pas un robot")
     } else {
-      setcaptchaValidate(false);
-      console.log("Vous êtes un robot ?");
+      setcaptchaValidate(false)
+      console.log("Vous êtes un robot ?")
     }
-  };
+  }
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
   const { 
     values, handleChange, handleBlur,
     isSubmitting, isValid, touched, 
-    handleSubmit, setFieldError,
-    resetForm, errors } = useFormik({
+    handleSubmit,resetForm, errors } = useFormik({
     initialValues,
     validationSchema,
     onSubmit
@@ -61,6 +61,9 @@ function LoginCard() {
       .then(response => {
         console.log('requête login ok')
         setIsLogin(true)
+        console.log(response.data)
+        // const {token} = response.data
+        // setToken(token)
       })
       .catch(error => {
         console.log('erreur requête login')
@@ -68,22 +71,21 @@ function LoginCard() {
       }) 
     console.log('requête terminée')
   }
-  
+
   async function onSubmit(formValues) {
     console.log(formValues);
-    if(captchagoogle.current.getValue()) {
-      setFormValidate(true)
-      setcaptchaValidate(true)
+    if(captchaValidate) {
+      // setFormValidate(true)
+      // setcaptchaValidate(true)
       login(formValues);
       resetForm();
       console.log('Connexion réussie')
       // setIsLogin(true)
     } else {
-      setFormValidate(false)
+      // setFormValidate(false)
       setcaptchaValidate(false)
     }
   }
-
 
   return (
     <div className='bg-gray-1 w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col  items-center'>
@@ -128,7 +130,7 @@ function LoginCard() {
         }
       </form>
       <div className='mb-4 w-full flex justify-end'>
-        <Link className='mr-4 mt-4' to='/register'>Créer un compte</Link>
+        <Link className='mr-4 mt-4' to='/signin'>Créer un compte</Link>
       </div>
     </div>
   )
