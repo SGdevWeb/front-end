@@ -9,8 +9,8 @@
         @apply h-full
     }
 
-    main{
-        height: calc(100vh - 102px);
+    .main{
+        height: calc(100vh - 113px);
     }
     
     /* TYPOGRAPHIE */

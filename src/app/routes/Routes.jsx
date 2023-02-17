@@ -3,11 +3,12 @@ import * as URL from "../constants/urls/urlFrontEnd";
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 
 import EditProfile from "../views/EditProfile/EditProfile"
-import HomePage from "../views/Home/Home";
-import LoginPage from "../views/Login/Login";
+import Home from "../views/Home/Home";
+import Login from "../views/Login/Login";
 import Profile from "../views/Profile/Profile";
 import React from "react";
 import SideBar from "../components/layouts/Sidebar";
+import SignIn from "../views/SignIn/SignIn"
 
 /**
  * Routes of the application
@@ -18,16 +19,16 @@ import SideBar from "../components/layouts/Sidebar";
 const Routes = () => {
 	return (
 		<RoutesContainer>
-			<Route path={URL.URL_LOGIN} element={<LoginPage />} />
-			<Route path={URL.URL_REGISTER} element={<LoginPage />} />
+			<Route path={URL.URL_LOGIN} element={<Login />} />
+			<Route path={URL.URL_SIGNIN} element={<SignIn />} />
 			<Route
-				path="/*"
+				path="/*"	
 				element={
-					<div className="flex container mx-auto mt-3 gap-3">
+					<div className=" flex container mx-auto pt-3 gap-3">
 						<SideBar />
-						<div className="w-full md:w-3/4 lg:w-4/5">
+						<div className="w-full main md:w-3/4 lg:w-4/5">
 							<RoutesContainer>
-								<Route path="/" element={<HomePage />} />
+								<Route path="/" element={<Home />} />
 								<Route path={URL.URL_PROFILE} element={<Profile />} />
 								<Route path={URL.URL_EDITPROFILE} element ={<EditProfile />} />
 							</RoutesContainer>

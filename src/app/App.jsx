@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { selectIsLogged, signIn } from './redux-store/authenticationSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { selectIsLogged, signIn } from "./redux-store/authenticationSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-import { BrowserRouter } from 'react-router-dom';
-import Navbar from './components/layouts/Navbar';
-import Routes from './routes/Routes';
-import SideBar from './components/layouts/SideBar';
-import { getToken } from './services/tokenServices';
+import { BrowserRouter } from "react-router-dom";
+import Navbar from "./components/layouts/Navbar";
+import Routes from "./routes/Routes";
+import SideBar from "./components/layouts/SideBar";
+import { getToken } from "./services/tokenServices";
 
 /**
  * Component RouteWithNavigation
@@ -31,7 +31,9 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<Navbar />
-            <Routes />
+			<div className="bg-gray-50">
+				<Routes />
+			</div>
 		</BrowserRouter>
 	);
 };
