@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import { selectIsLogged, selectUser } from "../../redux-store/authenticationSlice";
 
 import Button from "../base/Button";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/LogoTreeUp100x100.png";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [enableDropdown, setEnableDropdown] = useState(false);
-  const isLoggued = true;
+  const isLoggued = useSelector(selectIsLogged);
 
-  const fakeData = {
+  const user = useSelector(selectUser) || {
     username: "Manucraft",
     image: Logo,
   };
@@ -29,14 +31,14 @@ const Navbar = () => {
 
             {isLoggued ? (
               <div className="flex items-center">
-                <h5 className="mr-2">{fakeData.username}</h5>
+                <h5 className="mr-2">{user.username}</h5>
                 <div
                   className="rounded-full shadow-sm hover:shadow-inner border-gradient-v shadow-dark gradient-v"
                   onClick={() => setEnableDropdown(!enableDropdown)}
                 >
                   <img
                     className="bg-white rounded-full m-1"
-                    src={fakeData.image}
+                    src={user.image}
                     alt="Logo de TreeUp"
                     width={60}
                   />
