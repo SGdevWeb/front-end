@@ -16,31 +16,24 @@ import { getToken } from './services/tokenServices';
  */
 
 const App = () => {
-    const isLogged = useSelector(selectIsLogged);
-    const dispatch = useDispatch();
-    const [isLogin, setIsLogin] = useState(true);
+	const isLogged = useSelector(selectIsLogged);
+	const dispatch = useDispatch();
+	const [isLogin, setIsLogin] = useState(true);
 
-    useEffect(() => {
-        const token = getToken();
-        if (token) dispatch(signIn(token));
-        setIsLogin(false);
-    }, []);
+	useEffect(() => {
+		const token = getToken();
+		if (token) dispatch(signIn(token));
+		setIsLogin(false);
+	}, []);
 
-    if (isLogin) return null;
+	if (isLogin) return null;
 
-    return (
-        <BrowserRouter>
-            <div className="flex h-full cursor-default relative flex-col bg-gray-100">
-                <Navbar />  
-                <main className="main container flex mx-auto">
-						<SideBar />
-					<div className="md:w-4/6 xl:w-5/6 ">
-						<Routes />
-					</div>
-                </main>
-            </div>
-        </BrowserRouter>
-    );
+	return (
+		<BrowserRouter>
+			<Navbar />
+            <Routes />
+		</BrowserRouter>
+	);
 };
 
 export default App;

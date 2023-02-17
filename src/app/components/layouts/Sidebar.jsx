@@ -47,55 +47,33 @@ const SideBar = () => {
     );
   }, []);
 
-  return (
-    <>
-      {!blacklistRoutes.includes(location.pathname) && (
-        <div className="flex absolute h-fit md:relative transition-all md:w-2/6 xl:w-1/6">
-          <div
-            className={`flex flex-col justify-between shadow-lg bg-gray-1 p-2 rounded-md h-full w-full ${
-              !show && "hidden"
-            }`}
-          >
-            <div>
-              <Search setOutput={setSearch} />
-              <div>
-                <h6>Type</h6>
-                <CheckBox
-                  text="Projet"
-                  value="project"
-                  onChange={toggleFilter.type}
-                />
-                <CheckBox
-                  text="Utilisateur"
-                  value="user"
-                  onChange={toggleFilter.type}
-                />
-              </div>
-              <hr className="border-dark my-2" />
-              <div>
-                <h6>Type de projets</h6>
-                {fakeProjectType.map(({ uuid, type }) => (
-                  <CheckBox
-                    key={uuid}
-                    text={type}
-                    value={uuid}
-                    onChange={toggleFilter.typeProject}
-                  />
-                ))}
-              </div>
-              <hr className="border-dark my-2" />
-              <div>
-                <h6>Technologies utilisées</h6>
-                {fakeTechnologiesType.map(({ uuid, type }) => (
-                  <CheckBox
-                    key={uuid}
-                    text={type}
-                    value={uuid}
-                    onChange={toggleFilter.typeTechnologie}
-                  />
-                ))}
-              </div>
-            </div>
+	return (
+		<>
+			{!blacklistRoutes.includes(location.pathname) && (
+				<div className="flex absolute h-fit md:relative transition-all md:w-1/4 lg:w-1/5">
+					<div className={`flex flex-col justify-between shadow-lg bg-gray-1 p-2 rounded-md h-full w-full ${!show && "hidden"}`}>
+						<div>
+							<Search setOutput={setSearch} />
+							<div>
+								<h6>Type</h6>
+								<CheckBox text="Projet" value="project" onChange={toggleFilter.type} />
+								<CheckBox text="Utilisateur" value="user" onChange={toggleFilter.type} />
+							</div>
+							<hr className="border-dark my-2" />
+							<div>
+								<h6>Type de projets</h6>
+								{fakeProjectType.map(({ uuid, type }) => (
+									<CheckBox text={type} id={uuid} value={uuid} onChange={toggleFilter.typeProject} />
+								))}
+							</div>
+							<hr className="border-dark my-2" />
+							<div>
+								<h6>Technologies utilisées</h6>
+								{fakeTechnologiesType.map(({ uuid, type }) => (
+									<CheckBox text={type} id={uuid} value={uuid} onChange={toggleFilter.typeTechnologie} />
+								))}
+							</div>
+						</div>
 
             <div className="mt-5">
               <Link to="/">
