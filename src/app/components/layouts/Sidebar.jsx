@@ -25,7 +25,7 @@ const SideBar = () => {
   const [filterTypeTechnologie, setFilterTypeTechnologie] = useState([]);
   const [search, setSearch] = useState("");
 
-  const blacklistRoutes = ["/login"];
+  const blacklistRoutes = ["/login","/signin"];
 
   const toggleFilter = {
     base: (e, setFilter) =>

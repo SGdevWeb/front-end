@@ -128,7 +128,7 @@ function LoginCard() {
         }
       </form>
       <div className='mb-4 w-full flex justify-end'>
-        <Link className='mr-4 mt-4' to='/register'>Créer un compte</Link>
+        <Link className='mr-4 mt-4' to='/signin'>Crée un compte</Link>
       </div>
     </div>
   )
