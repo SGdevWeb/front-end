@@ -1,13 +1,13 @@
 .border-gradient-v {
     background: linear-gradient(white, white) padding-box,
         linear-gradient(to left, #0067EF, #79527C, #E86308) border-box;
-    border: 5px solid transparent;
+    border: 2px solid transparent;
 }
 
 .border-gradient-h {
     background: linear-gradient(white, white) padding-box,
         linear-gradient(to bottom, #0067EF, #79527C, #E86308) border-box;
-    border: 5px solid transparent;
+    border: 2px solid transparent;
 }
 
 .border-gradient-v[type="checkbox"]:checked {

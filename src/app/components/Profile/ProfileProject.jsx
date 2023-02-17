@@ -151,7 +151,7 @@ const ProfileProject = () => {
       </div>
       <div className="flex gap-3 overflow-x-scroll w-auto border-red-500">
       {FakeData.map((project) => (
-        <CardProject key={project.uuid} project={project} />
+        <CardProject key={project.uuid} {...project} />
       ))}
       </div>
     </div>
