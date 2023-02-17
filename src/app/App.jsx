@@ -31,7 +31,7 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<Navbar />
-			<div className="bg-gray-50">
+			<div className="bg-gray-50 main">
 				<Routes />
 			</div>
 		</BrowserRouter>
