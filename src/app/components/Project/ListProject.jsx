@@ -137,7 +137,7 @@ const ListProject = () => {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center overflow-y-scroll h-full gap-10">
+    <div className="flex flex-wrap justify-center h-full gap-10">
       <div className="border-gradient-v rounded-3xl p-3">
         <p>
           Tree-Up vous permets de partager et d’échanger sur les divers projets
