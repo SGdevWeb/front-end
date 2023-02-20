@@ -18,14 +18,17 @@ const SideBar = () => {
 		{ uuid: "6", type: "NodeJs" },
 	];
 
-	const [filterType, setFilterType] = useState([]);
+	const [filterType, setFilterType] = useState("project");
 	const [filterTypeProject, setFilterTypeProject] = useState([]);
 	const [filterTypeTechnologie, setFilterTypeTechnologie] = useState([]);
 	const [search, setSearch] = useState("");
 
+	const toggleFilterType = (e) => {
+		setFilterType(e.target.value);
+	};
+
 	const toggleFilter = {
 		base: (e, setFilter) => setFilter((filter) => (filter.includes(e.target.value) ? filter.filter((item) => item != e.target.value) : [...filter, e.target.value])),
-		type: (e) => toggleFilter.base(e, setFilterType),
 		typeProject: (e) => toggleFilter.base(e, setFilterTypeProject),
 		typeTechnologie: (e) => toggleFilter.base(e, setFilterTypeTechnologie),
 	};
@@ -37,8 +40,8 @@ const SideBar = () => {
 					<Search setOutput={setSearch} />
 					<div>
 						<h6>Type</h6>
-						<CheckBox text="Projet" value="project" onChange={toggleFilter.type} />
-						<CheckBox text="Utilisateur" value="user" onChange={toggleFilter.type} />
+						<CheckBox type="radio" text="Projet" value="project" onChange={toggleFilterType} defaultChecked={true} />
+						<CheckBox type="radio" text="Utilisateur" value="user" onChange={toggleFilterType} />
 					</div>
 					<hr className="border-dark my-2" />
 					<div>
