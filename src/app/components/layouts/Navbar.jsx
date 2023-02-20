@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { selectIsLogged, selectUser } from "../../redux-store/authenticationSlice";
 
 import Button from "../base/Button";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/LogoTreeUp100x100.png";
+import { selectUser } from "../../redux-store/authenticationSlice";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {

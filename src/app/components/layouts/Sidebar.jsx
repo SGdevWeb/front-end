@@ -1,7 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 
 import CheckBox from "../base/CheckBox";
+import { Link } from "react-router-dom";
 import Search from "../base/Search";
 
 const SideBar = () => {
