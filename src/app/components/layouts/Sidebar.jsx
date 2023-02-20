@@ -60,13 +60,13 @@ const SideBar = () => {
 				</div>
 
 				<div>
-					<Link to="/">
+					<Link to="/contact">
 						<p>Nous contacter ? </p>
 					</Link>
-					<Link to="/">
+					<Link to="/about">
 						<p>A propos de nous</p>
 					</Link>
-					<Link to="/">
+					<Link to="/cgu">
 						<p>Conditions Générales d'Utilisations</p>
 					</Link>
 				</div>

@@ -50,11 +50,11 @@ const Navbar = () => {
 						<Link to="/profile">
 							<div className="border-2 border-neutral-400 rounded m-1">Mon profil</div>
 						</Link>
-						<Link to="/">
+						<Link to="/profile#projects">
 							<div className="border-2 border-neutral-400 rounded m-1">Mes Projets</div>
 						</Link>
 						<hr className="border-neutral-400" />
-						<Link to="/login">
+						<Link to="/logout">
 							<div className="border-2 border-neutral-400 rounded m-1 text-red-700 font-bold">Déconnexion</div>
 						</Link>
 					</div>
