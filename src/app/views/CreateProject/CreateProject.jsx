@@ -1,9 +1,20 @@
+import React, { useState } from "react";
+
 import Button from "../../components/Base/Button";
 import InputBis from "../../components/base/InputBis";
-import React from "react";
 import TextArea from "../../components/base/TextArea";
 
 export default function CreateProject() {
+  const [name, setName] = useState("");
+  const [dateStart, setDateStart] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
+  const [type, setType] = useState();
+  const [description, setDescription] = useState("");
+
+  const create = () => {
+    const payload = {name, date_start: dateStart, date_end: dateEnd, type, description};
+  }
+
   return (
     <div className="p-3 bg-gray-1">
       <div className="">
