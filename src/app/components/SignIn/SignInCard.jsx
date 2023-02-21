@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import validationSchema from "../../utils/registerSchema";
 import ReCAPTCHA from "react-google-recaptcha";
 import Welcome from "./Welcome";
-import axios from "axios";
+import { registerUser } from '../../api/backend/account'
 
 /*
 Un message d'erreur apparaît lorsque l'utilisateur change de champ
@@ -19,10 +19,9 @@ Le composant est responsive
 function SignInCard() {
 
   const [captchaValidate, setcaptchaValidate] = useState(null)
-  const [formValidate, setFormValidate] = useState(null)
   const [isRegister, setIsRegister] = useState(false)
 
-  const captchagoogle = useRef (null);
+  const captchagoogle = useRef(null);
 
   const onChange = () => {
     if(captchagoogle.current.getValue()){
@@ -49,24 +48,20 @@ resetForm,errors } = useFormik({ initialValues,validationSchema,onSubmit});
   const register = (values) => {
     delete values.passwordConfirmation
     const user = values
-    console.log('user :',user)
-    axios
-      .post("http://localhost:8000/tree-up-api/newuser", user)
-      .then(response => console.log(response))
+    registerUser(user)
+      .then(response => {
+        console.log('utilisateur enregistrée')
+      })
       .catch(error => console.log(error)) 
-    console.log('requête terminée')
   }
 
   async function onSubmit(formValues) {
-    console.log(formValues);
-    if(captchagoogle.current.getValue()) {
-      setFormValidate(true)
+    if(captchaValidate) {
       setcaptchaValidate(true)
       register(formValues);
       resetForm();
       setIsRegister(true)
     } else {
-      setFormValidate(false)
       setcaptchaValidate(false)
     }
   }

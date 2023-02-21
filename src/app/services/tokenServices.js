@@ -39,7 +39,10 @@ export function removeToken() {
  * @author Peter Mollet
  */
 export function getPayloadToken(token) {
-    return jwt_decode(token);
+    const decodedToken = jwt_decode(token)
+    // Lecture du token décodé
+    // console.log(decodedToken) 
+    return decodedToken;
 }
 
 /**
@@ -52,11 +55,15 @@ export function getPayloadToken(token) {
 export function isTokenValid(token) {
     try {
         const payload = getPayloadToken(token);
-        const roles = payload.auth.split(',');
-        const expirationDate = payload.exp;
+        // console.log('payload', payload)
+        // const roles = payload.auth.split(',');
+        const role = payload.role
+        // const expirationDate = payload.exp;
+        const expDate = payload.iat
         const login = payload.sub;
         const dateNow = new Date();
-        return token && roles.length > 0 && login && expirationDate < dateNow.getTime();
+        // return token && roles.length > 0 && login && expirationDate < dateNow.getTime();
+        return payload && role && login && expDate < dateNow.getTime() && true
     } catch {
         return false;
     }

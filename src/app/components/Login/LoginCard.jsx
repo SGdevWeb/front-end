@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../../components/base/Button'
 import Input from '../../components/base/Input'
 import { useFormik } from 'formik'
 import validationSchema from '../../utils/loginSchema'
 import ReCAPTCHA from "react-google-recaptcha";
-import axios from "axios";
-// import { setToken } from '../../services/tokenServices'
+import { URL_HOME } from "../../constants/urls/urlFrontEnd";
+import { authenticate } from "../../api/backend/account";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../redux-store/authenticationSlice";
 
 /* Les composants sont dans le dossier assets/components/theme
 Le style des composants se trouve dans le dossier assets/styles/components
@@ -18,15 +20,10 @@ Les variables des couleurs se trouvent dans le fichier tailwind.config.js
 function LoginCard() {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [captchaValidate, setcaptchaValidate] = useState(null)
-  // const [formValidate, setFormValidate] = useState(null)
-  const [isLogin, setIsLogin] = useState(false)
   const [errorLog, setErrorLog] = useState(false)
-
-  useEffect(() => {
-    isLogin && navigate('/')
-  }, [isLogin])
 
   const captchagoogle = useRef (null);
 
@@ -55,34 +52,29 @@ function LoginCard() {
   });
 
   const login = (values) => {
-    const user = values
-    axios
-      .post("http://localhost:8000/tree-up-api/login", user)
-      .then(response => {
-        console.log('requête login ok')
-        setIsLogin(true)
-        console.log(response.data)
-        // const {token} = response.data
-        // setToken(token)
+    const credentials = values
+    authenticate(credentials)
+      .then(res => {
+        const {token} = res.data 
+        if (res.status === 200 && token) {
+          dispatch(signIn(token))
+          navigate(URL_HOME);
+        }
       })
-      .catch(error => {
-        console.log('erreur requête login')
+      .catch(() => {
+        // console.log('erreur requête login')
         setErrorLog(true)
-      }) 
-    console.log('requête terminée')
-  }
+      });
+  };
 
   async function onSubmit(formValues) {
     console.log(formValues);
     if(captchaValidate) {
-      // setFormValidate(true)
-      // setcaptchaValidate(true)
+      setcaptchaValidate(true)
       login(formValues);
       resetForm();
-      console.log('Connexion réussie')
-      // setIsLogin(true)
+      // console.log('Connexion réussie')
     } else {
-      // setFormValidate(false)
       setcaptchaValidate(false)
     }
   }
@@ -106,7 +98,7 @@ function LoginCard() {
         <Input
           type='password'
           placeholder='********'
-          description="Vous avez oublié votre mot de passe"
+          description="Vous avez oublié votre mot de passe ?"
           name="password"
           value={values.password}
           onChange={handleChange}
