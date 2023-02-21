@@ -61,7 +61,7 @@ export default function CreateProject() {
           onChange={(e) => {setDateEnd(e.target.value)}}
         />
       </div>
-      <ButtonBis className="my-3" title="Ajouter des collaborateurs" onClick={create}/>
+      <Button className="w-1/5 my-3" title="Ajouter des collaborateurs" /> 
       <TextArea
         placeholder={"Description du projet"}
         className="w-full"
