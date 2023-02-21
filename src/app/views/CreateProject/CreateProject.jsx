@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 
 import Button from "../../components/Base/Button";
+import ButtonBis from "../../components/Base/ButtonBis";
 import InputBis from "../../components/base/InputBis";
 import TextArea from "../../components/base/TextArea";
 
 export default function CreateProject() {
   const [name, setName] = useState("");
   const [dateStart, setDateStart] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
-  const [type, setType] = useState();
+  const [dateEnd, setDateEnd] = useState(null);
+  const [type, setType] = useState("");
   const [description, setDescription] = useState("");
 
   const create = () => {
-    const payload = {name, date_start: dateStart, date_end: dateEnd, type, description};
+    const payload = {name, date_start: dateStart, type, description};
+    if (dateEnd) {
+      payload.date_end = dateEnd;
+    }
+    console.log(payload);
   }
 
   return (
@@ -30,12 +35,14 @@ export default function CreateProject() {
           placeholder="Nom du projet"
           name="text"
           className="w-1/2 mr-2"
+          onChange={(e) => {setName(e.target.value)}}
         />
         <InputBis
           type="date"
           placeholder="Date de Début"
           name="date"
           className="w-1/6 ml-2"
+          onChange={(e) => {setDateStart(e.target.value)}}
         />
       </div>
       <div className="flex justify-between pt-3">
@@ -44,21 +51,24 @@ export default function CreateProject() {
           placeholder="Type du projet"
           name="text"
           className="w-1/2 mr-2"
+          onChange={(e) => {setType(e.target.value)}}
         />
         <InputBis
           type="date"
           placeholder="Date de Fin"
           name="date"
           className="w-1/6 ml-2"
+          onChange={(e) => {setDateEnd(e.target.value)}}
         />
       </div>
-      <Button className="w-1/5 my-3" title="Ajouter des collaborateurs" />
+      <ButtonBis className="my-3" title="Ajouter des collaborateurs" onClick={create}/>
       <TextArea
         placeholder={"Description du projet"}
         className="w-full"
         rows={"15"}
+        onChange={(e) => {setDescription(e.target.value)}}
       />
-      <div className="flex justify-center">
+      <div className="flex justify-center" onClick={create}>
         <Button className="w-1/6 mt-3" title="Créer le projet" />
       </div>
     </div>
