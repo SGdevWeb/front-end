@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "../../components/Base/Button";
 import ButtonBis from "../../components/Base/ButtonBis";
 import InputBis from "../../components/base/InputBis";
+import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
 
 export default function CreateProject() {
@@ -34,7 +35,7 @@ export default function CreateProject() {
           type="text"
           placeholder="Nom du projet"
           name="text"
-          className="w-1/2 mr-2"
+          className="w-1/2"
           onChange={(e) => {setName(e.target.value)}}
         />
         <InputBis
@@ -46,18 +47,12 @@ export default function CreateProject() {
         />
       </div>
       <div className="flex justify-between pt-3">
-        <InputBis
-          type="text"
-          placeholder="Type du projet"
-          name="text"
-          className="w-1/2 mr-2"
-          onChange={(e) => {setType(e.target.value)}}
-        />
-        <InputBis
+       <Select className="w-1/2"/>
+       <InputBis
           type="date"
           placeholder="Date de Fin"
           name="date"
-          className="w-1/6 ml-2"
+          className="w-1/6"
           onChange={(e) => {setDateEnd(e.target.value)}}
         />
       </div>
@@ -65,7 +60,7 @@ export default function CreateProject() {
       <TextArea
         placeholder={"Description du projet"}
         className="w-full"
-        rows={"15"}
+        rows={"10"}
         onChange={(e) => {setDescription(e.target.value)}}
       />
       <div className="flex justify-center" onClick={create}>
