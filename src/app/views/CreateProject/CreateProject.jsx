@@ -6,44 +6,42 @@ import TextArea from "../../components/base/TextArea";
 export default function CreateProject() {
   return (
     <div className="p-3 bg-gray-1">
-      <div className="">
         <img
           className="rounded-xl justify-center items-center"
           src={"https://dummyimage.com/1200x300.png/5fa2dd/ffffff"}
           alt="Projet"
           loading="lazy"
         />
-      </div>
       <Button className="w-1/6 mt-3" title="Ajouter une image" />
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-3">
         <InputBis
-          type="email"
+          type="text"
           placeholder="Nom du projet"
-          name="email"
+          name="text"
           className="w-1/2 mr-2"
         />
         <InputBis
-          type="email"
+          type="date"
           placeholder="Date de Début"
-          name="email"
+          name="date"
           className="w-1/6 ml-2"
         />
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-3">
         <InputBis
-          type="email"
+          type="text"
           placeholder="Type du projet"
-          name="email"
+          name="text"
           className="w-1/2 mr-2"
         />
         <InputBis
-          type="email"
+          type="date"
           placeholder="Date de Fin"
-          name="email"
+          name="date"
           className="w-1/6 ml-2"
         />
       </div>
-      <Button className="w-1/5 mt-3" title="Ajouter des collaborateurs" />
+      <Button className="w-1/5 my-3" title="Ajouter des collaborateurs" />
       <TextArea
         placeholder={"Description du projet"}
         className="w-full"

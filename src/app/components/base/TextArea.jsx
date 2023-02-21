@@ -6,6 +6,7 @@ export default function TextArea({
   placeholder,
   value,
   description,
+  cols,
   rows,
   id,
 }) {
@@ -16,8 +17,9 @@ export default function TextArea({
         className={`border-2 border-gradient-v rounded-lg ${className}`}
         placeholder={placeholder}
         value={value}
-        id={id}
+        cols={cols}
         rows={rows}
+        id={id}
       ></textarea>
       {description && <div className="text-xs">{description}</div>}
     </>
