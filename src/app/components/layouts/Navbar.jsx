@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="bg-gray-1 p-3">
+      <div className="bg-gray-1 p-3 mb-8">
         <div className="container mx-auto">
           <div className="flex justify-between items-center">
             <Link to="/">

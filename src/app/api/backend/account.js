@@ -1,6 +1,10 @@
-import { URL_BACK_AUTHENTICATE } from '../../constants/urls/urlBackEnd';
-import apiBackEnd from './api.Backend';
+import { URL_BACK_AUTHENTICATE, URL_BACK_REGISTER } from '../../constants/urls/urlBackEnd';
+import apiGateway from './apiGateway';
 
 export function authenticate(values) {
-    return apiBackEnd.post(URL_BACK_AUTHENTICATE, values);
+    return apiGateway.post(URL_BACK_AUTHENTICATE, values);
+}
+
+export function registerUser(values) {
+    return apiGateway.post(URL_BACK_REGISTER, values);
 }

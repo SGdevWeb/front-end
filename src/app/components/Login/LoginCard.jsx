@@ -1,12 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
-import React, { useEffect, useRef, useState } from "react";
-
-import Button from "../../components/base/Button";
-import Input from "../../components/base/Input";
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom'
+import Button from '../../components/base/Button'
+import Input from '../../components/base/Input'
+import { useFormik } from 'formik'
+import validationSchema from '../../utils/loginSchema'
 import ReCAPTCHA from "react-google-recaptcha";
-import axios from "axios";
-import { useFormik } from "formik";
-import validationSchema from "../../utils/loginSchema";
+import { URL_HOME } from "../../constants/urls/urlFrontEnd";
+import { authenticate } from "../../api/backend/account";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../redux-store/authenticationSlice";
 
 /* Les composants sont dans le dossier assets/components/theme
 Le style des composants se trouve dans le dossier assets/styles/components
@@ -16,74 +18,66 @@ Les variables des couleurs se trouvent dans le fichier tailwind.config.js
 */
 
 function LoginCard() {
-  const navigate = useNavigate();
-  
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const [captchaValidate, setcaptchaValidate] = useState(null)
-  const [formValidate, setFormValidate] = useState(null)
-  const [isLogin, setIsLogin] = useState(false)
   const [errorLog, setErrorLog] = useState(false)
 
-  useEffect(() => {
-    isLogin && navigate('/')
-  }, [isLogin])
-
-  const captchagoogle = useRef(null);
+  const captchagoogle = useRef (null);
 
   const onChange = () => {
-    if (captchagoogle.current.getValue()) {
-      setcaptchaValidate(true);
-      console.log("Vous n'êtes pas un robot");
+    if(captchagoogle.current.getValue()){
+      setcaptchaValidate(true)
+      console.log("Vous n'êtes pas un robot")
     } else {
-      setcaptchaValidate(false);
-      console.log("Vous êtes un robot ?");
+      setcaptchaValidate(false)
+      console.log("Vous êtes un robot ?")
     }
-  };
+  }
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
   const { 
     values, handleChange, handleBlur,
     isSubmitting, isValid, touched, 
-    handleSubmit, setFieldError,
-    resetForm, errors } = useFormik({
+    handleSubmit,resetForm, errors } = useFormik({
     initialValues,
     validationSchema,
     onSubmit
   });
 
   const login = (values) => {
-    const user = values
-    axios
-      .post("http://localhost:8000/tree-up-api/login", user)
-      .then(response => {
-        console.log('requête login ok')
-        setIsLogin(true)
+    const credentials = values
+    authenticate(credentials)
+      .then(res => {
+        const {token} = res.data 
+        if (res.status === 200 && token) {
+          dispatch(signIn(token))
+          navigate(URL_HOME);
+        }
       })
-      .catch(error => {
-        console.log('erreur requête login')
+      .catch(() => {
+        // console.log('erreur requête login')
         setErrorLog(true)
-      }) 
-    console.log('requête terminée')
-  }
-  
+      });
+  };
+
   async function onSubmit(formValues) {
     console.log(formValues);
-    if(captchagoogle.current.getValue()) {
-      setFormValidate(true)
+    if(captchaValidate) {
       setcaptchaValidate(true)
       login(formValues);
       resetForm();
-      console.log('Connexion réussie')
-      // setIsLogin(true)
+      // console.log('Connexion réussie')
     } else {
-      setFormValidate(false)
       setcaptchaValidate(false)
     }
   }
-
 
   return (
     <div className='bg-gray-1 w-full max-w-2xl md:w-4/5 lg:w-4/5 2xl:max-w-3xl rounded-lg flex flex-col  items-center'>
@@ -104,7 +98,7 @@ function LoginCard() {
         <Input
           type='password'
           placeholder='********'
-          description="Vous avez oublié votre mot de passe"
+          description="Vous avez oublié votre mot de passe ?"
           name="password"
           value={values.password}
           onChange={handleChange}
@@ -128,7 +122,11 @@ function LoginCard() {
         }
       </form>
       <div className='mb-4 w-full flex justify-end'>
+<<<<<<< HEAD
         <Link className='mr-4 mt-4' to='/signin'>Crée un compte</Link>
+=======
+        <Link className='mr-4 mt-4' to='/signin'>Créer un compte</Link>
+>>>>>>> connection
       </div>
     </div>
   )
