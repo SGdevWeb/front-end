@@ -5,6 +5,7 @@ import ButtonBis from "../../components/Base/ButtonBis";
 import InputBis from "../../components/base/InputBis";
 import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
+import typesProject from "../../fakeData/TypeData";
 
 export default function CreateProject() {
   const [name, setName] = useState("");
@@ -36,43 +37,35 @@ export default function CreateProject() {
           placeholder="Nom du projet"
           name="text"
           className="w-1/2"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          onChange={(e) => setName(e.target.value)}
         />
         <InputBis
           type="date"
           placeholder="Date de Début"
           name="date"
           className="w-1/6"
-          onChange={(e) => {
-            setDateStart(e.target.value);
-          }}
+          onChange={(e) => setDateStart(e.target.value)}
         />
       </div>
       <div className="flex justify-between pt-3">
-        <Select className="w-1/2" />
+        <Select className="w-1/2" label={"Type de projet"} dataList={typesProject} onChange={(e) => setType(e.target.value)} />
         <InputBis
           type="date"
           placeholder="Date de Fin"
           name="date"
           className="w-1/6"
-          onChange={(e) => {
-            setDateEnd(e.target.value);
-          }}
+          onChange={(e) => setDateEnd(e.target.value)}
         />
-      </div>
+      </div> 
       <Button className="w-1/5 my-3" title="Ajouter des collaborateurs" />
       <TextArea
         placeholder={"Description du projet"}
         className="w-full"
         rows={"10"}
-        onChange={(e) => {
-          setDescription(e.target.value);
-        }}
+        onChange={(e) => setDescription(e.target.value)}
       />
-      <div className="flex justify-center" onClick={create}>
-        <Button className="w-1/6 mt-3" title="Créer le projet" />
+      <div className="flex justify-center">
+        <ButtonBis className="w-1/6 mt-3" title="Créer le projet" onClick={create} />
       </div>
     </div>
   );
