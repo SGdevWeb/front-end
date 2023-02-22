@@ -21,21 +21,17 @@ export const authenticationSlice = createSlice({
     initialState,
     reducers: {
         signIn: (state, action) => {
-            // console.log('entrée signIn Reducer')
             const token = action.payload;
             state.token = token;
             const claims = getPayloadToken(token);
             // console.log('claims', claims)
             const user = {
-                username: claims.sub,
-                // roles: claims.auth.split(','),
+                userId : claims.sub,
                 roles : claims.role
             };
             state.user = user;
             state.isAuthenticated = isTokenValid(token);
-            // console.log('Token valid ?', state.isAuthenticated)
             setToken(token);
-            // console.log('signin terminée')
         },
         signOut: (state) => {
             localStorage.clear();
