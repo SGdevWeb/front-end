@@ -47,14 +47,14 @@ const SideBar = () => {
 					<div>
 						<h6>Type de projets</h6>
 						{fakeProjectType.map(({ uuid, type }) => (
-							<CheckBox text={type} id={uuid} value={uuid} onChange={toggleFilter.typeProject} />
+							<CheckBox text={type} key={uuid} value={uuid} onChange={toggleFilter.typeProject} />
 						))}
 					</div>
 					<hr className="border-dark my-2" />
 					<div>
 						<h6>Technologies utilisées</h6>
 						{fakeTechnologiesType.map(({ uuid, type }) => (
-							<CheckBox text={type} id={uuid} value={uuid} onChange={toggleFilter.typeTechnologie} />
+							<CheckBox text={type} key={uuid} value={uuid} onChange={toggleFilter.typeTechnologie} />
 						))}
 					</div>
 				</div>

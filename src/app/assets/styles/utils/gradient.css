@@ -4,6 +4,10 @@
     border: 2px solid transparent;
 }
 
+button.border-gradient-v:hover {
+    background: linear-gradient(to left, #0067EF, #79527C, #E86308) border-box;
+}
+
 .border-gradient-h {
     background: linear-gradient(white, white) padding-box,
         linear-gradient(to bottom, #0067EF, #79527C, #E86308) border-box;

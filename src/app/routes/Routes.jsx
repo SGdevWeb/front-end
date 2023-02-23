@@ -2,6 +2,7 @@ import * as URL from "../constants/urls/urlFrontEnd";
 
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 
+import CreateProject from "../views/CreateProject/CreateProject";
 import EditProfile from "../views/EditProfile/EditProfile"
 import Home from "../views/Home/Home";
 import Login from "../views/Login/Login";
@@ -31,6 +32,7 @@ const Routes = () => {
 								<Route path="/" element={<Home />} />
 								<Route path={URL.URL_PROFILE} element={<Profile />} />
 								<Route path={URL.URL_EDITPROFILE} element ={<EditProfile />} />
+								<Route path={URL.URL_CREATEPROJECT} element={<CreateProject />} />
 							</RoutesContainer>
 						</div>
 					</div>
