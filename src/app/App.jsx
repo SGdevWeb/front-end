@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { selectIsLogged, signIn } from "./redux-store/authenticationSlice";
-import { useDispatch, useSelector } from "react-redux";
-
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from './components/layouts/Navbar';
+import React from "react";
 import Routes from './routes/Routes';
-import SideBar from './components/layouts/SideBar';
-import { getToken } from './services/tokenServices';
 
 /**
  * Component RouteWithNavigation
@@ -33,7 +28,6 @@ const App = () => {
             <div className="flex h-full cursor-default relative flex-col bg-gray-100">
                 <Navbar />  
                 <main className="main container flex mx-auto justify-center mt-8">
-						<SideBar />
 					<div className="md:w-4/6 xl:w-5/6">
 						<Routes />
 					</div>
