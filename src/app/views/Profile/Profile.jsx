@@ -26,10 +26,13 @@ export default function Profile() {
         <ProfileUser  />
       </div>
       <p className="text-center my-5">Liste des technos</p>
-      <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">
-        <div className="flex flex-wrap justify-center w-full">
+      <div className="flex-col w-full items-center justify-center h-64 overflow-auto scrollbar">
+        <div
+          className="grid grid-cols-3 grid-rows-2 gap-4 mx-auto max-w-4xl"
+          style={{ gridTemplateRows: "50px 50px" }}
+        >
           {technologies.map((items) => (
-            <div className="w-1/3 p-2" key={items.uuid}>
+            <div className="p-2" key={items.uuid} style={{ height: "50px" }}>
               <PillTechnologie {...items} />
             </div>
           ))}

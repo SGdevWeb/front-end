@@ -24,13 +24,14 @@ export const authenticationSlice = createSlice({
             const token = action.payload;
             state.token = token;
             const claims = getPayloadToken(token);
+            // console.log('claims', claims)
             const user = {
-                username: claims.sub,
-                roles: claims.auth.split(','),
+                userId : claims.sub,
+                roles : claims.role
             };
             state.user = user;
             state.isAuthenticated = isTokenValid(token);
-            setToken(action.payload);
+            setToken(token);
         },
         signOut: (state) => {
             localStorage.clear();

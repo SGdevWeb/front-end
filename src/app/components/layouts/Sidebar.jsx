@@ -1,7 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 
 import CheckBox from "../base/CheckBox";
+import { Link } from "react-router-dom";
 import Search from "../base/Search";
 
 const SideBar = () => {
@@ -18,14 +18,17 @@ const SideBar = () => {
 		{ uuid: "6", type: "NodeJs" },
 	];
 
-	const [filterType, setFilterType] = useState([]);
+	const [filterType, setFilterType] = useState("project");
 	const [filterTypeProject, setFilterTypeProject] = useState([]);
 	const [filterTypeTechnologie, setFilterTypeTechnologie] = useState([]);
 	const [search, setSearch] = useState("");
 
+	const toggleFilterType = (e) => {
+		setFilterType(e.target.value);
+	};
+
 	const toggleFilter = {
 		base: (e, setFilter) => setFilter((filter) => (filter.includes(e.target.value) ? filter.filter((item) => item != e.target.value) : [...filter, e.target.value])),
-		type: (e) => toggleFilter.base(e, setFilterType),
 		typeProject: (e) => toggleFilter.base(e, setFilterTypeProject),
 		typeTechnologie: (e) => toggleFilter.base(e, setFilterTypeTechnologie),
 	};
@@ -37,33 +40,33 @@ const SideBar = () => {
 					<Search setOutput={setSearch} />
 					<div>
 						<h6>Type</h6>
-						<CheckBox text="Projet" value="project" onChange={toggleFilter.type} />
-						<CheckBox text="Utilisateur" value="user" onChange={toggleFilter.type} />
+						<CheckBox type="radio" text="Projet" value="project" onChange={toggleFilterType} defaultChecked={true} />
+						<CheckBox type="radio" text="Utilisateur" value="user" onChange={toggleFilterType} />
 					</div>
 					<hr className="border-dark my-2" />
 					<div>
 						<h6>Type de projets</h6>
 						{fakeProjectType.map(({ uuid, type }) => (
-							<CheckBox text={type} id={uuid} value={uuid} onChange={toggleFilter.typeProject} />
+							<CheckBox text={type} key={uuid} value={uuid} onChange={toggleFilter.typeProject} />
 						))}
 					</div>
 					<hr className="border-dark my-2" />
 					<div>
 						<h6>Technologies utilisées</h6>
 						{fakeTechnologiesType.map(({ uuid, type }) => (
-							<CheckBox text={type} id={uuid} value={uuid} onChange={toggleFilter.typeTechnologie} />
+							<CheckBox text={type} key={uuid} value={uuid} onChange={toggleFilter.typeTechnologie} />
 						))}
 					</div>
 				</div>
 
 				<div>
-					<Link to="/">
+					<Link to="/contact">
 						<p>Nous contacter ? </p>
 					</Link>
-					<Link to="/">
+					<Link to="/about">
 						<p>A propos de nous</p>
 					</Link>
-					<Link to="/">
+					<Link to="/cgu">
 						<p>Conditions Générales d'Utilisations</p>
 					</Link>
 				</div>

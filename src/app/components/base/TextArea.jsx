@@ -9,6 +9,7 @@ export default function TextArea({
   cols,
   rows,
   id,
+  onChange,
 }) {
   return (
     <>
@@ -20,6 +21,7 @@ export default function TextArea({
         cols={cols}
         rows={rows}
         id={id}
+        onChange={onChange}
       ></textarea>
       {description && <div className="text-xs">{description}</div>}
     </>

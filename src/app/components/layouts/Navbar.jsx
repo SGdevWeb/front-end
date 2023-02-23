@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { selectIsLogged, selectUser } from "../../redux-store/authenticationSlice";
 
 import Button from "../base/Button";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/LogoTreeUp100x100.png";
+import { selectUser } from "../../redux-store/authenticationSlice";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
 	const [enableDropdown, setEnableDropdown] = useState(false);
-	const isLoggued = true; //useSelector(selectIsLogged) ;
+	const isLoggued = true;
 
 	const user = useSelector(selectUser) || {
 		username: "Manucraft",
@@ -50,11 +50,11 @@ const Navbar = () => {
 						<Link to="/profile">
 							<div className="border-2 border-neutral-400 rounded m-1">Mon profil</div>
 						</Link>
-						<Link to="/">
+						<Link to="/profile#projects">
 							<div className="border-2 border-neutral-400 rounded m-1">Mes Projets</div>
 						</Link>
 						<hr className="border-neutral-400" />
-						<Link to="/login">
+						<Link to="/logout">
 							<div className="border-2 border-neutral-400 rounded m-1 text-red-700 font-bold">Déconnexion</div>
 						</Link>
 					</div>

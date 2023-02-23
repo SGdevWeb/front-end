@@ -9,7 +9,7 @@ export default function InputBis({
   description,
   onChange,
   onBlur,
-  id
+  id,
 }) {
   return (
     <>
