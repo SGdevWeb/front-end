@@ -2,7 +2,7 @@ const boxData = [
   {
     id : "1",
     name: "Maquetteur",
-    date: "10/02/2023",
+    date_start: "10/02/2023",
     location: "Calais la Ville des mouettes",
     description: "Vestibulum eu quam nec neque pellentesque efficitur id eget nisl Proin porta est convallis lacus blandit pretium sed non enim. Maecenas"
   },

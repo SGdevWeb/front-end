@@ -1,7 +1,58 @@
 import React from "react";
+import ProfileBoxEdit from "../../components/EditProfile/ProfileBoxEdit";
+import boxData from "../../fakeData/BoxData";
+import SoftSkillsData from "../../fakeData/SoftSkillsData";
 
 export default function EditProfile() {
+    const expTitle = "Ajouter une expérience professionnelle";
+    const softTitle = "ajouter un soft_skill";
     return(
-        <div>Toto</div>
+        <div className="bg-[#ececec] justify-center flex-col">
+      {/* <ProfileDescription
+        key={singleProfileData.fakeid}
+        username={singleProfileData.username}
+        job={singleProfileData.job}
+        description={singleProfileData.description}
+      /> */}
+      <div>
+        {/* <ProfileUser  /> */}
+      </div>
+      <p className="text-center my-5">Liste des technos</p>
+      <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">
+        <div className="flex flex-wrap justify-center w-full">
+          {/* {technologies.map((items) => (
+            <div className="w-1/3 p-2" key={items.uuid}>
+                <PillTechnologie {...items} />
+            </div>
+          ))} */}
+        </div>
+      </div>
+      <p className="text-center my-5">Mes expériences</p>
+      <div className="flex flex-wrap h-64 overflow-auto scrollbar">
+        {boxData.map((item) => {
+            item.exptitle = expTitle;
+            return (
+                <div className="w-1/2 p-2" key={item.id}>
+                    <ProfileBoxEdit {...item} />
+                </div>
+            )
+        })}
+      </div>
+      <p className="text-center my-5">Mes SoftSkills</p>
+      <div className="flex flex-wrap h-64 overflow-auto scrollbar">
+        {SoftSkillsData.map((item) => {
+            item.softtitle = softTitle;
+            return (
+                <div className="w-1/2 p-2" key={item.id}>
+                    <ProfileBoxEdit {...item} />
+                </div>
+            )
+        })}
+      </div>
+      <div className="pb-5">
+        <p className="text-center my-5">Mes projets</p>
+        {/* <ProfileProject /> */}
+      </div>
+    </div>
     )
 }
