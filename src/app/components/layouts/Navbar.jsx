@@ -1,20 +1,18 @@
 import React, { useState } from "react";
+import { selectIsLogged, selectUser, signOut } from "../../redux-store/authenticationSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../base/Button";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/LogoTreeUp100x100.png";
-import { selectUser } from "../../redux-store/authenticationSlice";
-import { useSelector } from "react-redux";
 
 const Navbar = () => {
 	const [enableDropdown, setEnableDropdown] = useState(false);
-	const isLoggued = true;
+	const isLoggued = useSelector(selectIsLogged);
 
-	const user = useSelector(selectUser) || {
-		username: "Manucraft",
-		image: Logo,
-	};
-
+	const dispatch = useDispatch();
+	const user = useSelector(selectUser);
+	
 	return (
 		<>
 			<div className="bg-gray-1 p-3">
@@ -26,10 +24,10 @@ const Navbar = () => {
 
 						{isLoggued ? (
 							<div className="flex items-center gap-3">
-								<h5>{user.username}</h5>
+								<h5>{user.avatar}</h5>
 								<img
 									className="bg-white rounded-full border-gradient-v shadow-sm hover:shadow-inner shadow-dark"
-									src={user.image}
+									src={Logo}
 									alt="Logo de TreeUp"
 									width={60}
 									onClick={() => setEnableDropdown(!enableDropdown)}
@@ -54,9 +52,10 @@ const Navbar = () => {
 							<div className="border-2 border-neutral-400 rounded m-1">Mes Projets</div>
 						</Link>
 						<hr className="border-neutral-400" />
-						<Link to="/logout">
-							<div className="border-2 border-neutral-400 rounded m-1 text-red-700 font-bold">Déconnexion</div>
-						</Link>
+
+						<div className="border-2 border-neutral-400 rounded m-1 text-red-700 font-bold cursor-pointer" onClick={() => dispatch(signOut())}>
+							Déconnexion
+						</div>
 					</div>
 				</div>
 			)}
