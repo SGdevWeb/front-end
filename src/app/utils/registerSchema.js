@@ -18,9 +18,9 @@ export default Yup.object({
     password: Yup   
         .string()
         .required('Le champ mot de passe est requis')
-        .min(8, 'Le mot de passe doit avoir au moins 8 caractères'),
-        // .matches(PASSWORD_VALID, 
-        //     "Le mot de passe doit contenir au moins une minucule, une majuscule, un chiffre et un caractère spécial"),
+        .min(8, 'Le mot de passe doit avoir au moins 8 caractères')
+        .matches(PASSWORD_VALID, 
+            "Le mot de passe doit contenir au moins une minucule, une majuscule, un chiffre et un caractère spécial"),
     passwordConfirmation: Yup   
         .string()
         .required('Merci de confirmer votre mot de passe')

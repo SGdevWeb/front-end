@@ -10,6 +10,7 @@ import Profile from "../views/Profile/Profile";
 import React from "react";
 import SideBar from "../components/layouts/Sidebar";
 import SignIn from "../views/SignIn/SignIn"
+import Project from "../views/Project/Project";
 
 /**
  * Routes of the application
@@ -33,6 +34,7 @@ const Routes = () => {
 								<Route path={URL.URL_PROFILE} element={<Profile />} />
 								<Route path={URL.URL_EDITPROFILE} element ={<EditProfile />} />
 								<Route path={URL.URL_CREATEPROJECT} element={<CreateProject />} />
+								<Route path={URL.URL_PROJETVIEW} element={<Project />} />
 							</RoutesContainer>
 						</div>
 					</div>

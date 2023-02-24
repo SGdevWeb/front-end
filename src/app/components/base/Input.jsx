@@ -1,6 +1,6 @@
 import React from 'react'
 
-function InputDescription({type, placeholder, description, name, value, onChange, onBlur}) {
+function Input({type, placeholder, description, name, value, onChange, onBlur}) {
   return (
     <div className='w-full flex flex-col items-center mt-4'>
       <div className='p-0.5 btn-border rounded-lg w-full'>
@@ -20,4 +20,4 @@ function InputDescription({type, placeholder, description, name, value, onChange
   )
 }
 
-export default InputDescription
+export default Input
