@@ -38,7 +38,7 @@ function AddComment() {
 
     return (
         <>
-            <form className='flex justify-between border-2 border-gradient-v rounded-lg' style={{ minHeight: "80px"}}>
+            <form className='flex justify-between border-2 border-gradient-v rounded-lg mb-3'>
                 <textarea 
                     onInput={updateTextAreaHeight}
                     style={{ resize: "none" }}
