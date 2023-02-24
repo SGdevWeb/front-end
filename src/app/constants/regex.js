@@ -1,2 +1,2 @@
-export const PASSWORD_VALID =  /^(?=[^A-Z][A-Z])(?=[^a-z][a-z])(?=[^0-9]*[0-9]).{8,}$/
+export const PASSWORD_VALID =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
