@@ -5,21 +5,18 @@ import Button from '../base/Button'
 import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_UPDATE_EXPERIENCE} from '../../constants/urls/urlBackEnd';
 
-export default function ModalEditExperience({name, date_start, date_end, location, description, uuid, exptitle}){
+export default function ModalEditSoftSkills({name, description, uuid, softtitle}){
     const [showModal, setShowModal] = useState(false);
 
     return (
         <div>
             <button onClick={() => setShowModal(true)}>
-                <PencilIcon className='h-4 w-4 m-1' />
-            </button>
+            <PencilIcon className='h-4 w-4 m-1' />
+        </button>
         {showModal ? (
                 <Formik
                 initialValues={{
                     name : name ? name : "titre",
-                    date_start : date_start ? date_start : "",
-                    date_end : date_end ? date_end : "",
-                    location : location ? location : "lieux",
                     description : description ? description : "description"
                 }}
                 onSubmit={async (values, actions) => {
@@ -48,32 +45,12 @@ export default function ModalEditExperience({name, date_start, date_end, locatio
                                                     </button>
                                                 </div>
                                                 <div className="relative px-8 flex-col justify-around text-center mb-3 ">
-                                                    <p className="text-3x1">{exptitle}</p>
+                                                    <p className="text-3x1">{softtitle}</p>
                                                     <Field
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
                                                         id="name" 
                                                         name="name" 
                                                         type="text"
-                                                    />
-                                                    <div className="flex justify-between">
-                                                        <Field 
-                                                            id="date_start" 
-                                                            name="date_start" 
-                                                            type="date" 
-                                                            className="border-2 border-gradient-v rounded-lg my-2 "
-                                                        />
-                                                        <Field 
-                                                            id="date_end" 
-                                                            name="date_end" 
-                                                            type="date" 
-                                                            className="border-2 border-gradient-v rounded-lg my-2 "
-                                                        />
-                                                    </div>
-                                                    <Field 
-                                                        id="location"  
-                                                        name="location" 
-                                                        type="text"  
-                                                        className="border-2 border-gradient-v rounded-lg my-2 w-full"
                                                     />
                                                     <Field 
                                                         as="textarea" 
@@ -83,7 +60,7 @@ export default function ModalEditExperience({name, date_start, date_end, locatio
                                                     />
                                                     <Button 
                                                         className=" my-1 flex justify-center" 
-                                                        title="Ajouter une exepérience" 
+                                                        title="Ajouter un soft_skill" 
                                                         type="submit"
                                                     />
                                                 </div>
