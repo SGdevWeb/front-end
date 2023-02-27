@@ -27,50 +27,54 @@ const ProfileUser = () => {
   }, [dispatch]);
 
   return (
-      <Formik
-        initialValues={{
-          firstname: "",
-          lastname: "",
-          date_birth: "",
-        }}
-      >
-          <Form className="block ">
-            <h3>Paramètres utilisateurs</h3>
-            <div className="grid grid-cols-2 gap-4 justify-items-center">
-            <Field
-              type="text"
-              name="firstname"
-              placeholder={users.firstname} // affiche le prénom de l'utilisateur
-              className="input mt-5 "
-            />
+    <Formik
+      initialValues={{
+        firstname: "",
+        lastname: "",
+        date_birth: "",
+      }}
+    >
+      <div>
+        <h3 className=" mt-5 mx-5">Paramètres utilisateurs</h3>
 
-            <Field
-              type="text"
-              name="lastname"
-              placeholder={users.lastname} // affiche le nom de l'utilisateur
-              className="input mt-5"
-            />
-            </div>
-            <div className="grid justify-items-center mt-5" >
-            <Field
-              type="date"
-              name="date-birth"
-              placeholder={users.date_birth} // affiche la date de naissance de l'utilisateur
-              className="input w-4/5"
-            />   
-            </div>
-            <div className=" grid justify-items-center mt-5  ">
-            <h3>Parametre profile</h3>
+          <Form >
+            <div className="justify-between flex mt-5 mx-5">
+
               <Field
-              type="text"
-              name="email"
-              placeholder={users.email} // affiche l'email de l'utilisateur
-              className="input mt-5  "
-            />  
-            </div> 
-
+                type="text"
+                name="firstname"
+                placeholder={users.firstname} // affiche le prénom de l'utilisateur
+                className="input w-1/3"
+              />
+              <Field
+                type="text"
+                name="lastname"
+                placeholder={users.lastname} // affiche le nom de l'utilisateur
+                className="input w-1/3"
+              />
+            </div>
+            <div className="flex mx-5 ">
+              <Field
+                type="date"
+                name="date_birth"
+                placeholder={users.date_birth} // affiche la date de naissance
+                className="input mt-5 w-11/12"
+              />
+            </div>
+            <div>
+              <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
+            </div>
+            <div className="flex mx-5">
+              <Field
+                type="text"
+                name="email"
+                placeholder={users.email} // affiche l'email de l'utilisateur
+                className="input flex mt-5 w-full "
+              />
+            </div>
           </Form>
-</Formik>
+      </div>
+    </Formik>
   );
 };
 
