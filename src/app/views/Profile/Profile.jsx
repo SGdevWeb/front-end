@@ -22,7 +22,7 @@ export default function Profile() {
         job={singleProfileData.job}
         description={singleProfileData.description}
       />
-      <div>
+      <div className="flex-none">
         <ProfileUser  />
       </div>
       <p className="text-center my-5">Liste des technos</p>

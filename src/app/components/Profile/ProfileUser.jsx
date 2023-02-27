@@ -5,7 +5,12 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux-store/userProfileSlice";
 
 const ProfileUser = () => {
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    date_birth: "",
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,42 +27,54 @@ const ProfileUser = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <h3>Paramètre utilisateur</h3>
+    <Formik
+      initialValues={{
+        firstname: "",
+        lastname: "",
+        date_birth: "",
+      }}
+    >
+      <div>
+        <h3 className=" mt-5 mx-5">Paramètres utilisateurs</h3>
 
-      <Formik
-        initialValues={{
-          firstname: "",
-          lastname: "",
-          date_birth: "",
-        }}
-      >
-        <div className="flex-row flex">
-          <Form className="w-1/3">
-            <Field
-              type="text"
-              name="firstname"
-              placeholder={users.firstname} // affiche le prénom de l'utilisateur
-              className="input"
-            />
+          <Form >
+            <div className="justify-between flex mt-5 mx-5">
 
-            <Field
-              type="text"
-              name="lastname"
-              placeholder={users.lastname} // affiche le nom de l'utilisateur
-              className="input"
-            />
-
-            <Field
-              type="text"
-              name="email"
-              placeholder={users.email} // affiche l'email de l'utilisateur
-              className="input"
-            />
+              <Field
+                type="text"
+                name="firstname"
+                placeholder={users.firstname} // affiche le prénom de l'utilisateur
+                className="input w-1/3"
+              />
+              <Field
+                type="text"
+                name="lastname"
+                placeholder={users.lastname} // affiche le nom de l'utilisateur
+                className="input w-1/3"
+              />
+            </div>
+            <div className="flex mx-5 ">
+              <Field
+                type="date"
+                name="date_birth"
+                placeholder={users.date_birth} // affiche la date de naissance
+                className="input mt-5 w-11/12"
+              />
+            </div>
+            <div>
+              <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
+            </div>
+            <div className="flex mx-5">
+              <Field
+                type="text"
+                name="email"
+                placeholder={users.email} // affiche l'email de l'utilisateur
+                className="input flex mt-5 w-full "
+              />
+            </div>
           </Form>
-        </div>
-      </Formik>
-    </div>
+      </div>
+    </Formik>
   );
 };
 
