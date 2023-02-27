@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
 	const [enableDropdown, setEnableDropdown] = useState(false);
-	const isLoggued = true; //useSelector(selectIsLogged) ;
+	const isLoggued = true;
 
 	const user = useSelector(selectUser) || {
 		username: "Manucraft",

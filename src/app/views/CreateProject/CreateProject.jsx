@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import Button from "../../components/Base/Button";
-import ButtonBis from "../../components/Base/ButtonBis";
 import InputBis from "../../components/base/InputBis";
 import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
