@@ -2,18 +2,24 @@ import React from "react";
 import ProfileBoxEdit from "../../components/EditProfile/ProfileBoxEdit";
 import boxData from "../../fakeData/BoxData";
 import SoftSkillsData from "../../fakeData/SoftSkillsData";
+import ModalNewExperience from "../../components/EditProfile/ModalNewExperience";
+import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
+import ProfileEditDescription from "../../components/EditProfile/ProfileEditDescription";
+import profileData from "../../fakeData/ProfileData";
 
 export default function EditProfile() {
     const expTitle = "Ajouter une expérience professionnelle";
     const softTitle = "ajouter un soft_skill";
+    const singleProfileData = profileData[0];
+
     return(
-        <div className="bg-[#ececec] justify-center flex-col">
-      {/* <ProfileDescription
-        key={singleProfileData.fakeid}
-        username={singleProfileData.username}
-        job={singleProfileData.job}
-        description={singleProfileData.description}
-      /> */}
+      <div className="bg-[#ececec] justify-center flex-col">
+        <ProfileEditDescription
+          key={singleProfileData.fakeid}
+          username={singleProfileData.username}
+          job={singleProfileData.job}
+          description={singleProfileData.description}
+        />
       <div>
         {/* <ProfileUser  /> */}
       </div>
@@ -38,6 +44,9 @@ export default function EditProfile() {
             )
         })}
       </div>
+      <div className="flex justify-center">
+        <ModalNewExperience/>
+      </div>
       <p className="text-center my-5">Mes SoftSkills</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {SoftSkillsData.map((item) => {
@@ -48,6 +57,9 @@ export default function EditProfile() {
                 </div>
             )
         })}
+      </div>
+      <div className="flex justify-center">
+        <ModalNewSoftSkills/>
       </div>
       <div className="pb-5">
         <p className="text-center my-5">Mes projets</p>

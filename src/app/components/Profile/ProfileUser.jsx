@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/slices/userSlice";
+import { setUser } from "../../redux-store/userProfileSlice";
 
 const ProfileUser = () => {
   const [users, setUsers] = useState({});

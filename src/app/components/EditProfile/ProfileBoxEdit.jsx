@@ -20,7 +20,7 @@ function ProfileBoxEdit(props){
                     <p className="font-bold">Description</p>
                     <p className="text-sm">{props.description}</p>
                 </div>
-                <div className=" flex-col flex justify-between">
+                <div className="flex flex-col justify-between">
                     <button>
                         <XIcon className='h-4 w-4 m-1' />
                     </button>

@@ -1,12 +1,21 @@
 import React, { useState} from "react";
 import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
-import Button from '../base/Button'
+import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_UPDATE_EXPERIENCE} from '../../constants/urls/urlBackEnd';
+import * as Yup from 'Yup';
 
 export default function ModalEditExperience({name, date_start, date_end, location, description, uuid, exptitle}){
     const [showModal, setShowModal] = useState(false);
+
+    const formShema = Yup.object().shape({
+        name : Yup.string().min(3).max(30).required('required'),
+        date_start : Yup.string().required('required').matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)/gm),
+        date_end : Yup.string().matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)/gm),
+        location : Yup.string().min(3).required('required'),
+        description : Yup.string().min(3).required('required')
+    })
 
     return (
         <div>
@@ -34,6 +43,7 @@ export default function ModalEditExperience({name, date_start, date_end, locatio
                         setShowModal(false);
                     });
                   }}
+                  //validationSchema={formShema}
                 >
                     {props => (
                             <>
@@ -81,8 +91,7 @@ export default function ModalEditExperience({name, date_start, date_end, locatio
                                                         name="description"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
                                                     />
-                                                    <Button 
-                                                        className=" my-1 flex justify-center" 
+                                                    <ButtonBis 
                                                         title="Ajouter une exepérience" 
                                                         type="submit"
                                                     />
