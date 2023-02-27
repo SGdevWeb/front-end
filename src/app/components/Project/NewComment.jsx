@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
+
 import { commentPost } from '../../api/backend/comment'
 
-function AddComment() {
+
+function NewComment({addComment, uuid_user}) {
         
     const [inputValue, setInputValue] = useState('')
     const [error, setError] = useState(false)
+
+    // const userUuid = useSelector(selectUser())
+    // console.log(userUuid)
+    // console.log(useSelector(state => console.log(state)))
+    // const userUuid = useSelector(selectUser())
 
     function handleChange(e) {
         const value = e.target.value
@@ -19,12 +26,14 @@ function AddComment() {
         } else {
             setError(false)
         }
-        const comment = {
-            comment: value
+        const newComment = {
+            comment: value,
+            uuid_user: uuid_user
         }
-        commentPost(comment)
+        commentPost(newComment)
             .then(() => {
                 console.log('commentaire enregistré')
+                addComment()
             })
             .catch((error) => console.log(error))
         setInputValue('')
@@ -64,4 +73,4 @@ function AddComment() {
     )
 }
 
-export default AddComment
+export default NewComment

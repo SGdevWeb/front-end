@@ -6,5 +6,5 @@ export function commentPost(values) {
 }
 
 export function getAllComments() {
-    return apiGateway.get('/')
+    return apiGateway.get('/comments')
 }
