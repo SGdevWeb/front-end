@@ -1,5 +1,6 @@
 import React from "react";
 import ProfileBoxEdit from "../../components/EditProfile/ProfileBoxEdit";
+import ProfileUser from "../../components/EditProfile/ProfileUserEdit";
 import boxData from "../../fakeData/BoxData";
 import SoftSkillsData from "../../fakeData/SoftSkillsData";
 
@@ -15,7 +16,7 @@ export default function EditProfile() {
         description={singleProfileData.description}
       /> */}
       <div>
-        {/* <ProfileUser  /> */}
+         <ProfileUser  /> 
       </div>
       <p className="text-center my-5">Liste des technos</p>
       <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">
