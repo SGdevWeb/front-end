@@ -1,12 +1,18 @@
 import React, { useState} from "react";
 import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
-import Button from '../base/Button'
+import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
-import { URL_BACK_UPDATE_EXPERIENCE} from '../../constants/urls/urlBackEnd';
+import { URL_BACK_UPDATE_SOFTSKILL} from '../../constants/urls/urlBackEnd';
+import * as Yup from 'Yup';
 
 export default function ModalEditSoftSkills({name, description, uuid, softtitle}){
     const [showModal, setShowModal] = useState(false);
+
+    const formShema = Yup.object().shape({
+        name : Yup.string().min(3).max(30).required('required'),
+        description : Yup.string().min(3).required('required')
+    })
 
     return (
         <div>
@@ -20,7 +26,7 @@ export default function ModalEditSoftSkills({name, description, uuid, softtitle}
                     description : description ? description : "description"
                 }}
                 onSubmit={async (values, actions) => {
-                    await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE,values).then((res) => {
+                    await apiGateway.post(URL_BACK_UPDATE_SOFTSKILL,values).then((res) => {
                         console.log(res);
                         setShowModal(false);
                     }).catch((err) => {
@@ -31,6 +37,7 @@ export default function ModalEditSoftSkills({name, description, uuid, softtitle}
                         setShowModal(false);
                     });
                   }}
+                  //validationSchema={formShema}
                 >
                     {props => (
                             <>
@@ -58,8 +65,7 @@ export default function ModalEditSoftSkills({name, description, uuid, softtitle}
                                                         name="description"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
                                                     />
-                                                    <Button 
-                                                        className=" my-1 flex justify-center" 
+                                                    <ButtonBis 
                                                         title="Ajouter un soft_skill" 
                                                         type="submit"
                                                     />
