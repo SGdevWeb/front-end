@@ -5,7 +5,6 @@ import boxData from "../../fakeData/BoxData";
 import SoftSkillsData from "../../fakeData/SoftSkillsData";
 import ModalNewExperience from "../../components/EditProfile/ModalNewExperience";
 import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
-import ProfileEditDescription from "../../components/EditProfile/ProfileEditDescription";
 import profileData from "../../fakeData/ProfileData";
 import { selectIsLogged, selectUser } from "../../redux-store/authenticationSlice";
 import { useSelector } from "react-redux";
@@ -25,23 +24,19 @@ export default function EditProfile() {
     <div>
       {isLoggued ? (
         <div className="bg-[#ececec] justify-center flex-col">
-          <ProfileEditDescription
-            key={singleProfileData.fakeid}
+          <ProfileUser key={singleProfileData.fakeid}
             username={singleProfileData.username}
-            job={singleProfileData.job}
+            ob={singleProfileData.job}
             description={singleProfileData.description}
-          />
-          <div>
-            <ProfileUser />
-          </div>
+             />
           <p className="text-center my-5">Liste des technos</p>
           <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">
             <div className="flex flex-wrap justify-center w-full">
               {/* {technologies.map((items) => (
-            <div className="w-1/3 p-2" key={items.uuid}>
-                <PillTechnologie {...items} />
-            </div>
-          ))} */}
+                <div className="w-1/3 p-2" key={items.uuid}>
+                  <PillTechnologie {...items} />
+                </div>
+              ))} */}
             </div>
           </div>
           <p className="text-center my-5">Mes expériences</p>
