@@ -2,22 +2,15 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { selectIsLogged, selectUser } from '../../redux-store/authenticationSlice'
 
-
 function Comment({comments}) {
 
   console.log(comments)
   const isLogged = useSelector(selectIsLogged)
   const user = useSelector(selectUser)
-
-  if (comments != []) {
-    useEffect(() => {
-      
-    })
-  }
   
   return (
     <>
-    { comments.map( comment => (
+    {comments && comments.map( comment => (
       <div key={comment._id}>
         <div className='flex border-2 border-gradient-v rounded-lg p-2 mb-2'>
           <div className='w-full'>

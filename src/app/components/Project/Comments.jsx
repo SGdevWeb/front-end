@@ -4,7 +4,7 @@ import NewComment from './NewComment';
 import { getAllComments } from '../../api/backend/comment';
 import { useSelector } from 'react-redux';
 import { selectIsLogged } from '../../redux-store/authenticationSlice';
-
+import axios from 'axios'
 
 function Comments() {
 
@@ -12,17 +12,24 @@ function Comments() {
   const isLogged = useSelector(selectIsLogged)
   
   useEffect(() => {
-    getAllComments()
-    .then( response => {setComments(response.data.comments)} )
+    // getAllComments()
+    axios.get('http://localhost:8020/comments')
+    .then( response => {
+      console.log(response.data.success)
+      const comments = response.data.success
+      setComments(comments)
+    })
     .catch(error => console.log(error))
-}, [])
+  }, [])
 
   const addComment = () => {
     // const newComment = comment
     // setComments([...comments, newComment])
-    getAllComments()
+    // getAllComments()
+    axios.get('http://localhost:8020/comments')
       .then(response => {
-        const comments = response.data.comments
+        console.log(response.data.success)
+        const comments = response.data.success
         setComments(comments)
       })
   }
@@ -30,11 +37,11 @@ function Comments() {
   return (
     <div>
         <h2 className='text-2xl mb-3'><span className='border-b-2 border-black'>COMMENTAIRES</span></h2>
-        {isLogged && 
+        {/* {isLogged &&  */}
         <NewComment
           addComment={addComment}
         />
-        }
+        {/* } */}
         <Comment 
           comments = {comments}
         />
