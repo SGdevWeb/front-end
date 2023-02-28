@@ -2,7 +2,6 @@ import "./Scrollbar.css";
 
 import PillTechnologie from "../../components/Technos/PillTechnologie";
 import ProfileBox from "../../components/Profile/ProfileBox";
-import ProfileDescription from "../../components/Profile/ProfileDescription";
 import ProfileProject from "../../components/Profile/ProfileProject";
 import ProfileUser from "../../components/Profile/ProfileUser";
 import React from "react";
@@ -16,14 +15,12 @@ export default function Profile() {
 
   return (
     <div className="bg-[#ececec] justify-center flex-col">
-      <ProfileDescription
-        key={singleProfileData.fakeid}
-        username={singleProfileData.username}
-        job={singleProfileData.job}
-        description={singleProfileData.description}
-      />
-      <div className="flex-none">
-        <ProfileUser  />
+      <div >
+        <ProfileUser
+          key={singleProfileData.fakeid}
+          username={singleProfileData.username}
+          job={singleProfileData.job}
+          description={singleProfileData.description} />
       </div>
       <p className="text-center my-5">Liste des technos</p>
       <div className="flex-col w-full items-center justify-center h-64 overflow-auto scrollbar">
