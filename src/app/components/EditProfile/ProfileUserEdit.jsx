@@ -50,7 +50,7 @@ const ProfileUser = () => {
                 email: "",
                 job: "",
                 description: "",
-                date_birth: "",
+                username: "",
 
             }}
             onSubmit={async (values, actions) => {
