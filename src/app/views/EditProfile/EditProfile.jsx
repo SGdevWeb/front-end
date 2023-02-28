@@ -5,7 +5,6 @@ import boxData from "../../fakeData/BoxData";
 import SoftSkillsData from "../../fakeData/SoftSkillsData";
 import ModalNewExperience from "../../components/EditProfile/ModalNewExperience";
 import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
-//import ProfileEditDescription from "../../components/EditProfile/ProfileEditDescription";
 import profileData from "../../fakeData/ProfileData";
 
 export default function EditProfile() {
