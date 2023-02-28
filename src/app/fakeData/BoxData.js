@@ -4,7 +4,7 @@ const boxData = [
     name: "Maquetteur",
     date_start: "2023-02-10",
     date_end:"2023-02-11",
-    location: "Calais la Ville des mouettes",
+    place: "Calais la Ville des mouettes",
     description: "Vestibulum eu quam nec neque pellentesque efficitur id eget nisl Proin porta est convallis lacus blandit pretium sed non enim. Maecenas"
   },
   {

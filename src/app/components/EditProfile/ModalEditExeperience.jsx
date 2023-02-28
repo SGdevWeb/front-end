@@ -28,10 +28,12 @@ export default function ModalEditExperience({name, date_start, date_end, locatio
                     name : name ? name : "titre",
                     date_start : date_start ? date_start : "",
                     date_end : date_end ? date_end : "",
-                    location : location ? location : "lieux",
+                    place : place ? place : "lieux",
                     description : description ? description : "description"
                 }}
                 onSubmit={async (values, actions) => {
+                    const valueJson = {};
+                    valueJson.experience = values;
                     await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE,values).then((res) => {
                         console.log(res);
                         setShowModal(false);
@@ -80,8 +82,8 @@ export default function ModalEditExperience({name, date_start, date_end, locatio
                                                         />
                                                     </div>
                                                     <Field 
-                                                        id="location"  
-                                                        name="location" 
+                                                        id="place"  
+                                                        name="place" 
                                                         type="text"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
                                                     />

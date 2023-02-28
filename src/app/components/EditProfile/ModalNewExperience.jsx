@@ -29,10 +29,12 @@ export default function ModalNewExperience(){
                     name :  "titre",
                     date_start :  "",
                     date_end : "",
-                    location :  "lieux",
+                    place :  "lieux",
                     description :  "description"
                 }}
                 onSubmit={async (values, actions) => {
+                    const valueJson = {};
+                    valueJson.experience = values;
                     await apiGateway.post(URL_BACK_NEW_EXPERIENCE,values).then((res) => {
                         console.log(res);
                         setShowModal(false);
@@ -81,8 +83,8 @@ export default function ModalNewExperience(){
                                                         />
                                                     </div>
                                                     <Field 
-                                                        id="location"  
-                                                        name="location" 
+                                                        id="place"  
+                                                        name="place" 
                                                         type="text"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
                                                     />

@@ -27,6 +27,8 @@ export default function ModalNewSoftSkills(){
                     description : "description"
                 }}
                 onSubmit={async (values, actions) => {
+                    const valueJson = {};
+                    valueJson.soft_skill = values;
                     await apiGateway.post(URL_BACK_NEW_SOFTSKILL,values).then((res) => {
                         console.log(res);
                         setShowModal(false);

@@ -1,5 +1,5 @@
-import React, { useState} from "react";
-import { PencilIcon, XIcon } from "@heroicons/react/solid";
+import React from "react";
+import { XIcon } from "@heroicons/react/solid";
 import ModalEditExperience from "./ModalEditExeperience";
 import ModalEditSoftSkills from "./ModalEditSoftSkills";
 
@@ -15,7 +15,7 @@ function ProfileBoxEdit(props){
                             {props.date_end && <p className="text-xs">{props.date_end}</p>}
                         </div>
                     </div>
-                    {props.location && <p className="text-xs">{props.location}</p>}
+                    {props.place && <p className="text-xs">{props.place}</p>}
                     <hr className="my-2" />
                     <p className="font-bold">Description</p>
                     <p className="text-sm">{props.description}</p>
