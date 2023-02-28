@@ -1,14 +1,15 @@
-import React, { useRef, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
-import Button from '../../components/base/Button'
-import Input from '../../components/base/Input'
-import { useFormik } from 'formik'
-import validationSchema from '../../utils/loginSchema'
+import React, { useRef, useState } from "react";
+
+import Button from '../base/Button'
+import Input from '../base/Input'
 import ReCAPTCHA from "react-google-recaptcha";
 import { URL_HOME } from "../../constants/urls/urlFrontEnd";
 import { authenticate } from "../../api/backend/account";
-import { useDispatch } from "react-redux";
 import { signIn } from "../../redux-store/authenticationSlice";
+import { useDispatch } from "react-redux";
+import { useFormik } from 'formik'
+import validationSchema from '../../utils/loginSchema'
 
 /* Les composants sont dans le dossier assets/components/theme
 Le style des composants se trouve dans le dossier assets/styles/components
