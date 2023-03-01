@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <div className="h-full">
-      <Link to={"project/update/f017a9cd-ce87-40fe-a247-3f06880b80a3"}><Button title="salut"></Button></Link>
+      <Link to={"project/update/5078bfc7-65ed-4472-8a3e-9f2aabfb30e7"}><Button title="salut"></Button></Link>
       <ListProject />
     </div>
   );

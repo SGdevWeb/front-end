@@ -19,11 +19,21 @@ export default function CreateProject({isEditMode}) {
   const {uuid} = useParams(); 
   
 
+  const fakeData = {
+    name: "EspaceDeVie",
+    date_start: "2023-03-02T00:00:00.000Z",
+    date_end: "",
+    type: "",
+    description: "Manu",
+  }
+  
+  const project = fakeData;
+  
   const initialValues = isEditMode
     ? {
         name: project.name,
-        date_start: project.date_start,
-        date_end: project.date_end,
+        date_start: project.date_start.slice(0,project.date_start.indexOf("T")),
+        date_end: project.date_end.slice(0,project.date_start.indexOf("T")),
         type: project.type,
         description: project.description,
       } : { 
@@ -37,6 +47,7 @@ export default function CreateProject({isEditMode}) {
   const onSubmit = async (formValues) => {
     try {
       if (formValues.date_end === "") delete formValues.date_end;
+      delete formValues.type;
       const response = isEditMode ? await apiGateway.put(`/project/update/${uuid}`, formValues) : await apiGateway.post("/project/create/", formValues);
       resetForm();
       navigate("/project/" + response.data.uuid);
