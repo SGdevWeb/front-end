@@ -10,5 +10,9 @@ export function getAllComments() {
 }
 
 export function updateComment(values) {
-    return apiGateway.put('/comments/comment', values)
+    return apiGateway.put('/comments', values)
+}
+
+export function getCommentByProjectId(id) {
+    return apiGateway.get(`/comments/${id}`)
 }

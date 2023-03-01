@@ -1,18 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Comments from './Comments'
 import NewComment from './NewComment';
-import { getAllComments } from '../../api/backend/comment';
+import { getCommentByProjectId } from '../../api/backend/comment';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsLogged } from '../../redux-store/authenticationSlice';
 
 function CommentsContainer() {
 
   const [comments, setComments] = useState([])
-  
+  const uuidProject = useParams().id
+  const isLogged = useSelector(selectIsLogged)
+
   useEffect(() => {
-    getAllComments()
+    getCommentByProjectId(uuidProject)
       .then( response => {
         const comments = response.data
-/* Logging the comments to the console. */
-        // console.log(comments)
         setComments(comments)
       })
       .catch(error => console.log(error))
@@ -21,31 +24,31 @@ function CommentsContainer() {
   const addComment = () => {
     // const newComment = comment
     // setComments([...comments, newComment])
-    getAllComments()
-      .then(response => {
-        const comments = response.data
-        setComments(comments)
-      })
-      .catch(error => console.log(error))
+    getCommentByProjectId(uuidProject)
+    .then( response => {
+      const comments = response.data
+      setComments(comments)
+    })
+    .catch(error => console.log(error))
   }
 
   const update = () => {
-    getAllComments()
-      .then(response => {
-        const comments = response.data
-        setComments(comments)
-      })
-      .catch(error => console.log(error))
+    getCommentByProjectId(uuidProject)
+    .then( response => {
+      const comments = response.data
+      setComments(comments)
+    })
+    .catch(error => console.log(error))
   }
 
   return (
     <div>
         <h2 className='text-2xl mb-3'><span className='border-b-2 border-black'>COMMENTAIRES</span></h2>
-        {/* {isLogged &&  */}
+        {isLogged && 
         <NewComment
           addComment={addComment}
         />
-        {/* } */}
+        }
         <Comments
           comments = {comments}
           update= {update}
