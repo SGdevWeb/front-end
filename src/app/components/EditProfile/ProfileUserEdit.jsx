@@ -23,8 +23,7 @@ const ProfileUser = () => {
     });
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const getUserProfile = async () => {
+    useEffect(() => { (async () => {
             try {
                 const response = await apiGateway.get(URL_BACK_GET_PROFILE);
                 setUsers(response.data);
@@ -32,8 +31,7 @@ const ProfileUser = () => {
             } catch (error) {
                 console.log(error);
             }
-        };
-        getUserProfile();
+        })();
     }, [dispatch]);
 
     return (
@@ -69,12 +67,16 @@ const ProfileUser = () => {
                                 id="username"
                                 name="username"
                                 type="text"
+                                value={users.username}
+                                onChange={(e) => setUsers({ ...users, username: e.target.value })}
                             />
                             <Field
                                 className="text-center border-2 border-gradient-v rounded-lg my-1 "
                                 id="job"
                                 name="job"
                                 type="text"
+                                value={users.job}
+                                onChange={(e) => setUsers({ ...users, job: e.target.value })}
                             />
                             <ButtonBis className="mt-3" title="Editer ma photo" />
                         </div>
