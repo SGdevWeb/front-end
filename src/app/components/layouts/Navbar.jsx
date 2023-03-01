@@ -24,10 +24,10 @@ const Navbar = () => {
 
 						{isLoggued ? (
 							<div className="flex items-center gap-3">
-								<h5>{user.avatar}</h5>
+								<h5>{user.username}</h5>
 								<img
-									className="bg-white rounded-full border-gradient-v shadow-sm hover:shadow-inner shadow-dark"
-									src={Logo}
+									className="bg-white rounded-full border-gradient-v shadow-sm hover:shadow-inner shadow-dark cursor-pointer"
+									src={user.avatar}
 									alt="Logo de TreeUp"
 									width={60}
 									onClick={() => setEnableDropdown(!enableDropdown)}

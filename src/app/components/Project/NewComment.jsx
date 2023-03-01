@@ -1,22 +1,16 @@
 import React, { useState } from 'react'
-
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { commentPost } from '../../api/backend/comment'
+import { selectUser } from '../../redux-store/authenticationSlice'
 
 
-function NewComment({addComment, uuid_user}) {
+function NewComment({addComment}) {
         
     const [inputValue, setInputValue] = useState('')
     const [error, setError] = useState(false)
 
-    // const userUuid = useSelector(selectUser())
-    // console.log(userUuid)
-    // console.log(useSelector(state => console.log(state)))
-    // const userUuid = useSelector(selectUser())
-
-    function handleChange(e) {
-        const value = e.target.value
-        setInputValue(value)
-    }
+    const idProject = useParams().id
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -28,16 +22,15 @@ function NewComment({addComment, uuid_user}) {
         }
         const newComment = {
             comment: value,
-            uuid_user: uuid_user
+            uuid_project: idProject
         }
         commentPost(newComment)
-            .then(() => {
-                console.log('commentaire enregistré')
+            .then((response) => {
+                // console.log('commentaire enregistré')
                 addComment()
             })
             .catch((error) => console.log(error))
         setInputValue('')
-        console.log('fin submit')
     }
 
     function updateTextAreaHeight(e) {
@@ -46,15 +39,15 @@ function NewComment({addComment, uuid_user}) {
     }
 
     return (
-        <>
-            <form className='flex justify-between border-2 border-gradient-v rounded-lg mb-3'>
+        <div className='mb-3'>
+            <form className='flex justify-between border-2 border-gradient-v rounded-lg'>
                 <textarea 
                     onInput={updateTextAreaHeight}
                     style={{ resize: "none" }}
                     className='w-full border-none rounded-lg focus:outline-none focus:ring-0' 
                     type="text" 
                     placeholder='Ecrire un message ...'
-                    onChange={handleChange}
+                    onChange={(e) => setInputValue(e.target.value)}
                     value={inputValue}
                 />
                 <button 
@@ -67,9 +60,9 @@ function NewComment({addComment, uuid_user}) {
             </form>
             {
                 error &&
-                <p className='text-red-600 text-base'>Message vide !</p>
+                <p className='text-red-600 text-base mt-1'>Message vide !</p>
             }
-        </>
+        </div>
     )
 }
 

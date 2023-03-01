@@ -26,17 +26,17 @@ function LoginCard() {
   const [captchaValidate, setcaptchaValidate] = useState(null)
   const [errorLog, setErrorLog] = useState(false)
 
-  const captchagoogle = useRef (null);
+  // const captchagoogle = useRef (null);
 
-  const onChange = () => {
-    if(captchagoogle.current.getValue()){
-      setcaptchaValidate(true)
-      console.log("Vous n'êtes pas un robot")
-    } else {
-      setcaptchaValidate(false)
-      console.log("Vous êtes un robot ?")
-    }
-  }
+  // const onChange = () => {
+  //   if(captchagoogle.current.getValue()){
+  //     setcaptchaValidate(true)
+  //     console.log("Vous n'êtes pas un robot")
+  //   } else {
+  //     setcaptchaValidate(false)
+  //     console.log("Vous êtes un robot ?")
+  //   }
+  // }
 
   const initialValues = {
     email: '',
@@ -69,15 +69,14 @@ function LoginCard() {
   };
 
   async function onSubmit(formValues) {
-    console.log(formValues);
-    if(captchaValidate) {
-      setcaptchaValidate(true)
+    // if(captchaValidate) {
+      // setcaptchaValidate(true)
       login(formValues);
       resetForm();
       // console.log('Connexion réussie')
-    } else {
-      setcaptchaValidate(false)
-    }
+    // } else {
+    //   setcaptchaValidate(false)
+    // }
   }
 
   return (
@@ -108,10 +107,10 @@ function LoginCard() {
         { touched.password && errors.password && 
           <small className="error">{ errors.password }</small>
         }
-        <ReCAPTCHA className="my-4" ref={captchagoogle} sitekey="6Lc43mskAAAAAPGuj5wsQMpI-Bkcvy1cpXJusonn" onChange={onChange} />
+        {/* <ReCAPTCHA className="my-4" ref={captchagoogle} sitekey="6Lc43mskAAAAAPGuj5wsQMpI-Bkcvy1cpXJusonn" onChange={onChange} />
         {captchaValidate === false &&
           <p className="w-full text-red-600 text-center mb-4">Etes-vous un robot ? Merci de valider le captcha</p>
-        }
+        } */}
         <Button
           className="w-full sm:w-4/5"
           title="CONNEXION"

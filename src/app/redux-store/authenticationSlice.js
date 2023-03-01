@@ -26,7 +26,9 @@ export const authenticationSlice = createSlice({
             const claims = getPayloadToken(token);
             // console.log('claims', claims)
             const user = {
-                userId : claims.sub,
+                userId : claims.sub.uuid,
+                username : claims.sub.username,
+                avatar : claims.sub.avatar,
                 roles : claims.role
             };
             state.user = user;

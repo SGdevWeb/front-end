@@ -8,3 +8,7 @@ export function commentPost(values) {
 export function getAllComments() {
     return apiGateway.get('/comments')
 }
+
+export function updateComment(values) {
+    return apiGateway.put('/comments/comment', values)
+}

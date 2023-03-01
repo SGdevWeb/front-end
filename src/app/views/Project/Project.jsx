@@ -1,5 +1,5 @@
 import React from 'react'
-import Comments from '../../components/Project/Comments'
+import CommentsContainer from '../../components/Project/CommentsContainer'
 
 function Project() {
   return (
@@ -9,7 +9,7 @@ function Project() {
       <div className='border-solid border-2 border-slate-200 mb-1'>Collaborateurs</div>
       <div className='border-solid border-2 border-slate-200 mb-1'>Description du projet</div>
       <div className='border-solid border-2 border-slate-200 mb-1'>Contactez-nous</div>
-      <Comments />
+      <CommentsContainer />
     </>
   )
 }
