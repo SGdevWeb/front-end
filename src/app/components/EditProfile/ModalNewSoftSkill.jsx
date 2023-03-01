@@ -4,15 +4,10 @@ import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_NEW_SOFTSKILL} from '../../constants/urls/urlBackEnd';
-import * as Yup from 'Yup';
+import validationSchema from '../../utils//soft_skillSchema';
 
 export default function ModalNewSoftSkills(){
     const [showModal, setShowModal] = useState(false);
-
-    const formShema = Yup.object().shape({
-        name : Yup.string().min(3).max(30).required('required'),
-        description : Yup.string().min(3).required('required')
-    })
 
     return (
         <div>
@@ -40,7 +35,7 @@ export default function ModalNewSoftSkills(){
                         setShowModal(false);
                     });
                   }}
-                  //validationSchema={formShema}
+                  validationSchema={validationSchema}
                 >
                     {props => (
                             <>

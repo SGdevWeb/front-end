@@ -22,7 +22,6 @@ export default function EditProfile() {
 
   return (
     <div>
-      {isLoggued ? (
         <div className="bg-[#ececec] justify-center flex-col">
           <ProfileUser key={singleProfileData.fakeid}
             username={singleProfileData.username}
@@ -72,11 +71,6 @@ export default function EditProfile() {
             {/* <ProfileProject /> */}
           </div>
         </div>
-      ) : (
-        <Link to="/login">
-					<Button title={"Connexion"} />
-				</Link>
-      )}
     </div>
   )
 }

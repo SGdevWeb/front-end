@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
-import axios from "axios";
+import apiGateway from '../../api/backend/apiGateway';
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux-store/userProfileSlice";
 import ButtonBis from "../Base/ButtonBis";
 import { Link } from "react-router-dom";
-import { URL_BACK_UPDATE_DESCRIPTION, URL_BACK_UPDATE_EXPERIENCE } from "../../constants/urls/urlBackEnd";
+import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
-import * as Yup from 'Yup';
 
 const ProfileUser = () => {
-    const formShema = Yup.object().shape({
-        username: Yup.string().min(3).required('required'),
-        job: Yup.string().min(3).required('required'),
-        description: Yup.string().min(3).required('required')
-    })
+
     const [users, setUsers] = useState({
         firstname: "",
         lastname: "",
@@ -31,7 +26,7 @@ const ProfileUser = () => {
     useEffect(() => {
         const getUserProfile = async () => {
             try {
-                const response = await axios.get("http://localhost:8010/users/uuid");
+                const response = await apiGateway.get(URL_BACK_GET_PROFILE);
                 setUsers(response.data);
                 dispatch(setUser(response.data)); // sauvegarde l'utilisateur dans le store Redux
             } catch (error) {
@@ -54,14 +49,14 @@ const ProfileUser = () => {
 
             }}
             onSubmit={async (values, actions) => {
-                await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE, values).then((res) => {
-                    console.log(res);
-                }).catch((err) => {
-                    if (err) {
-                        alert("erreur server")
-                    }
-                    console.log(err);
-                });
+                // await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE, values).then((res) => {
+                //     console.log(res);
+                // }).catch((err) => {
+                //     if (err) {
+                //         alert("erreur server")
+                //     }
+                //     console.log(err);
+                // });
             }}
         >
             {props => (
