@@ -47,14 +47,14 @@ const ProfileUser = () => {
 
             }}
             onSubmit={async (values, actions) => {
-                // await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE, values).then((res) => {
-                //     console.log(res);
-                // }).catch((err) => {
-                //     if (err) {
-                //         alert("erreur server")
-                //     }
-                //     console.log(err);
-                // });
+                await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE, values).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    if (err) {
+                        alert("erreur server")
+                    }
+                    console.log(err);
+                });
             }}
         >
             {props => (

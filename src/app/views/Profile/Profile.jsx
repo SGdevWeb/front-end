@@ -7,8 +7,9 @@ import PillTechnologie from "../../components/Technos/PillTechnologie";
 import ProfileBox from "../../components/Profile/ProfileBox";
 import ProfileProject from "../../components/Profile/ProfileProject";
 import ProfileUser from "../../components/Profile/ProfileUser";
-import axios from "axios";
+import apiGateway from '../../api/backend/apiGateway';
 import { useParams } from "react-router";
+import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 
 import SoftSkillsData from "../../fakeData/SoftSkillsData";
 
@@ -28,7 +29,7 @@ export default function Profile() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:8010/api/userprofile/${uuid}`);
+        const response = await apiGateway.get(URL_BACK_GET_PROFILE);
         setUser(response.data);
       } catch (error) {
         console.log(error);
