@@ -2,8 +2,9 @@ import * as URL from "../constants/urls/urlFrontEnd";
 
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 
+import { ConnectedRoute } from "./ConnectedRoute";
 import CreateProject from "../views/CreateProject/CreateProject";
-import EditProfile from "../views/EditProfile/EditProfile"
+import EditProfile from "../views/EditProfile/EditProfile";
 import Home from "../views/Home/Home";
 import Login from "../views/Login/Login";
 import Profile from "../views/Profile/Profile";
@@ -24,17 +25,17 @@ const Routes = () => {
 			<Route path={URL.URL_LOGIN} element={<Login />} />
 			<Route path={URL.URL_SIGNIN} element={<SignIn />} />
 			<Route
-				path="/*"	
+				path="/*"
 				element={
 					<div className=" flex container mx-auto pt-3 gap-3">
 						<SideBar />
 						<div className="w-full body overflow-y-scroll md:w-3/4 lg:w-4/5">
 							<RoutesContainer>
 								<Route path="/" element={<Home />} />
-								<Route path={URL.URL_PROFILE} element={<Profile />} />
-								<Route path={URL.URL_EDITPROFILE} element ={<EditProfile />} />
-								<Route path={URL.URL_CREATEPROJECT} element={<CreateProject />} />
-								<Route path={URL.URL_PROJETVIEW} element={<Project />} />
+								<Route path={URL.URL_PROFILE} element={<ConnectedRoute><Profile /></ConnectedRoute>} />
+								<Route path={URL.URL_EDITPROFILE} element={<ConnectedRoute><EditProfile /></ConnectedRoute>} />
+								<Route path={URL.URL_CREATEPROJECT} element={<ConnectedRoute><CreateProject /></ConnectedRoute>} />
+								<Route path={URL.URL_PROJETVIEW} element={<ConnectedRoute><Project /></ConnectedRoute>} />
 							</RoutesContainer>
 						</div>
 					</div>
