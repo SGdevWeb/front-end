@@ -23,7 +23,7 @@ export default function Profile() {
   //const singleProfileData = profileData[0];
   //const user = useSelector(selectUser);
   const { uuid } = useParams();
-  const [user,setUser] = useState([]);
+  const [user,setUser] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {

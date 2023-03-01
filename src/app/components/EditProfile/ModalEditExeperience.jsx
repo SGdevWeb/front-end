@@ -6,8 +6,13 @@ import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_UPDATE_EXPERIENCE} from '../../constants/urls/urlBackEnd';
 import validationSchema from '../../utils/experienceSchema'
 
-export default function ModalEditExperience({name, date_start, date_end, location, description, uuid, exptitle}){
+export default function ModalEditExperience({name, date_start, date_end, place, description, uuid, exptitle}){
     const [showModal, setShowModal] = useState(false);
+
+    const isoDateToInputFormat = (isoDate) => {
+        const dateSplit = isoDate.split('/');
+        return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`
+    }
 
     return (
         <div>
@@ -17,11 +22,11 @@ export default function ModalEditExperience({name, date_start, date_end, locatio
         {showModal ? (
                 <Formik
                 initialValues={{
-                    name : name ? name : "titre",
-                    date_start : date_start ? date_start : "",
-                    date_end : date_end ? date_end : "",
-                    place : place ? place : "lieux",
-                    description : description ? description : "description"
+                    name : name ? name : "",
+                    date_start : isoDateToInputFormat(date_start),
+                    date_end : date_end ? isoDateToInputFormat(date_end) : "2000-01-01",
+                    place : place ? place : "",
+                    description : description ? description : ""
                 }}
                 onSubmit={async (values, actions) => {
                     const valueJson = {};

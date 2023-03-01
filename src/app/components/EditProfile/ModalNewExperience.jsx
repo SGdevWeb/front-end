@@ -30,6 +30,7 @@ export default function ModalNewExperience(){
                     await apiGateway.post(URL_BACK_NEW_EXPERIENCE,values).then((res) => {
                         console.log(res);
                         setShowModal(false);
+                        window.location.reload(false);
                     }).catch((err) => {
                         if(err){
                             alert("erreur server")
@@ -37,6 +38,7 @@ export default function ModalNewExperience(){
                         console.log(err);
                         setShowModal(false);
                     });
+                    actions.setSubmitting(false)
                   }}
                   validationSchema={validationSchema}
                 >
