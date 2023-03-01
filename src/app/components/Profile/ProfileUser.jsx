@@ -9,24 +9,6 @@ import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
 
 const ProfileUser = ({firstname, lastname,username,email,work,date_birth,description}) => {
-  
-  console.log(firstname)
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-
-  //   const getUserProfile = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:8010/api/userprofile/" + uuid_user);
-  //       setUsers(response.data);
-  //       dispatch(setUser(response.data)); // sauvegarde l'utilisateur dans le store Redux
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getUserProfile();
-  // }, [dispatch]);
-
   return (
     <Formik
       initialValues={{
@@ -36,8 +18,7 @@ const ProfileUser = ({firstname, lastname,username,email,work,date_birth,descrip
         email: email,
         description: description,
         username: username,
-        work: work
-
+        work: work,
       }}
     >
       <div>
@@ -65,20 +46,23 @@ const ProfileUser = ({firstname, lastname,username,email,work,date_birth,descrip
               name="firstname"
               placeholder={firstname} // affiche le prénom de l'utilisateur
               className="input w-1/3"
+              disabled
             />
             <Field
               type="text"
               name="lastname"
               placeholder={lastname} // affiche le nom de l'utilisateur
               className="input w-1/3"
+              disabled
             />
           </div>
           <div className="flex mx-5 ">
             <Field
               type="date"
               name="date_birth"
-              placeholder={date_birth} // affiche la date de naissance
-              className="input mt-5 w-11/12"
+              placeholder={date_birth}
+              className="input flex mt-5 w-full"
+              disabled
             />
           </div>
           <div>
@@ -90,6 +74,7 @@ const ProfileUser = ({firstname, lastname,username,email,work,date_birth,descrip
               name="email"
               placeholder={email} // affiche l'email de l'utilisateur
               className="input flex mt-5 w-full "
+              disabled
             />
           </div>
         </Form>
