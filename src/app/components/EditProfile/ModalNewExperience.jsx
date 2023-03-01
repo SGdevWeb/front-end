@@ -4,18 +4,18 @@ import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_NEW_EXPERIENCE} from '../../constants/urls/urlBackEnd';
-import * as Yup from 'Yup';
+//import * as Yup from 'Yup';
 
 export default function ModalNewExperience(){
     const [showModal, setShowModal] = useState(false);
 
-    const formShema = Yup.object().shape({
-        name : Yup.string().min(3).max(30).required('required'),
-        date_start : Yup.string().required('required').matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)/gm),
-        date_end : Yup.string().matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)/gm),
-        location : Yup.string().min(3).required('required'),
-        description : Yup.string().min(3).required('required')
-    })  
+    // const formShema = Yup.object().shape({
+    //     name : Yup.string().min(3).max(30).required('required'),
+    //     date_start : Yup.string().required('required').matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)/gm),
+    //     date_end : Yup.string().matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)/gm),
+    //     location : Yup.string().min(3).required('required'),
+    //     description : Yup.string().min(3).required('required')
+    // })  
 
     return (
         <div>

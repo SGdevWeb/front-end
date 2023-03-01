@@ -7,14 +7,14 @@ import ButtonBis from "../Base/ButtonBis";
 import { Link } from "react-router-dom";
 import { URL_BACK_UPDATE_DESCRIPTION, URL_BACK_UPDATE_EXPERIENCE } from "../../constants/urls/urlBackEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
-import * as Yup from 'Yup';
+
 
 const ProfileUser = () => {
-    const formShema = Yup.object().shape({
-        username: Yup.string().min(3).required('required'),
-        job: Yup.string().min(3).required('required'),
-        description: Yup.string().min(3).required('required')
-    })
+    // const formShema = Yup.object().shape({
+    //     username: Yup.string().min(3).required('required'),
+    //     job: Yup.string().min(3).required('required'),
+    //     description: Yup.string().min(3).required('required')
+    // })
     const [users, setUsers] = useState({
         firstname: "",
         lastname: "",
@@ -28,8 +28,7 @@ const ProfileUser = () => {
     });
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const getUserProfile = async () => {
+    useEffect(() => { (async () => {
             try {
                 const response = await axios.get("http://localhost:8010/users/uuid");
                 setUsers(response.data);
@@ -37,8 +36,7 @@ const ProfileUser = () => {
             } catch (error) {
                 console.log(error);
             }
-        };
-        getUserProfile();
+        })();
     }, [dispatch]);
 
     return (
@@ -74,12 +72,16 @@ const ProfileUser = () => {
                                 id="username"
                                 name="username"
                                 type="text"
+                                value={users.username}
+                                onChange={(e) => setUsers({ ...users, username: e.target.value })}
                             />
                             <Field
                                 className="text-center border-2 border-gradient-v rounded-lg my-1 "
                                 id="job"
                                 name="job"
                                 type="text"
+                                value={users.job}
+                                onChange={(e) => setUsers({ ...users, job: e.target.value })}
                             />
                             <ButtonBis className="mt-3" title="Editer ma photo" />
                         </div>

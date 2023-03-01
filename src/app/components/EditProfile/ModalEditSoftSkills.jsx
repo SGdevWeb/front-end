@@ -4,15 +4,15 @@ import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_UPDATE_SOFTSKILL} from '../../constants/urls/urlBackEnd';
-import * as Yup from 'Yup';
+//import * as Yup from 'Yup';
 
 export default function ModalEditSoftSkills({name, description, uuid, softtitle}){
     const [showModal, setShowModal] = useState(false);
 
-    const formShema = Yup.object().shape({
-        name : Yup.string().min(3).max(30).required('required'),
-        description : Yup.string().min(3).required('required')
-    })
+    // const formShema = Yup.object().shape({
+    //     name : Yup.string().min(3).max(30).required('required'),
+    //     description : Yup.string().min(3).required('required')
+    // })
 
     return (
         <div>
