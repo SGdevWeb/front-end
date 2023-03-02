@@ -5,9 +5,11 @@ import InputBis from "../../components/base/InputBis";
 import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
+import { selectToken } from "../../redux-store/authenticationSlice";
 import typesProject from "../../fakeData/TypeData";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import validationSchema from "../../utils/createProjectSchema";
 
 export default function CreateProject() {
@@ -15,6 +17,8 @@ export default function CreateProject() {
 	const navigate = useNavigate();
 
 	const [error, setError] = useState();
+
+	const token = useSelector(selectToken);
 	
 	const initialValues = {
 		name: "",
@@ -27,7 +31,9 @@ export default function CreateProject() {
 	const onSubmit = async (formValues) => {
 		try {
 			if (formValues.date_end === "") delete formValues.date_end;
-			const response = await apiGateway.post("/project/create/", formValues);
+			const response = await apiGateway.post("/project/create/", formValues, { headers: {
+				Authorization : `Bearer ${token}`
+				}});
 			resetForm();
 			navigate("/project/" + response.data.uuid);
 		} catch (error) {
