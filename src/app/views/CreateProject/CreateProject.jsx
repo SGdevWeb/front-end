@@ -11,11 +11,10 @@ import { useNavigate } from "react-router-dom";
 import validationSchema from "../../utils/createProjectSchema";
 
 export default function CreateProject() {
-
 	const navigate = useNavigate();
 
 	const [error, setError] = useState();
-	
+
 	const initialValues = {
 		name: "",
 		date_start: "",
@@ -27,11 +26,15 @@ export default function CreateProject() {
 	const onSubmit = async (formValues) => {
 		try {
 			if (formValues.date_end === "") delete formValues.date_end;
+			if (new Date(formValues.date_end) < new Date(formValues.date_start)) 
+        throw new Error("Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin.");
+			if (Date.now() < new Date(formValues.date_start)) 
+        throw new Error("Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui.");
 			const response = await apiGateway.post("/project/create/", formValues);
 			resetForm();
 			navigate("/project/" + response.data.uuid);
 		} catch (error) {
-			setError(error.message);
+			setError(error.response ? error.response.data.message : error.message);
 		}
 	};
 
