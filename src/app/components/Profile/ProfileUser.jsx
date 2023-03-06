@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Field, Form, Formik } from "formik";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../redux-store/userProfileSlice";
 import Button from "../Base/Button";
 import { Link } from "react-router-dom";
 import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
@@ -44,14 +41,14 @@ const ProfileUser = ({firstname, lastname,username,email,work,date_birth,descrip
             <Field
               type="text"
               name="firstname"
-              placeholder={firstname} // affiche le prénom de l'utilisateur
+              placeholder={firstname}
               className="input w-1/3"
               disabled
             />
             <Field
               type="text"
               name="lastname"
-              placeholder={lastname} // affiche le nom de l'utilisateur
+              placeholder={lastname}
               className="input w-1/3"
               disabled
             />
@@ -72,7 +69,7 @@ const ProfileUser = ({firstname, lastname,username,email,work,date_birth,descrip
             <Field
               type="text"
               name="email"
-              placeholder={email} // affiche l'email de l'utilisateur
+              placeholder={email}
               className="input flex mt-5 w-full "
               disabled
             />
