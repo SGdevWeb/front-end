@@ -21,7 +21,6 @@ function Comment({ comment, update }) {
     const user = await axios.get(
       `http://localhost:8000/tree-up-api/users/${userId}`
     );
-    // console.log(user.data);
     setAvatar(user.data.avatar);
     setUsername(user.data.username);
   }

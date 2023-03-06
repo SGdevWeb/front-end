@@ -8,7 +8,8 @@ function NewComment({ addComment }) {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(false);
 
-  const idProject = useParams().id;
+  // const idProject = useParams().id;
+  const idProject = "e73bab9a-7d74-4e18-a647-040c16742467";
 
   function handleSubmit(e) {
     e.preventDefault();

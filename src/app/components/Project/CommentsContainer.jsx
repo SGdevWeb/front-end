@@ -9,7 +9,8 @@ import axios from "axios";
 
 function CommentsContainer() {
   const [comments, setComments] = useState([]);
-  const uuidProject = useParams().id;
+  // const uuidProject = useParams().id;
+  const uuidProject = "e73bab9a-7d74-4e18-a647-040c16742467";
   const isLogged = useSelector(selectIsLogged);
 
   useEffect(() => {
