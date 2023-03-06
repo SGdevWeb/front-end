@@ -35,7 +35,7 @@ const Routes = () => {
 								<Route path={URL.URL_PROFILE} element={<ConnectedRoute><Profile /></ConnectedRoute>} />
 								<Route path={URL.URL_EDITPROFILE} element={<ConnectedRoute><EditProfile /></ConnectedRoute>} />
 								<Route path={URL.URL_CREATEPROJECT} element={<ConnectedRoute><CreateProject /></ConnectedRoute>} />
-								<Route path={URL.URL_PROJETVIEW} element={<ConnectedRoute><Project /></ConnectedRoute>} />
+								<Route path={URL.URL_PROJETVIEW} element={<Project />} />
 							</RoutesContainer>
 						</div>
 					</div>
