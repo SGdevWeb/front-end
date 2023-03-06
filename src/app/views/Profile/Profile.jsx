@@ -41,7 +41,7 @@ export default function Profile() {
           firstname={user.firstname}
           lastname={user.lastname}
           email={user.email}
-          date_birth={user.date_birth ? user.date_birth : '1900/01/01'}
+          date_birth={user.date_birth}
           work={user.work}
           username={user.username}
         />
