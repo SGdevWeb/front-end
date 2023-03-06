@@ -13,7 +13,7 @@ export default function EditProfile() {
   const [user, setUser] = useState({});
   const [experiences, setExperiences] = useState([]);
   const [soft_skills, setSoft_skills] = useState([])
-  const dispatch = useDispatch();
+
 
   useEffect(() => {
     async function fetchData() {
