@@ -6,7 +6,7 @@ import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_NEW_SOFTSKILL} from '../../constants/urls/urlBackEnd';
 import validationSchema from '../../utils//soft_skillSchema';
 
-export default function ModalNewSoftSkills(){
+export default function ModalNewSoftSkills(props){
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -26,6 +26,7 @@ export default function ModalNewSoftSkills(){
                     valueJson.soft_skill = values;
                     await apiGateway.post(URL_BACK_NEW_SOFTSKILL,values).then((res) => {
                         console.log(res);
+                        props.handleAdd(res.data.result)
                         setShowModal(false);
                     }).catch((err) => {
                         if(err){
@@ -56,12 +57,14 @@ export default function ModalNewSoftSkills(){
                                                         id="name" 
                                                         name="name" 
                                                         type="text"
+                                                        placeholder='Titre'
                                                     />
                                                     <Field 
                                                         as="textarea" 
                                                         id="description" 
                                                         name="description"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
+                                                        placeholder='Description'
                                                     />
                                                     <ButtonBis 
                                                         title="Ajouter un soft_skill" 

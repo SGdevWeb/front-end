@@ -74,7 +74,7 @@ export default function Profile() {
       <p className="text-center my-5">Mes expériences</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {user.experience && user.experience.length > 0 ? (
-          user.experiences.map((item) => (
+          user.experience?.map((item) => (
             <div className="w-1/2 p-2" key={item.id}>
               <ProfileBox {...item} />
             </div>
@@ -86,7 +86,7 @@ export default function Profile() {
       <p className="text-center my-5">Mes SoftSkills</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
       {user.soft_skill && user.soft_skill.length > 0 ? (
-          user.softskills.map((item) => (
+          user.soft_skill?.map((item) => (
             <div className="w-1/2 p-2" key={item.id}>
               <ProfileBox {...item} />
             </div>

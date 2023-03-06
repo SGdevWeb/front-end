@@ -6,7 +6,7 @@ import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_NEW_EXPERIENCE} from '../../constants/urls/urlBackEnd';
 import validationSchema from '../../utils/experienceSchema'
 
-export default function ModalNewExperience(){
+export default function ModalNewExperience(props){
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -18,19 +18,19 @@ export default function ModalNewExperience(){
         {showModal ? (
                 <Formik
                 initialValues={{
-                    name :  "titre",
+                    name :  "",
                     date_start :  "",
                     date_end : "",
-                    place :  "lieux",
-                    description :  "description"
+                    place :  "",
+                    description :  ""
                 }}
                 onSubmit={async (values, actions) => {
                     const valueJson = {};
                     valueJson.experience = values;
                     await apiGateway.post(URL_BACK_NEW_EXPERIENCE,values).then((res) => {
                         console.log(res);
+                        props.handleAdd(res.data.result)
                         setShowModal(false);
-                        window.location.reload(false);
                     }).catch((err) => {
                         if(err){
                             alert("erreur server")
@@ -61,6 +61,7 @@ export default function ModalNewExperience(){
                                                         id="name" 
                                                         name="name" 
                                                         type="text"
+                                                        placeholder='Titre'
                                                     />
                                                     <div className="flex justify-between">
                                                         <Field 
@@ -81,12 +82,14 @@ export default function ModalNewExperience(){
                                                         name="place" 
                                                         type="text"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
+                                                        placeholder='Lieux'
                                                     />
                                                     <Field 
                                                         as="textarea" 
                                                         id="description" 
                                                         name="description"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
+                                                        placeholder='Description'
                                                     />
                                                     <ButtonBis 
                                                         title="Ajouter une exepérience" 

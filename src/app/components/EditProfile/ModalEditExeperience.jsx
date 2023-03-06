@@ -1,15 +1,16 @@
 import React, { useState} from "react";
 import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
-import ButtonBis from '../base/ButtonBis'
+import ButtonBis from '../base/ButtonBis';
 import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_UPDATE_EXPERIENCE} from '../../constants/urls/urlBackEnd';
-import validationSchema from '../../utils/experienceSchema'
+import validationSchema from '../../utils/experienceSchema';
 
-export default function ModalEditExperience({name, date_start, date_end, place, description, uuid, exptitle}){
+export default function ModalEditExperience(props){
     const [showModal, setShowModal] = useState(false);
 
     const isoDateToInputFormat = (isoDate) => {
+        console.log(isoDate)
         const dateSplit = isoDate.split('/');
         return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`
     }
@@ -22,17 +23,18 @@ export default function ModalEditExperience({name, date_start, date_end, place, 
         {showModal ? (
                 <Formik
                 initialValues={{
-                    name : name ? name : "",
-                    date_start : isoDateToInputFormat(date_start),
-                    date_end : date_end ? isoDateToInputFormat(date_end) : "2000-01-01",
-                    place : place ? place : "",
-                    description : description ? description : ""
+                    name : props.name ? props.name : "",
+                    date_start : isoDateToInputFormat(props.date_start),
+                    date_end : props.date_end ? isoDateToInputFormat(props.date_end) : "",
+                    place : props.place ? props.place : "",
+                    description : props.description ? props.description : ""
                 }}
                 onSubmit={async (values, actions) => {
                     const valueJson = {};
                     valueJson.experience = values;
+                    valueJson.experience.uuid = props.uuid;
                     await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE,values).then((res) => {
-                        console.log(res);
+                        props.handleUpdate(res.data.result);
                         setShowModal(false);
                     }).catch((err) => {
                         if(err){
@@ -57,12 +59,13 @@ export default function ModalEditExperience({name, date_start, date_end, place, 
                                                     </button>
                                                 </div>
                                                 <div className="relative px-8 flex-col justify-around text-center mb-3 ">
-                                                    <p className="text-3x1">{exptitle}</p>
+                                                    <p className="text-3x1">Modifier une experience</p>
                                                     <Field
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
                                                         id="name" 
                                                         name="name" 
                                                         type="text"
+                                                        placeholder='Titre'
                                                     />
                                                     <div className="flex justify-between">
                                                         <Field 
@@ -83,15 +86,17 @@ export default function ModalEditExperience({name, date_start, date_end, place, 
                                                         name="place" 
                                                         type="text"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
+                                                        placeholder='Lieux'
                                                     />
                                                     <Field 
                                                         as="textarea" 
                                                         id="description" 
                                                         name="description"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
+                                                        placeholder='Description'
                                                     />
                                                     <ButtonBis 
-                                                        title="Ajouter une exepérience" 
+                                                        title="Modifier" 
                                                         type="submit"
                                                     />
                                                 </div>

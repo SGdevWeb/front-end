@@ -6,7 +6,7 @@ import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_UPDATE_SOFTSKILL} from '../../constants/urls/urlBackEnd';
 import validationSchema from '../../utils//soft_skillSchema';
 
-export default function ModalEditSoftSkills({name, description, uuid, softtitle}){
+export default function ModalEditSoftSkills(props){
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -17,14 +17,16 @@ export default function ModalEditSoftSkills({name, description, uuid, softtitle}
         {showModal ? (
                 <Formik
                 initialValues={{
-                    name : name ? name : "titre",
-                    description : description ? description : "description"
+                    name : props.name ? props.name : "",
+                    description : props.description ? props.description : ""
                 }}
                 onSubmit={async (values, actions) => {
                     const valueJson = {};
                     valueJson.soft_skill = values;
+                    valueJson.soft_skill.uuid = props.uuid;
+                    console.log(valueJson)
                     await apiGateway.post(URL_BACK_UPDATE_SOFTSKILL,values).then((res) => {
-                        console.log(res);
+                        props.handleUpdate(res.data.result);
                         setShowModal(false);
                     }).catch((err) => {
                         if(err){
@@ -50,18 +52,20 @@ export default function ModalEditSoftSkills({name, description, uuid, softtitle}
                                                     </button>
                                                 </div>
                                                 <div className="relative px-8 flex-col justify-around text-center mb-3 ">
-                                                    <p className="text-3x1">{softtitle}</p>
+                                                    <p className="text-3x1">Modifier un Soft_skill</p>
                                                     <Field
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
                                                         id="name" 
                                                         name="name" 
                                                         type="text"
+                                                        placeholder='Titre'
                                                     />
                                                     <Field 
                                                         as="textarea" 
                                                         id="description" 
                                                         name="description"  
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
+                                                        placeholder='description'
                                                     />
                                                     <ButtonBis 
                                                         title="Ajouter un soft_skill" 
