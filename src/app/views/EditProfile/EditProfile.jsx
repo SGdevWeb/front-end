@@ -3,7 +3,6 @@ import ProfileBoxEdit from "../../components/EditProfile/ProfileBoxEdit";
 import ProfileUser from "../../components/EditProfile/ProfileUserEdit";
 import ModalNewExperience from "../../components/EditProfile/ModalNewExperience";
 import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
-import { useDispatch } from "react-redux";
 import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import apiGateway from '../../api/backend/apiGateway';
 

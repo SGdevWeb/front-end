@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Field, Form, Formik } from "formik";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../redux-store/userProfileSlice";
 import Button from "../Base/Button";
 import { Link } from "react-router-dom";
 import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
 
-const ProfileUser = ({firstname, lastname,username,email,work,date_birth,description}) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description }) => {
   return (
     <Formik
       initialValues={{
@@ -44,27 +41,38 @@ const ProfileUser = ({firstname, lastname,username,email,work,date_birth,descrip
             <Field
               type="text"
               name="firstname"
-              placeholder={firstname} // affiche le prénom de l'utilisateur
+              placeholder={firstname}
               className="input w-1/3"
               disabled
             />
             <Field
               type="text"
               name="lastname"
-              placeholder={lastname} // affiche le nom de l'utilisateur
+              placeholder={lastname}
               className="input w-1/3"
               disabled
             />
           </div>
           <div className="flex mx-5 ">
-            <Field
-              type="date"
-              name="date_birth"
-              placeholder={date_birth}
-              className="input flex mt-5 w-full"
-              disabled
-            />
+            {date_birth ? (
+              <input
+                type="date"
+                name="date_birth"
+                value={date_birth}
+                className="input flex mt-5 w-full"
+                disabled
+              />
+            ) : (
+              <input
+                type="text"
+                name="date_birth"
+                value="date non renseigné"
+                className="input flex mt-5 w-full"
+                disabled
+              />
+            )}
           </div>
+
           <div>
             <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
           </div>
@@ -72,7 +80,7 @@ const ProfileUser = ({firstname, lastname,username,email,work,date_birth,descrip
             <Field
               type="text"
               name="email"
-              placeholder={email} // affiche l'email de l'utilisateur
+              placeholder={email}
               className="input flex mt-5 w-full "
               disabled
             />
