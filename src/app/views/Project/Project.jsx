@@ -31,7 +31,7 @@ function Project() {
 					<h1 className="text-2xl">{project.name}</h1>
 					<h3 className="text-xs">
 						{project.date_start.slice(0, project.date_start.indexOf("T"))}
-						{project.date_end ? " - " + project.date_end.slice(0, project.date_start.indexOf("Z")) : ""}
+						{project.date_end ? " - " + project.date_end.slice(0, project.date_start.indexOf("T")) : ""}
 					</h3>
 				</div>
 			</div>
