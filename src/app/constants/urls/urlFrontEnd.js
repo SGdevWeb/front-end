@@ -6,3 +6,4 @@ export const URL_PROFILE = '/profile';
 export const URL_EDITPROFILE = '/editprofile'; 
 export const URL_CREATEPROJECT = '/project/create'; 
 export const URL_PROJETVIEW = '/project/:uuid';
+export const URL_PROJECT_UPDATE = '/project/update/'
