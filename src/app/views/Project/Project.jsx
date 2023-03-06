@@ -25,7 +25,7 @@ function Project() {
 	}, []);
 
 	return (
-		<div className="items-center gap-4 p-2">
+		<div className="items-center gap-4 p-2 bg-gray-1 rounded-md">
 			<div>
 				<div>
 					<h1 className="text-2xl">{project.name}</h1>
