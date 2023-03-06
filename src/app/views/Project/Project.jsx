@@ -26,19 +26,18 @@ function Project() {
 
 	return (
 		<div className="items-center gap-4 p-2">
-			<img src="" alt="" />
 			<div>
 				<div>
 					<h1 className="text-2xl">{project.name}</h1>
-					<h3 className="text-sm ">
+					<h3 className="text-xs">
 						{project.date_start.slice(0, project.date_start.indexOf("T"))}
 						{project.date_end ? " - " + project.date_end.slice(0, project.date_start.indexOf("Z")) : ""}
 					</h3>
 				</div>
 			</div>
 			<div>
-				<h2 className="text-2xl">Description du projet</h2>
-				<p>{project.description}</p>
+				<h2 className="text-2xl underline">Description du projet</h2>
+				<p className="text-base">{project.description}</p>
 			</div>
 			<CommentsContainer />
 		</div>
