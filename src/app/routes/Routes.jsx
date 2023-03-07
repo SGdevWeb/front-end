@@ -2,7 +2,6 @@ import * as URL from "../constants/urls/urlFrontEnd";
 
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 
-import { ConnectedRoute } from "./ConnectedRoute";
 import CreateProject from "../views/CreateProject/CreateProject";
 import EditProfile from "../views/EditProfile/EditProfile";
 import Home from "../views/Home/Home";
@@ -12,7 +11,6 @@ import Project from "../views/Project/Project";
 import React from "react";
 import SideBar from "../components/layouts/Sidebar";
 import SignIn from "../views/SignIn/SignIn"
-import Project from "../views/Project/Project";
 
 /**
  * Routes of the application
