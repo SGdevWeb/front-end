@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../components/Base/ButtonBis";
@@ -10,45 +10,42 @@ import typesProject from "../../fakeData/TypeData";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/createProjectSchema";
 
-export default function CreateProject({isEditMode}) {
-	
+export default function CreateProject({ isEditMode }) {
   const navigate = useNavigate();
 
   const [error, setError] = useState();
-  
-  const {uuid} = useParams(); 
-  
 
-  const fakeData = {
-    name: "EspaceDeVie",
-    date_start: "2023-03-02T00:00:00.000Z",
-    date_end: "",
-    type: "",
-    description: "Manu",
-  }
+  const { uuid } = useParams();
+
+  useEffect(() => {
+    if (isEditMode) {
+      apiGateway.get("/project/" + uuid).then(({ data }) => {
+        setValues({
+          name: data.name,
+          date_start: data.date_start,
+          date_end: data.date_end,
+          description: data.description,
+        });
+      });
+    }
+  }, []);
   
-  const project = fakeData;
+  const initialValues = 
+     {
+        name: "",
+        date_start: "",
+        date_end: "",
+        description:"",
+      }
   
-  const initialValues = isEditMode
-    ? {
-        name: project.name,
-        date_start: project.date_start.slice(0,project.date_start.indexOf("T")),
-        date_end: project.date_end.slice(0,project.date_start.indexOf("T")),
-        type: project.type,
-        description: project.description,
-      } : { 
-			name: "",
-			date_start: "",
-			date_end: "",
-			type: "",
-			description: "",
-	  }
 
   const onSubmit = async (formValues) => {
     try {
       if (formValues.date_end === "") delete formValues.date_end;
       delete formValues.type;
-      const response = isEditMode ? await apiGateway.put(`/project/update/${uuid}`, formValues) : await apiGateway.post("/project/create/", formValues);
+      const response = isEditMode
+        ? await apiGateway.put(`/project/update/${uuid}`, formValues)
+        : await apiGateway.post("/project/create/", formValues);
       resetForm();
       navigate("/project/" + response.data.uuid);
     } catch (error) {
@@ -59,6 +56,7 @@ export default function CreateProject({isEditMode}) {
   const {
     handleSubmit,
     values,
+    setValues,
     touched,
     isValid,
     isSubmitting,
@@ -85,7 +83,7 @@ export default function CreateProject({isEditMode}) {
         <div className="flex flex-col gap-1">
           <InputBis
             type="text"
-            placeholder="Nom du projet"
+            placeholder={isEditMode ? values.name : "Nom du projet"}
             name="name"
             value={values.name}
             onChange={handleChange}
@@ -110,7 +108,6 @@ export default function CreateProject({isEditMode}) {
         <div className="flex flex-col gap-1">
           <InputBis
             type="date"
-            placeholder="Date de Début"
             name="date_start"
             value={values.date_start}
             onChange={handleChange}
@@ -122,7 +119,6 @@ export default function CreateProject({isEditMode}) {
 
           <InputBis
             type="date"
-            placeholder="Date de Fin"
             name="date_end"
             value={values.date_end}
             onChange={handleChange}
@@ -135,7 +131,7 @@ export default function CreateProject({isEditMode}) {
       </div>
       <Button className="my-3" title="Ajouter des collaborateurs" />
       <TextArea
-        placeholder={"Description du projet"}
+        placeholder={isEditMode ? values.description : "Description du projet"}
         className="w-full"
         rows={"10"}
         name="description"
@@ -155,7 +151,7 @@ export default function CreateProject({isEditMode}) {
         type="submit"
         disabled={!isValid || isSubmitting}
         className="flex mx-auto mt-3"
-        title="Créer le projet"
+        title= { isEditMode ? "Modifier le projet" : "Créer le projet" }
       />
     </form>
   );

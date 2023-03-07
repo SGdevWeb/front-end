@@ -70,10 +70,10 @@ function LoginCard() {
 
   async function onSubmit(formValues) {
     // if(captchaValidate) {
-      // setcaptchaValidate(true)
+      setcaptchaValidate(true)
       login(formValues);
       resetForm();
-      // console.log('Connexion réussie')
+    //   console.log('Connexion réussie')
     // } else {
     //   setcaptchaValidate(false)
     // }
