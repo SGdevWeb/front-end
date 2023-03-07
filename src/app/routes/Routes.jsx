@@ -2,11 +2,13 @@ import * as URL from "../constants/urls/urlFrontEnd";
 
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 
+import { ConnectedRoute } from "./ConnectedRoute";
 import CreateProject from "../views/CreateProject/CreateProject";
-import EditProfile from "../views/EditProfile/EditProfile"
+import EditProfile from "../views/EditProfile/EditProfile";
 import Home from "../views/Home/Home";
 import Login from "../views/Login/Login";
 import Profile from "../views/Profile/Profile";
+import Project from "../views/Project/Project";
 import React from "react";
 import SideBar from "../components/layouts/Sidebar";
 import SignIn from "../views/SignIn/SignIn"
@@ -24,7 +26,7 @@ const Routes = () => {
 			<Route path={URL.URL_LOGIN} element={<Login />} />
 			<Route path={URL.URL_SIGNIN} element={<SignIn />} />
 			<Route
-				path="/*"	
+				path="/*"
 				element={
 					<div className=" flex container mx-auto pt-3 gap-3">
 						<SideBar />
@@ -33,8 +35,9 @@ const Routes = () => {
 								<Route path="/" element={<Home />} />
 								<Route path={URL.URL_PROFILE} element={<Profile />} />
 								<Route path={URL.URL_EDITPROFILE} element ={<EditProfile />} />
-								<Route path={URL.URL_CREATEPROJECT} element={<CreateProject />} />
-								<Route path={URL.URL_PROJETVIEW} element={<Project />} />
+								<Route path={URL.URL_CREATEPROJECT} element={<CreateProject isEditMode={false} />} />
+								<Route path={URL.URL_PROJETVIEW + ":uuid"} element={<Project />} />
+								<Route path={URL.URL_PROJECT_UPDATE + ":uuid"} element={<CreateProject isEditMode={true} />} />
 							</RoutesContainer>
 						</div>
 					</div>
