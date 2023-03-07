@@ -25,7 +25,6 @@ export default function ModalNewSoftSkills(props){
                     const valueJson = {};
                     valueJson.soft_skill = values;
                     await apiGateway.post(URL_BACK_NEW_SOFTSKILL,values).then((res) => {
-                        console.log(res);
                         props.handleAdd(res.data.result)
                         setShowModal(false);
                     }).catch((err) => {
@@ -67,7 +66,7 @@ export default function ModalNewSoftSkills(props){
                                                         placeholder='Description'
                                                     />
                                                     <ButtonBis 
-                                                        title="Ajouter un soft_skill" 
+                                                        title="Ajouter un soft skill" 
                                                         type="submit"
                                                     />
                                                 </div>

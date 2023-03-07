@@ -28,7 +28,6 @@ export default function ModalNewExperience(props){
                     const valueJson = {};
                     valueJson.experience = values;
                     await apiGateway.post(URL_BACK_NEW_EXPERIENCE,values).then((res) => {
-                        console.log(res);
                         props.handleAdd(res.data.result)
                         setShowModal(false);
                     }).catch((err) => {
@@ -92,7 +91,7 @@ export default function ModalNewExperience(props){
                                                         placeholder='Description'
                                                     />
                                                     <ButtonBis 
-                                                        title="Ajouter une exepérience" 
+                                                        title="Ajouter une expérience" 
                                                         type="submit"
                                                     />
                                                 </div>

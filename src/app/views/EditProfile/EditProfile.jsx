@@ -6,13 +6,12 @@ import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
 import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import apiGateway from '../../api/backend/apiGateway';
 
-
 export default function EditProfile() {
-  const expTitle = "Ajouter une expérience professionnelle";
-  const softTitle = "ajouter un soft_skill";
+  const expTitle = "Ajouter une expérience ";
+  const softTitle = "ajouter un soft skill";
   const [user, setUser] = useState({});
   const [experiences, setExperiences] = useState([]);
-  const [soft_skills, setSoft_skills] = useState([])
+  const [soft_skills, setSoft_skills] = useState([]);
 
 
   useEffect(() => {
@@ -20,48 +19,49 @@ export default function EditProfile() {
       try {
         const response = await apiGateway.get(URL_BACK_GET_PROFILE);
         setUser(response.data);
-        setExperiences(user.experience);
-        setSoft_skills(user.setSoft_skills)
+        setExperiences(response.data.experience);
+        setSoft_skills(response.data.soft_skill);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
+
   }, []);
 
   const handleDeleteExperience = (uuid) => {
-      const currentUserData = user;
-      const foundExperience = currentUserData.experience.findIndex((exp) => exp.uuid === uuid);
-      if(foundExperience >= 0) {
-        currentUserData.experience.splice(foundExperience,1);
-        setUser(currentUserData);
-        setExperiences(user.experience);
-      }
+    const currentUserData = user;
+    const foundExperience = currentUserData.experience.findIndex((exp) => exp.uuid === uuid);
+    if (foundExperience >= 0) {
+      currentUserData.experience.splice(foundExperience, 1);
+      setUser(currentUserData);
+      setExperiences([...currentUserData.experience]);
+    }
   }
 
   const handleAddExperience = (exp) => {
     const currentUserData = user;
-    currentUserData.experience.push(exp)
+    currentUserData.experience.push(exp);
     setUser(currentUserData);
-    setExperiences(user.experience);
+    setExperiences([...currentUserData.experience]);
   }
 
   const handleDeleteSoft_skill = (uuid) => {
     const currentUserData = user;
     const foundSoft_skill = currentUserData.soft_skill.findIndex((exp) => exp.uuid === uuid);
-    if(foundSoft_skill >= 0) {
-      currentUserData.soft_skill.splice(foundSoft_skill,1);
+    if (foundSoft_skill >= 0) {
+      currentUserData.soft_skill.splice(foundSoft_skill, 1);
       setUser(currentUserData);
-      setExperiences(user.soft_skill);
+      setSoft_skills([...currentUserData.soft_skill]);
     }
-}
+  }
 
-const handleAddSoft_skill = (exp) => {
-  const currentUserData = user;
-  currentUserData.soft_skill.push(exp)
-  setUser(currentUserData);
-  setExperiences(user.soft_skill);
-}
+  const handleAddSoft_skill = (soft) => {
+    const currentUserData = user;
+    currentUserData.soft_skill.push(soft);
+    setUser(currentUserData);
+    setSoft_skills([...currentUserData.soft_skill]);
+  }
 
   return (
     <div className="bg-[#ececec] justify-center flex-col">
@@ -82,7 +82,7 @@ const handleAddSoft_skill = (exp) => {
       </div>
       <p className="text-center my-5">Mes expériences</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
-        {user.experience?.map((item) => {
+        {experiences?.map((item) => {
           item.exptitle = expTitle
           item.handleDelete = handleDeleteExperience
           return (
@@ -97,7 +97,7 @@ const handleAddSoft_skill = (exp) => {
       </div>
       <p className="text-center my-5">Mes SoftSkills</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
-        {user.soft_skill?.map((item) => {
+        {soft_skills?.map((item) => {
           item.softtitle = softTitle;
           item.handleDelete = handleDeleteSoft_skill
           return (

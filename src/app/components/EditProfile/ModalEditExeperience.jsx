@@ -10,7 +10,6 @@ export default function ModalEditExperience(props){
     const [showModal, setShowModal] = useState(false);
 
     const isoDateToInputFormat = (isoDate) => {
-        console.log(isoDate)
         const dateSplit = isoDate.split('/');
         return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`
     }
