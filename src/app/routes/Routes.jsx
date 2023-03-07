@@ -12,6 +12,7 @@ import Project from "../views/Project/Project";
 import React from "react";
 import SideBar from "../components/layouts/Sidebar";
 import SignIn from "../views/SignIn/SignIn"
+import Project from "../views/Project/Project";
 
 /**
  * Routes of the application

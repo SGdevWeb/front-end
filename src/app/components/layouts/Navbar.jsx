@@ -1,10 +1,11 @@
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { selectIsLogged, selectUser, signOut } from "../../redux-store/authenticationSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../base/Button";
-import { Link } from "react-router-dom";
 import Logo from "../../assets/img/LogoTreeUp100x100.png";
+import { URL_LOGIN } from "../../constants/urls/urlFrontEnd";
 
 const Navbar = () => {
 	const [enableDropdown, setEnableDropdown] = useState(false);
@@ -12,6 +13,7 @@ const Navbar = () => {
 
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
+	const nav = useNavigate();
 	
 	return (
 		<>
@@ -53,7 +55,10 @@ const Navbar = () => {
 						</Link>
 						<hr className="border-neutral-400" />
 
-						<div className="border-2 border-neutral-400 rounded m-1 text-red-700 font-bold cursor-pointer" onClick={() => dispatch(signOut())}>
+						<div className="border-2 border-neutral-400 rounded m-1 text-red-700 font-bold cursor-pointer" onClick={() => {
+							dispatch(signOut());
+							nav(URL_LOGIN);
+						}}>
 							Déconnexion
 						</div>
 					</div>
