@@ -1,29 +1,27 @@
-import { URL_BACK_COMMENTPOST } from "../../constants/urls/urlBackEnd";
+import { URL_BACK_COMMENT } from "../../constants/urls/urlBackEnd";
 import apiGateway from "./apiGateway";
 import { getToken } from "../../services/tokenServices";
 
+const token = getToken();
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+
 export function commentPost(values) {
-  const token = getToken();
-  return apiGateway.post(URL_BACK_COMMENTPOST, values, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return apiGateway.post(URL_BACK_COMMENT, values, config);
 }
 
 export function getAllComments() {
-  return apiGateway.get("/comments");
+  return apiGateway.get(URL_BACK_COMMENT);
 }
 
 export function updateComment(values) {
-  const token = getToken();
-  return apiGateway.put("/comments", values, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return apiGateway.put(URL_BACK_COMMENT, values, config);
 }
 
 export function getCommentByProjectId(id) {
-  return apiGateway.get(`/comments/${id}`);
+  return apiGateway.get(URL_BACK_COMMENT + `/${id}`);
 }

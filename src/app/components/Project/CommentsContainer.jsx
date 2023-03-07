@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import Comments from "./Comments";
 import NewComment from "./NewComment";
 import { getCommentByProjectId } from "../../api/backend/comment";
 import { selectIsLogged } from "../../redux-store/authenticationSlice";
-import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function CommentsContainer() {
+function CommentsContainer({ uuid_project }) {
   const [comments, setComments] = useState([]);
-  const uuidProject = useParams().uuid;
   const isLogged = useSelector(selectIsLogged);
 
   useEffect(() => {
-    getCommentByProjectId(uuidProject)
+    getCommentByProjectId(uuid_project)
       .then((response) => {
         const comments = response.data;
         setComments(comments);
@@ -22,9 +19,7 @@ function CommentsContainer() {
   }, []);
 
   const addComment = () => {
-    // const newComment = comment
-    // setComments([...comments, newComment])
-    getCommentByProjectId(uuidProject)
+    getCommentByProjectId(uuid_project)
       .then((response) => {
         const comments = response.data;
         setComments(comments);
@@ -33,7 +28,7 @@ function CommentsContainer() {
   };
 
   const update = () => {
-    getCommentByProjectId(uuidProject)
+    getCommentByProjectId(uuid_project)
       .then((response) => {
         const comments = response.data;
         setComments(comments);
@@ -46,7 +41,9 @@ function CommentsContainer() {
       <h2 className="text-2xl mb-3">
         <span className="border-b-2 border-black">COMMENTAIRES</span>
       </h2>
-      {isLogged && <NewComment addComment={addComment} />}
+      {isLogged && (
+        <NewComment addComment={addComment} uuid_project={uuid_project} />
+      )}
       <Comments comments={comments} update={update} />
     </div>
   );

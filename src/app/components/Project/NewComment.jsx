@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-
 import { commentPost } from "../../api/backend/comment";
-import { selectUser } from "../../redux-store/authenticationSlice";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-function NewComment({ addComment }) {
+function NewComment({ addComment, uuid_project }) {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(false);
-
-  const idProject = useParams().uuid;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -21,7 +15,7 @@ function NewComment({ addComment }) {
     }
     const newComment = {
       comment: value,
-      uuid_project: idProject,
+      uuid_project,
     };
     commentPost(newComment)
       .then((response) => {

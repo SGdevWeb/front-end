@@ -43,7 +43,7 @@ function Project() {
         <h2 className="text-2xl underline">Description du projet</h2>
         <p className="text-base">{project.description}</p>
       </div>
-      <CommentsContainer />
+      <CommentsContainer uuid_project={uuid} />
       <div className="flex justify-center">
         <Link to={URL_PROJECT_UPDATE + uuid}>
           <Button title="Mettre à jour"></Button>

@@ -12,9 +12,6 @@ import axios from "axios";
 
 const apiGateway = axios.create({
   baseURL: "http://localhost:8000/tree-up-api",
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
 });
 
 export default apiGateway;

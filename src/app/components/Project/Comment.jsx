@@ -7,7 +7,7 @@ import {
 import UpdateComment from "./UpdateComment";
 import pencil from "../../assets/img/icons/pencil.svg";
 import report from "../../assets/img/icons/report.svg";
-import axios from "axios";
+import { getUser } from "../../api/backend/account";
 
 function Comment({ comment, update }) {
   const [isUpdate, setIsUpdate] = useState(false);
@@ -17,15 +17,14 @@ function Comment({ comment, update }) {
   const isLogged = useSelector(selectIsLogged);
   const user = useSelector(selectUser);
 
-  async function getAvatar(userId) {
-    const user = await axios.get(
-      `http://localhost:8000/tree-up-api/users/${userId}`
-    );
-    setAvatar(user.data.avatar);
-    setUsername(user.data.username);
+  async function getAvatarAndUsername(userId) {
+    const response = await getUser(userId);
+    const { avatar, username } = response.data.user;
+    setAvatar(avatar);
+    setUsername(username);
   }
 
-  getAvatar(comment.uuid_user);
+  getAvatarAndUsername(comment.uuid_user);
 
   return (
     <div key={comment._id}>
@@ -36,7 +35,7 @@ function Comment({ comment, update }) {
               <img className="w-full rounded-full" src={avatar} alt="avatar" />
             </div>
             <div className="flex items-center">
-              <div className="font-semibold">{username}</div>
+              <div className="font-semibold text-dark">{username}</div>
             </div>
           </div>
           {isUpdate ? (
@@ -46,7 +45,7 @@ function Comment({ comment, update }) {
               update={update}
             />
           ) : (
-            <div className="mt-2">{comment.comment}</div>
+            <div className="mt-2 text-dark">{comment.comment}</div>
           )}
         </div>
         <div className="flex flex-row">
