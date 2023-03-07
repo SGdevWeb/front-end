@@ -5,9 +5,11 @@ import InputBis from "../../components/base/InputBis";
 import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
+import { selectToken } from "../../redux-store/authenticationSlice";
 import typesProject from "../../fakeData/TypeData";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import validationSchema from "../../utils/createProjectSchema";
 
 export default function CreateProject() {
@@ -15,6 +17,8 @@ export default function CreateProject() {
 
 	const [error, setError] = useState();
 
+	const token = useSelector(selectToken);
+	
 	const initialValues = {
 		name: "",
 		date_start: "",
@@ -29,7 +33,9 @@ export default function CreateProject() {
         throw new Error("Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin.");
 			if (Date.now() < new Date(formValues.date_start)) 
         throw new Error("Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui.");
-			const response = await apiGateway.post("/project/create/", formValues);
+			const response = await apiGateway.post("/project/create/", formValues, { headers: {
+				Authorization : `Bearer ${token}`
+				}});
 			resetForm();
 			navigate("/project/" + response.data.uuid);
 		} catch (error) {
