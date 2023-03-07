@@ -19,25 +19,25 @@ export default function CreateProject({ isEditMode }) {
 
   useEffect(() => {
     if (isEditMode) {
-      apiGateway.get("/project/" + uuid).then(({ data }) => {
+      apiGateway.get("/project/" + uuid).then(({ data: { name, date_start, date_end, description } }) => {
+        const dateStart = date_start.slice(0, date_start.indexOf("T"));
+        const dateEnd = date_end ? date_end.slice(0, date_end.indexOf("T")) : "";
         setValues({
-          name: data.name,
-          date_start: data.date_start,
-          date_end: data.date_end,
-          description: data.description,
+          name,
+          date_start: dateStart,
+          date_end: dateEnd,
+          description,
         });
       });
     }
   }, []);
-  
-  const initialValues = 
-     {
-        name: "",
-        date_start: "",
-        date_end: "",
-        description:"",
-      }
-  
+
+  const initialValues = {
+    name: "",
+    date_start: "",
+    date_end: "",
+    description: "",
+  };
 
   const onSubmit = async (formValues) => {
     try {
@@ -130,7 +130,7 @@ export default function CreateProject({ isEditMode }) {
         type="submit"
         disabled={!isValid || isSubmitting}
         className="flex mx-auto mt-3"
-        title= { isEditMode ? "Modifier le projet" : "Créer le projet" }
+        title={isEditMode ? "Modifier le projet" : "Créer le projet"}
       />
     </form>
   );
