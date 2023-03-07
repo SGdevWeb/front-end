@@ -9,7 +9,7 @@ function UpdateComment({ comment, setIsUpdate, update }) {
   const [error, setError] = useState(false);
 
   function handleSubmit() {
-    console.log(textareaValue);
+    // console.log(textareaValue);
     if (!textareaValue) {
       return setError(true);
     } else {
@@ -22,7 +22,7 @@ function UpdateComment({ comment, setIsUpdate, update }) {
     };
     updateComment(updatedComment)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         update();
       })
       .catch((error) => console.log(error));
