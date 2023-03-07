@@ -1,11 +1,7 @@
-import React, { useEffect } from "react";
-
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/layouts/Navbar";
+import React from "react";
 import Routes from "./routes/Routes";
-import { getToken } from "./services/tokenServices";
-import { signIn } from "./redux-store/authenticationSlice";
-import { useDispatch } from "react-redux";
 
 /**
  * Component RouteWithNavigation
@@ -15,12 +11,17 @@ import { useDispatch } from "react-redux";
  */
 
 const App = () => {
-  const dispatch = useDispatch();
+  // const isLogged = useSelector(selectIsLogged);
+  // const dispatch = useDispatch();
+  // const [isLogin, setIsLogin] = useState(true);
 
-  useEffect(() => {
-    const token = getToken();
-    if (token) dispatch(signIn(token));
-  }, []);
+  // useEffect(() => {
+  //     const token = getToken();
+  //     if (token) dispatch(signIn(token));
+  //     setIsLogin(false);
+  // }, []);
+
+  // if (isLogin) return null;
 
   return (
     <BrowserRouter>

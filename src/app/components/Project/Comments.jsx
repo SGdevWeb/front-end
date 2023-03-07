@@ -1,14 +1,23 @@
-import React from "react";
-import Comment from "./Comment";
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-function Comments({ comments, update }) {
-  return (
+import Comment from './Comment'
+import UpdateComment from './UpdateComment'
+
+function Comments({comments, update}) {
+  
+  return ( 
     <>
-      {comments.map((comment) => (
-        <Comment key={comment._id} comment={comment} update={update} />
-      ))}
+    {comments && comments.map( comment => (
+      <Comment
+        key={comment._id}
+        comment={comment}
+        update={update}
+      />
+    ))}
     </>
-  );
+  )
 }
 
-export default Comments;
+export default Comments
+
