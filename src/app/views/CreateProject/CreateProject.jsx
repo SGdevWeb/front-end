@@ -72,14 +72,7 @@ export default function CreateProject({ isEditMode }) {
 
   return (
     <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
-      <img
-        className="rounded-xl justify-center items-center"
-        src={"https://dummyimage.com/1200x300.png/5fa2dd/ffffff"}
-        alt="Projet"
-        loading="lazy"
-      />
-      <Button className="mt-3" title="Ajouter une image" />
-      <div className="flex justify-between pt-3">
+      <div className="flex justify-between my-3 pt-3">
         <div className="flex flex-col gap-1">
           <InputBis
             type="text"
@@ -91,18 +84,6 @@ export default function CreateProject({ isEditMode }) {
           />
           {touched.name && errors.name && (
             <small className="error">{errors.name}</small>
-          )}
-
-          <Select
-            label={"Type de projet"}
-            dataList={typesProject}
-            name="type"
-            value={values.type}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {touched.type && errors.type && (
-            <small className="error">{errors.type}</small>
           )}
         </div>
         <div className="flex flex-col gap-1">
@@ -116,7 +97,6 @@ export default function CreateProject({ isEditMode }) {
           {touched.date_start && errors.date_start && (
             <small className="error">{errors.date_start}</small>
           )}
-
           <InputBis
             type="date"
             name="date_end"
@@ -129,7 +109,6 @@ export default function CreateProject({ isEditMode }) {
           )}
         </div>
       </div>
-      <Button className="my-3" title="Ajouter des collaborateurs" />
       <TextArea
         placeholder={isEditMode ? values.description : "Description du projet"}
         className="w-full"
