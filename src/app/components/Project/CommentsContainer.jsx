@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import Comments from "./Comments";
 import NewComment from "./NewComment";
 import { getCommentByProjectId } from "../../api/backend/comment";
+import { selectIsLogged } from "../../redux-store/authenticationSlice";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectIsLogged } from "../../redux-store/authenticationSlice";
-import axios from "axios";
 
 function CommentsContainer() {
   const [comments, setComments] = useState([]);
-  // const uuidProject = useParams().id;
-  const uuidProject = "e73bab9a-7d74-4e18-a647-040c16742467";
+  const uuidProject = useParams().uuid;
   const isLogged = useSelector(selectIsLogged);
 
   useEffect(() => {
