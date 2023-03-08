@@ -3,10 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../components/Base/ButtonBis";
 import InputBis from "../../components/base/InputBis";
-import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
-import typesProject from "../../fakeData/TypeData";
+import { getToken } from "../../services/tokenServices";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/createProjectSchema";
 
@@ -17,10 +16,22 @@ export default function CreateProject({ isEditMode }) {
 
   const { uuid } = useParams();
 
+  const token = getToken();
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   useEffect(() => {
     if (isEditMode) {
       apiGateway
+<<<<<<< HEAD
         .get("/project/" + uuid)
+=======
+        .get("/project/" + uuid, config)
+>>>>>>> 2d81d877e2316d41c07c8b15ee81c9f52dffcb77
         .then(({ data: { name, date_start, date_end, description } }) => {
           const dateStart = date_start.slice(0, date_start.indexOf("T"));
           const dateEnd = date_end
@@ -46,14 +57,21 @@ export default function CreateProject({ isEditMode }) {
   const onSubmit = async (formValues) => {
     try {
       if (formValues.date_end === "") delete formValues.date_end;
-      delete formValues.type;
+      if (new Date(formValues.date_end) < new Date(formValues.date_start))
+        throw new Error(
+          "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
+        );
+      if (Date.now() < new Date(formValues.date_start))
+        throw new Error(
+          "Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui."
+        );
       const response = isEditMode
-        ? await apiGateway.put(`/project/update/${uuid}`, formValues)
-        : await apiGateway.post("/project/create/", formValues);
+        ? await apiGateway.put(`/project/update/${uuid}`, formValues, config)
+        : await apiGateway.post("/project/create/", formValues, config);
       resetForm();
       navigate("/project/" + response.data.uuid);
     } catch (error) {
-      setError(error.message);
+      setError(error.response ? error.response.data.message : error.message);
     }
   };
 
