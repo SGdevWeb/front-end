@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Comments from "./Comments";
 import NewComment from "./NewComment";
-import { getCommentByProjectId } from "../../api/backend/comment";
+import {
+  deleteComment,
+  getCommentByProjectId,
+} from "../../api/backend/comment";
 import { selectIsLogged } from "../../redux-store/authenticationSlice";
 import { useSelector } from "react-redux";
 
@@ -36,6 +39,13 @@ function CommentsContainer({ uuid_project }) {
       .catch((error) => console.log(error));
   };
 
+  const delComment = (commentId) => {
+    console.log("uuid commentaire : ", commentId);
+    // deleteComment(commentId)
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.log(error));
+  };
+
   return (
     <div>
       <h2 className="text-2xl mb-3">
@@ -44,7 +54,7 @@ function CommentsContainer({ uuid_project }) {
       {isLogged && (
         <NewComment addComment={addComment} uuid_project={uuid_project} />
       )}
-      <Comments comments={comments} update={update} />
+      <Comments comments={comments} update={update} delComment={delComment} />
     </div>
   );
 }

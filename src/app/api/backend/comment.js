@@ -25,3 +25,7 @@ export function updateComment(values) {
 export function getCommentByProjectId(id) {
   return apiGateway.get(URL_BACK_COMMENT + `/${id}`);
 }
+
+export function deleteComment(id) {
+  return apiGateway.delete(URL_BACK_COMMENT + `/${id}`, config);
+}
