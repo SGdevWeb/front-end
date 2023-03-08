@@ -19,16 +19,20 @@ export default function CreateProject({ isEditMode }) {
 
   useEffect(() => {
     if (isEditMode) {
-      apiGateway.get("/project/" + uuid).then(({ data: { name, date_start, date_end, description } }) => {
-        const dateStart = date_start.slice(0, date_start.indexOf("T"));
-        const dateEnd = date_end ? date_end.slice(0, date_end.indexOf("T")) : "";
-        setValues({
-          name,
-          date_start: dateStart,
-          date_end: dateEnd,
-          description,
+      apiGateway
+        .get("/project/" + uuid)
+        .then(({ data: { name, date_start, date_end, description } }) => {
+          const dateStart = date_start.slice(0, date_start.indexOf("T"));
+          const dateEnd = date_end
+            ? date_end.slice(0, date_end.indexOf("T"))
+            : "";
+          setValues({
+            name,
+            date_start: dateStart,
+            date_end: dateEnd,
+            description,
+          });
         });
-      });
     }
   }, []);
 

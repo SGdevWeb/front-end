@@ -40,10 +40,19 @@ function CommentsContainer({ uuid_project }) {
   };
 
   const delComment = (commentId) => {
-    console.log("uuid commentaire : ", commentId);
-    // deleteComment(commentId)
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.log(error));
+    if (confirm("Etes-vous sûr de vouloir supprimer ce commentaire ?")) {
+      deleteComment(commentId)
+        .then((response) => {
+          console.log(response);
+          getCommentByProjectId(uuid_project)
+            .then((response) => {
+              const comments = response.data;
+              setComments(comments);
+            })
+            .catch((error) => console.log(error));
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
