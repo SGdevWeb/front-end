@@ -10,6 +10,10 @@ function Comments({ comments, update, delComment }) {
 
   const commentsByDate = comments.sort(sortDate);
 
+  function isModified(comment) {
+    if (comment.createdAt !== comment.updatedAt) return true;
+  }
+
   return (
     <>
       {commentsByDate.map((comment) => (
@@ -18,6 +22,7 @@ function Comments({ comments, update, delComment }) {
           comment={comment}
           update={update}
           delComment={delComment}
+          isModified={isModified(comment)}
         />
       ))}
     </>

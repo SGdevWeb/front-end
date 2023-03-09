@@ -10,7 +10,7 @@ import report from "../../assets/img/icons/report.svg";
 import trash from "../../assets/img/icons/trash.svg";
 import { getUser } from "../../api/backend/account";
 
-function Comment({ comment, update, delComment }) {
+function Comment({ comment, update, delComment, isModified }) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
@@ -31,13 +31,24 @@ function Comment({ comment, update, delComment }) {
     <div key={comment._id}>
       <div className="flex border-2 border-gradient-v rounded-lg py-2 px-4 mb-2">
         <div className="w-full">
-          <div className="flex">
-            <div className="flex items-center w-8 h-8 mr-2">
-              <img className="w-full rounded-full" src={avatar} alt="avatar" />
+          <div className="flex justify-between">
+            <div className="flex">
+              <div className="flex items-center w-8 h-8 mr-2">
+                <img
+                  className="w-full rounded-full"
+                  src={avatar}
+                  alt="avatar"
+                />
+              </div>
+              <div className="flex items-center">
+                <div className="font-semibold text-dark">{username}</div>
+              </div>
             </div>
-            <div className="flex items-center">
-              <div className="font-semibold text-dark">{username}</div>
-            </div>
+            {isModified && (
+              <div className="mr-2 flex items-center">
+                <small>Modifié</small>
+              </div>
+            )}
           </div>
           {isUpdate ? (
             <UpdateComment
