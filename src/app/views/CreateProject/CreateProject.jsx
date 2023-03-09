@@ -27,11 +27,7 @@ export default function CreateProject({ isEditMode }) {
   useEffect(() => {
     if (isEditMode) {
       apiGateway
-<<<<<<< HEAD
-        .get("/project/" + uuid)
-=======
         .get("/project/" + uuid, config)
->>>>>>> 2d81d877e2316d41c07c8b15ee81c9f52dffcb77
         .then(({ data: { name, date_start, date_end, description } }) => {
           const dateStart = date_start.slice(0, date_start.indexOf("T"));
           const dateEnd = date_end
