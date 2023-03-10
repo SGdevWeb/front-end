@@ -5,14 +5,14 @@ import ModalEditSoftSkills from "./ModalEditSoftSkills";
 import apiGateway from '../../api/backend/apiGateway';
 import { URL_BACK_DELETE_EXPERIENCE, URL_BACK_DELETE_SOFTSKILL } from '../../constants/urls/urlBackEnd';
 
-function ProfileBoxEdit(props){
+function ProfileBoxEdit(props) {
     const [experience, setExperience] = useState({
-        name : props.name,
-        date_start : props.date_start ? props.date_start : "",
-        date_end : props.date_end ? props.date_end : "",
-        place : props.place ? props.place : "",
-        description : props.description,
-        uuid : props.uuid ? props.uuid : null,
+        name: props.name,
+        date_start: props.date_start ? props.date_start : "",
+        date_end: props.date_end ? props.date_end : "",
+        place: props.place ? props.place : "",
+        description: props.description,
+        uuid: props.uuid ? props.uuid : null,
     });
 
     const handleUpdate = (experienceUpdate) => {
@@ -35,61 +35,59 @@ function ProfileBoxEdit(props){
                     <p className="font-bold">Description</p>
                     <p className="text-sm">{experience.description}</p>
                 </div>
-                
-                    
-                    {props.exptitle ? (
+
+
+                {props.exptitle ? (
                     <div className="flex flex-col justify-between ml-1">
                         <button onClick={async () => {
-                            await apiGateway.post(URL_BACK_DELETE_EXPERIENCE,{uuid : props.uuid}).then((res) => {
-                                console.log(res.data)
+                            await apiGateway.post(URL_BACK_DELETE_EXPERIENCE, { uuid: props.uuid }).then((res) => {
                                 props.handleDelete(res.data.result);
                             }).catch((err) => {
-                                if(err){
+                                if (err) {
                                     alert("erreur server")
                                 }
                             });
                         }}>
-                        <XIcon className='h-4 w-4 m-1' />
+                            <XIcon className='h-4 w-4 m-1' />
                         </button>
-                        <ModalEditExperience 
+                        <ModalEditExperience
                             name={experience.name}
                             date_start={experience.date_start}
                             date_end={experience.date_end}
                             place={experience.place}
                             description={experience.description}
-                            uuid = {experience.uuid}
+                            uuid={experience.uuid}
                             handleUpdate={handleUpdate}
                         />
-                    </div>    
-                    ) :null}
+                    </div>
+                ) : null}
 
-                    {props.softtitle ? (
-                        <div className="flex flex-col justify-between ml-1">
-                            <button onClick={async () => {
-                            await apiGateway.post(URL_BACK_DELETE_SOFTSKILL,{uuid : props.uuid}).then((res) => {
-                                console.log(res.data)
+                {props.softtitle ? (
+                    <div className="flex flex-col justify-between ml-1">
+                        <button onClick={async () => {
+                            await apiGateway.post(URL_BACK_DELETE_SOFTSKILL, { uuid: props.uuid }).then((res) => {
                                 props.handleDelete(res.data.result);
                             }).catch((err) => {
-                                if(err){
+                                if (err) {
                                     alert("erreur server")
                                 }
                             });
                         }}>
-                        <XIcon className='h-4 w-4 m-1' />
+                            <XIcon className='h-4 w-4 m-1' />
                         </button>
-                    <ModalEditSoftSkills  
-                        name={experience.name}
-                        description={experience.description}
-                        uuid = {experience.uuid}
-                        handleUpdate={handleUpdate}
-                    />
+                        <ModalEditSoftSkills
+                            name={experience.name}
+                            description={experience.description}
+                            uuid={experience.uuid}
+                            handleUpdate={handleUpdate}
+                        />
                     </div>
-                    ) :null}
-                    
-                
+                ) : null}
+
+
             </div>
         </div>
     )
-} 
+}
 
 export default ProfileBoxEdit;

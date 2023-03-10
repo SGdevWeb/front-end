@@ -7,10 +7,9 @@ import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
 import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import apiGateway from '../../api/backend/apiGateway';
 
-
 export default function EditProfile() {
-  const expTitle = "Ajouter une expérience professionnelle";
-  const softTitle = "ajouter un soft_skill";
+  const expTitle = "Ajouter une expérience ";
+  const softTitle = "ajouter un soft skill";
   const [user, setUser] = useState({});
   const [experiences, setExperiences] = useState([]);
   const [soft_skills, setSoft_skills] = useState([])
@@ -94,7 +93,7 @@ export default function EditProfile() {
       </div>
       <p className="text-center my-5">Mes expériences</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
-        {user.experience?.map((item) => {
+        {experiences?.map((item) => {
           item.exptitle = expTitle
           item.handleDelete = handleDeleteExperience
           return (
@@ -109,7 +108,7 @@ export default function EditProfile() {
       </div>
       <p className="text-center my-5">Mes SoftSkills</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
-        {user.soft_skill?.map((item) => {
+        {soft_skills?.map((item) => {
           item.softtitle = softTitle;
           item.handleDelete = handleDeleteSoft_skill
           return (
