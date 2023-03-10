@@ -7,6 +7,7 @@ import validationSchema from "../../utils/registerSchema";
 import ReCAPTCHA from "react-google-recaptcha";
 import Welcome from "./Welcome";
 import { registerUser } from "../../api/backend/account";
+import InputPassword from "../base/InputPassword";
 
 /*
 Un message d'erreur apparaît lorsque l'utilisateur change de champ
@@ -144,11 +145,11 @@ function SignInCard() {
             {touched.username && errors.username && (
               <small className="error">{errors.username}</small>
             )}
-            <Input
+            <InputPassword
               type="password"
               placeholder="********"
-              name="password"
-              value={values.password || ""}
+              name="passwordConfirmation"
+              value={values.passwordConfirmation || ""}
               onChange={handleChange}
               onBlur={handleBlur}
             />
