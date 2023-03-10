@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-
 import { getPayloadToken, isTokenValid, setToken } from './..//services/tokenServices';
+
+import { createSlice } from '@reduxjs/toolkit';
 
 /**
  * initial state: {
@@ -25,12 +25,16 @@ export const authenticationSlice = createSlice({
             state.token = token;
             const claims = getPayloadToken(token);
             // console.log('claims', claims)
+<<<<<<< HEAD
             const user = {
                 userId : claims.sub.uuid,
                 username : claims.sub.username,
                 avatar : claims.sub.avatar,
                 roles : claims.role
             };
+=======
+            const user = claims.sub;
+>>>>>>> test
             state.user = user;
             state.isAuthenticated = isTokenValid(token);
             setToken(token);
@@ -38,6 +42,8 @@ export const authenticationSlice = createSlice({
         signOut: (state) => {
             localStorage.clear();
             sessionStorage.clear();
+            state.token = null,
+            state.user = null,
             state.isAuthenticated = false;
         },
     },
