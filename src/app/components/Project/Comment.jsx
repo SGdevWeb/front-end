@@ -64,7 +64,7 @@ function Comment({ comment, update, delComment, isModified }) {
           {!isUpdate &&
             isLogged &&
             user != null &&
-            comment.uuid_user === user.userId && (
+            comment.uuid_user === user.uuid && (
               <div className="flex items-end">
                 <button type="submit" onClick={() => setIsUpdate(!isUpdate)}>
                   <img src={pencil} alt="" />
@@ -79,7 +79,7 @@ function Comment({ comment, update, delComment, isModified }) {
           {!isUpdate &&
             isLogged &&
             user != null &&
-            comment.uuid_user === user.userId && (
+            comment.uuid_user === user.uuid && (
               <div className="flex items-end ml-1 w-5">
                 <button type="submit" onClick={() => delComment(comment.uuid)}>
                   <img src={trash} alt="" />
