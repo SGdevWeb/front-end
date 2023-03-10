@@ -55,11 +55,10 @@ export function isTokenValid(token) {
     try {
         const payload = getPayloadToken(token);
         // console.log('payload', payload)
-        const role = payload.role
-        const expDate = payload.iat
+        const expDate = payload.iat;
         const login = payload.sub;
         const dateNow = new Date();
-        return payload && role && login && expDate < dateNow.getTime() && true
+        return payload && login && expDate < dateNow.getTime();
     } catch {
         return false;
     }
