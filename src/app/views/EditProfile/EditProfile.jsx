@@ -27,6 +27,8 @@ export default function EditProfile() {
           experience: userData?.experience ?? [],
           soft_skill: userData?.soft_skill ?? []
         });
+        setExperiences(response.data.experience ? response.data.experience : []);
+        setSoft_skills(response.data.soft_skill ? response.data.soft_skill : []);
       } catch (error) {
         console.log(error);
       }
