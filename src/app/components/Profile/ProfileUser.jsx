@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
 
-const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description }) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description,uuid_user }) => {
   return (
     <Formik
       initialValues={{
@@ -24,7 +24,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             <UserCircleIcon />
             <p className="text-center">{username}</p>
             <p className="text-center mt-1">{work}</p>
-            <Link to={URL_EDITPROFILE}>
+            <Link to={`/editprofile/${uuid_user}`}>
               <Button className="mt-3" title="Editer mon profil" />
             </Link>
           </div>
@@ -54,25 +54,14 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             />
           </div>
           <div className="flex mx-5 ">
-            {date_birth ? (
-              <input
-                type="date"
-                name="date_birth"
-                value={date_birth}
-                className="input flex mt-5 w-full"
-                disabled
-              />
-            ) : (
               <input
                 type="text"
                 name="date_birth"
-                value="date non renseigné"
+                value={date_birth ? date_birth : "date non renseigné"}
                 className="input flex mt-5 w-full"
                 disabled
               />
-            )}
           </div>
-
           <div>
             <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
           </div>

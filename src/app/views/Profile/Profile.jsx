@@ -52,8 +52,8 @@ export default function Profile() {
           className="grid grid-cols-3 grid-rows-2 gap-4 mx-auto max-w-4xl"
           style={{ gridTemplateRows: "50px 50px" }}
         >
-          {technologies.map((items) => (
-            <div className="p-2" key={items.uuid} style={{ height: "50px" }}>
+          {technologies.map((items,index) => (
+            <div className="p-2"  key={index} style={{ height: "50px" }}>
               <PillTechnologie {...items} />
             </div>
           ))}
@@ -62,9 +62,9 @@ export default function Profile() {
       <p className="text-center my-5">Mes expériences</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {user.experience && user.experience.length > 0 ? (
-          user.experience?.map((item) => (
-            <div className="w-1/2 p-2" key={item.id}>
-              <ProfileBox {...item} />
+          user.experience?.map((item,index) => (
+            <div className="w-1/2 p-2" key={index}>
+              <ProfileBox {...item}  />
             </div>
           ))
         ) : (
@@ -74,8 +74,8 @@ export default function Profile() {
       <p className="text-center my-5">Mes SoftSkills</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {user.soft_skill && user.soft_skill.length > 0 ? (
-          user.soft_skill?.map((item) => (
-            <div className="w-1/2 p-2" key={item.id}>
+          user.soft_skill?.map((item,index) => (
+            <div className="w-1/2 p-2" key={index} >
               <ProfileBox {...item} />
             </div>
           ))
@@ -84,12 +84,12 @@ export default function Profile() {
             <h4 className="">Aucun soft-skill disponible</h4>
           </div>
         )}
+        </div>
 
         <div className="pb-5">
           <p className="text-center my-5">Mes projets</p>
           <ProfileProject />
         </div>
       </div>
-    </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import ProfileBoxEdit from "../../components/EditProfile/ProfileBoxEdit";
 import ProfileUser from "../../components/EditProfile/ProfileUserEdit";
 import ModalNewExperience from "../../components/EditProfile/ModalNewExperience";
@@ -13,62 +14,73 @@ export default function EditProfile() {
   const [user, setUser] = useState({});
   const [experiences, setExperiences] = useState([]);
   const [soft_skills, setSoft_skills] = useState([])
+  const { uuid } = useParams();
+
 
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await apiGateway.get(URL_BACK_GET_PROFILE);
-        setUser(response.data);
-        setExperiences(user.experience);
-        setSoft_skills(user.setSoft_skills)
+        const userData = response.data;
+        setUser({
+          ...userData,
+          experience: userData?.experience ?? [],
+          soft_skill: userData?.soft_skill ?? []
+        });
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, []);
+  }, [uuid]);
 
   const handleDeleteExperience = (uuid) => {
-      const currentUserData = user;
-      const foundExperience = currentUserData.experience.findIndex((exp) => exp.uuid === uuid);
-      if(foundExperience >= 0) {
-        currentUserData.experience.splice(foundExperience,1);
-        setUser(currentUserData);
-        setExperiences(user.experience);
-      }
+    const currentUserData = user;
+    const foundExperience = currentUserData.experience.findIndex((exp) => exp.uuid === uuid);
+    if (foundExperience >= 0) {
+      currentUserData.experience.splice(foundExperience, 1);
+      setUser(currentUserData);
+      setExperiences([...currentUserData.experience]);
+    }
   }
 
   const handleAddExperience = (exp) => {
     const currentUserData = user;
-    currentUserData.experience.push(exp)
+    currentUserData.experience.push(exp);
     setUser(currentUserData);
-    setExperiences(user.experience);
+    setExperiences([...currentUserData.experience]);
   }
 
   const handleDeleteSoft_skill = (uuid) => {
     const currentUserData = user;
     const foundSoft_skill = currentUserData.soft_skill.findIndex((exp) => exp.uuid === uuid);
-    if(foundSoft_skill >= 0) {
-      currentUserData.soft_skill.splice(foundSoft_skill,1);
+    if (foundSoft_skill >= 0) {
+      currentUserData.soft_skill.splice(foundSoft_skill, 1);
       setUser(currentUserData);
-      setExperiences(user.soft_skill);
+      setSoft_skills([...currentUserData.soft_skill]);
     }
-}
+  }
 
-const handleAddSoft_skill = (exp) => {
-  const currentUserData = user;
-  currentUserData.soft_skill.push(exp)
-  setUser(currentUserData);
-  setExperiences(user.soft_skill);
-}
+  const handleAddSoft_skill = (soft) => {
+    const currentUserData = user;
+    currentUserData.soft_skill.push(soft);
+    setUser(currentUserData);
+    setSoft_skills([...currentUserData.soft_skill]);
+  }
 
+  console.log(user);
   return (
     <div className="bg-[#ececec] justify-center flex-col">
       <ProfileUser
+        uuid_user={uuid}
         username={user.username}
-        job={user.work}
+        work={user.work}
         description={user.description}
+        date_birth={user.date_birth}
+        firstname={user.firstname}
+        lastname={user.lastname}
+        email={user.email}
       />
       <p className="text-center my-5">Liste des technos</p>
       <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">

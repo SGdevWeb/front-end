@@ -17,3 +17,6 @@ export const URL_BACK_UPDATE_DESCRIPTION = '/updatedescription'
 
 // Get profile for one user
 export const URL_BACK_GET_PROFILE = '/getprofile'
+
+//Update profile user 
+export const URL_BACK_UPDATE_USER = '/updateuser'
