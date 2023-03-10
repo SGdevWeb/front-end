@@ -23,7 +23,7 @@ function LoginCard() {
   const dispatch = useDispatch();
 
   const [captchaValidate, setcaptchaValidate] = useState(null);
-  const [errorLog, setErrorLog] = useState(false);
+  const [errorLog, setErrorLog] = useState("");
 
   // const captchagoogle = useRef (null);
 
@@ -67,10 +67,12 @@ function LoginCard() {
           dispatch(signIn(token));
           navigate(URL_HOME);
         }
+        setErrorLog("");
       })
-      .catch(() => {
+      .catch((error) => {
         // console.log('erreur requête login')
-        setErrorLog(true);
+        const { message } = error.response.data;
+        setErrorLog(message);
       });
   };
 
@@ -127,9 +129,7 @@ function LoginCard() {
           disabled={isSubmitting || !isValid}
         />
         {errorLog && (
-          <small className="error text-center mt-4">
-            Paire login / mot de passe incorrecte
-          </small>
+          <small className="error text-center mt-4">{errorLog}</small>
         )}
       </form>
       <div className="mb-4 w-full flex justify-end">

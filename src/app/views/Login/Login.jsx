@@ -8,7 +8,6 @@ function Login() {
       <div className="flex justify-center items-center h-full">
         <LoginCard />
       </div>
-      <CommentsContainer />
     </>
   );
 }

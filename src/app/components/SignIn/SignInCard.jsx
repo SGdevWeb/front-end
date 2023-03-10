@@ -66,7 +66,7 @@ function SignInCard() {
         setIsRegister(true);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log("error", error);
         if (error.message === "Network Error") {
           setErrorLog("Erreur serveur");
         } else {
