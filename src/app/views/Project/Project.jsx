@@ -35,27 +35,18 @@ function Project() {
       .get("/project/" + uuid)
       .then(({ data }) => setProject(data))
       .catch(() => nav(URL_HOME));
-    //dave
-    // Get collaborators and owners information
-    apiGateway
-      .get("/collaborators/project/" + uuid)
+    
+  }, []);
+  useEffect(() => {
+    apiGateway.get("/collaborators/project/" + uuid)
       .then(({ data }) => {
         const { owners, collaborators } = data;
-
-        
-        // Get information for each collaborator
         Promise.all(
-          collaborators.map((collaboratorId) =>
-            apiGateway.get(`/users/${collaboratorId}`, config)
-          )
+          collaborators.map((collaboratorId) => apiGateway.get(`/users/${collaboratorId}`, config))
         ).then((responses) => {
-          
           const collaboratorsData = responses.map((response) => response.data);
-
           setCollaborators(collaboratorsData);
         });
-
-        // Get information for each owner
         Promise.all(
           owners.map((ownerId) => apiGateway.get(`/users/${ownerId}`, config))
         ).then((responses) => {
