@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { commentPost } from "../../api/backend/comment";
 
 function NewComment({ addComment, uuid_project }) {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -19,20 +18,21 @@ function NewComment({ addComment, uuid_project }) {
       comment: value,
       uuid_project,
     };
-    setLoading(true);
     commentPost(newComment)
       .then((response) => {
-        addComment();
+        setInputValue("");
       })
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-    setInputValue("");
+      .catch((error) => console.log(error));
   }
 
   function updateTextAreaHeight(e) {
     e.target.style.height = "auto";
     e.target.style.height = e.target.scrollHeight + "px";
   }
+
+  useEffect(() => {
+    addComment();
+  }, [inputValue]);
 
   return (
     <div className="mb-3">
@@ -50,7 +50,6 @@ function NewComment({ addComment, uuid_project }) {
           className="flex items-end cursor-pointer"
           type="submit"
           onClick={handleSubmit}
-          disabled={loading}
         >
           <span className="text-3xl font-bold text- text-transparent bg-clip-text gradient mr-1">
             {">"}
