@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
 
 import Button from "../../components/Base/ButtonBis";
+import CollaboratorCard from "../../components/Project/CollaboratorCard";
 import CommentsContainer from "../../components/Project/CommentsContainer";
 import apiGateway from "../../api/backend/apiGateway";
+import { getToken } from "../../services/tokenServices";
 
 function Project() {
   const nav = useNavigate();
@@ -18,13 +20,54 @@ function Project() {
     description: "",
   });
 
+  //dave
+  const [collaborators, setCollaborators] = useState([]);
+  const [owners, setOwners] = useState([]);
+  const token = getToken();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   useEffect(() => {
     apiGateway
       .get("/project/" + uuid)
       .then(({ data }) => setProject(data))
       .catch(() => nav(URL_HOME));
+    //dave
+    // Get collaborators and owners information
+    apiGateway
+      .get("/collaborators/project/" + uuid)
+      .then(({ data }) => {
+        const { owners, collaborators } = data;
+
+        
+        // Get information for each collaborator
+        Promise.all(
+          collaborators.map((collaboratorId) =>
+            apiGateway.get(`/users/${collaboratorId}`, config)
+          )
+        ).then((responses) => {
+          
+          const collaboratorsData = responses.map((response) => response.data);
+
+          setCollaborators(collaboratorsData);
+        });
+
+        // Get information for each owner
+        Promise.all(
+          owners.map((ownerId) => apiGateway.get(`/users/${ownerId}`, config))
+        ).then((responses) => {
+          const ownersData = responses.map((response) => response.data);
+          setOwners(ownersData);
+        });
+      })
+      .catch(() => nav(URL_HOME));
   }, []);
 
+
+  
   return (
     <div className="items-center gap-4 p-2 bg-gray-1 rounded-md">
       <div>
@@ -43,6 +86,33 @@ function Project() {
         <h2 className="text-2xl underline">Description du projet</h2>
         <p className="text-base break-words">{project.description}</p>
       </div>
+      <h2 className="text-2xl underline">Collaborateurs</h2>
+
+      <div className="flex flex-wrap">
+        {owners.map((item) => (
+          
+          <CollaboratorCard
+          
+            key={item.user.uuid}
+            firstname={item.user.firstname}
+            username={item.user.username}
+            email={item.user.email}
+          />
+        ))}
+      </div>
+      <div className="flex flex-wrap">
+        {collaborators.map((item) => (
+          
+          <CollaboratorCard
+            key={item.user.uuid}
+            firstname={item.user.firstname}
+            username={item.user.username}
+            email={item.user.email}
+          />
+        ))}
+      </div>
+
+
       <CommentsContainer uuid_project={uuid} />
       <div className="flex justify-center">
         <Link to={URL_PROJECT_UPDATE + uuid}>
