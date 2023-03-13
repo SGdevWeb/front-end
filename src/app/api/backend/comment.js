@@ -2,16 +2,16 @@ import { URL_BACK_COMMENT } from "../../constants/urls/urlBackEnd";
 import apiGateway from "./apiGateway";
 import { getToken } from "../../services/tokenServices";
 
-const token = getToken();
-
-const config = {
-  headers: {
+const config = () => {
+  const token = getToken();
+  const headers = {
     Authorization: `Bearer ${token}`,
-  },
+  };
+  return { headers };
 };
 
 export function commentPost(values) {
-  return apiGateway.post(URL_BACK_COMMENT, values, config);
+  return apiGateway.post(URL_BACK_COMMENT, values, config());
 }
 
 export function getAllComments() {
@@ -19,7 +19,7 @@ export function getAllComments() {
 }
 
 export function updateComment(values) {
-  return apiGateway.put(URL_BACK_COMMENT, values, config);
+  return apiGateway.put(URL_BACK_COMMENT, values, config());
 }
 
 export function getCommentByProjectId(id) {
@@ -27,5 +27,5 @@ export function getCommentByProjectId(id) {
 }
 
 export function deleteComment(id) {
-  return apiGateway.delete(URL_BACK_COMMENT + `/${id}`, config);
+  return apiGateway.delete(URL_BACK_COMMENT + `/${id}`, config());
 }

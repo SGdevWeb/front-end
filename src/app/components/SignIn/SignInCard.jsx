@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/base/Button";
 import Input from "../../components/base/Input";
 import { useFormik } from "formik";
@@ -8,6 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Welcome from "./Welcome";
 import { registerUser } from "../../api/backend/account";
 import InputPassword from "../base/InputPassword";
+import { URL_LOGIN } from "../../constants/urls/urlFrontEnd";
 
 /*
 Un message d'erreur apparaît lorsque l'utilisateur change de champ
@@ -21,6 +22,8 @@ function SignInCard() {
   const [captchaValidate, setcaptchaValidate] = useState(null);
   const [isRegister, setIsRegister] = useState(false);
   const [errorLog, setErrorLog] = useState("");
+
+  const navigate = useNavigate();
 
   const captchagoogle = useRef(null);
 
@@ -63,14 +66,16 @@ function SignInCard() {
       .then((response) => {
         console.log("utilisateur enregistrée");
         setErrorLog("");
+        navigate(URL_LOGIN);
         resetForm();
-        setIsRegister(true);
+        // setIsRegister(true);
       })
       .catch((error) => {
         console.log("error", error);
         if (error.message === "Network Error") {
           setErrorLog("Erreur serveur");
-        } else {
+        }
+        if (error.response) {
           console.log(error.response.data.message);
           setErrorLog(error.response.data.message);
         }
