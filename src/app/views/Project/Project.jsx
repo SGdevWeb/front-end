@@ -41,7 +41,7 @@ function Project() {
       </div>
       <div>
         <h2 className="text-2xl underline">Description du projet</h2>
-        <p className="text-base">{project.description}</p>
+        <p className="text-base break-words">{project.description}</p>
       </div>
       <CommentsContainer uuid_project={uuid} />
       <div className="flex justify-center">
