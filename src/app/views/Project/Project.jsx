@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
 
 import Button from "../../components/Base/ButtonBis";
+import LikeButton from "../../components/Project/LikeButton";
 import CollaboratorCard from "../../components/Project/CollaboratorCard";
 import CommentsContainer from "../../components/Project/CommentsContainer";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
+import selectIsLogged from "../../redux-store/authenticationSlice";
 
 function Project() {
   const nav = useNavigate();
@@ -61,7 +63,7 @@ function Project() {
   
   return (
     <div className="items-center gap-4 p-2 bg-gray-1 rounded-md">
-      <div>
+      <div className="flex justify-between">
         <div>
           <h1 className="text-2xl">{project.name}</h1>
           <h3 className="text-xs">
@@ -71,6 +73,14 @@ function Project() {
                 project.date_end.slice(0, project.date_start.indexOf("T"))
               : ""}
           </h3>
+        </div>
+        <div>
+        <LikeButton 
+          isLogged={selectIsLogged} 
+          countLike={project.countlikes} 
+          isliked={false} 
+          uuid_project={project.uuid}
+        />
         </div>
       </div>
       <div>

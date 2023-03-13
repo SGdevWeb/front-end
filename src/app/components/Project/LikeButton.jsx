@@ -8,7 +8,7 @@ function LikeButton({ isLogged, countLike, isliked, uuid_project}) {
     const [liked, setliked] = useState(isliked)
     const [likes,setlikes] = useState(countLike)
 	return (
-        <div className={`border-gradient-v border-2 rounded-lg text-primary px-1 py-1 flex flex-wrap justify-center items-center max-w-fit`}>
+        <div className={`border-gradient-v border-2 rounded-lg text-primary px-1 flex flex-wrap justify-center items-center max-w-fit`}>
             
             {isLogged ? (
                 <button 
