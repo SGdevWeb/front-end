@@ -51,26 +51,39 @@ export default function CreateProject({ isEditMode }) {
   };
 
   const onSubmit = async (formValues) => {
+    const { date_start, date_end } = formValues;
+    if (date_end === "") {
+      delete formValues.date_end;
+    }
+    if (new Date(date_end) < new Date(date_start)) {
+      setError(
+        "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
+      );
+      return;
+    }
+    if (Date.now() < new Date(date_start)) {
+      setError(
+        "Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui."
+      );
+      return;
+    }
     try {
-      if (formValues.date_end === "") delete formValues.date_end;
-      if (new Date(formValues.date_end) < new Date(formValues.date_start))
-        throw new Error(
-          "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
-        );
-      if (Date.now() < new Date(formValues.date_start))
-        throw new Error(
-          "Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui."
-        );
       const response = isEditMode
         ? await apiGateway.put(`/project/update/${uuid}`, formValues, config)
         : await apiGateway.post("/project/create/", formValues, config);
       resetForm();
       navigate("/project/" + response.data.uuid);
     } catch (error) {
-      setError(error.response ? error.response.data.message : error.message);
+      if (error.response && error.response.status === 401) {
+        setError(
+          "Il est impossible de modifier un projet dont vous n'êtes pas le propriétaire"
+        );
+      } else {
+        setError(error.response ? error.response.data.message : error.message);
+      }
     }
   };
-
+  
   const {
     handleSubmit,
     values,
