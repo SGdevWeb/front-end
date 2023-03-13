@@ -18,8 +18,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      const token = getToken();
-      if (token) dispatch(signIn(token));
+    const token = getToken();
+    if (token) dispatch(signIn(token));
   }, []);
 
   return (

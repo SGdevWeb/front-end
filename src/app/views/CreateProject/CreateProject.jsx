@@ -1,74 +1,218 @@
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../components/Base/ButtonBis";
+import CollaboratorCard from "../../components/Project/CollaboratorCard";
 import InputBis from "../../components/base/InputBis";
-import Select from "../../components/base/Select";
+import { ModalAdd } from "../../components/Project/ModalAdd";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
-import { selectToken } from "../../redux-store/authenticationSlice";
-import typesProject from "../../fakeData/TypeData";
+import { getToken } from "../../services/tokenServices";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import validationSchema from "../../utils/createProjectSchema";
 
-export default function CreateProject() {
-	const navigate = useNavigate();
+export default function CreateProject({ isEditMode }) {
+  const navigate = useNavigate();
+  const [error, setError] = useState();
+  const { uuid } = useParams();
+  const token = getToken();
+  const [showModal, setShowModal] = useState(null);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [collaborators, setCollaborators] = useState([]);
+  const handleModalClose = (selectedUsers) => {
+    setSelectedUsers(selectedUsers);
+  };
 
-	const [error, setError] = useState();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-	const token = useSelector(selectToken);
-	
-	const initialValues = {
-		name: "",
-		date_start: "",
-		date_end: "",
-		description: "",
-	};
+  useEffect(() => {
+    const fetchCollaborators = async () => {
+      if (selectedUsers.length > 0) {
+        const promises = selectedUsers.map(async (userId) => {
+          const response = await apiGateway.get(`/users/${userId}`, config);
+          return response.data;
+        });
+        const users = await Promise.all(promises);
+        setCollaborators(users);
+      } else {
+        setCollaborators([]);
+      }
+    };
+    fetchCollaborators();
+    if (isEditMode) {
+      apiGateway
+        .get("/project/" + uuid, config)
+        .then(({ data: { name, date_start, date_end, description } }) => {
+          const dateStart = date_start.slice(0, date_start.indexOf("T"));
+          const dateEnd = date_end
+            ? date_end.slice(0, date_end.indexOf("T"))
+            : "";
+          setValues({
+            name,
+            date_start: dateStart,
+            date_end: dateEnd,
+            description,
+          });
+        });
+    }
+  }, [selectedUsers, isEditMode, uuid]); //modif dave
 
-	const onSubmit = async (formValues) => {
-		try {
-			if (formValues.date_end === "") delete formValues.date_end;
-			if (new Date(formValues.date_end) < new Date(formValues.date_start)) 
-        throw new Error("Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin.");
-			if (Date.now() < new Date(formValues.date_start)) 
-        throw new Error("Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui.");
-			const response = await apiGateway.post("/project/create/", formValues, { headers: {
-				Authorization : `Bearer ${token}`
-				}});
-			resetForm();
-			navigate("/project/" + response.data.uuid);
-		} catch (error) {
-			setError(error.response ? error.response.data.message : error.message);
-		}
-	};
+  const initialValues = {
+    name: "",
+    date_start: "",
+    date_end: "",
+    description: "",
+  };
 
-	const { handleSubmit, values, touched, isValid, isSubmitting, handleChange, handleBlur, resetForm, errors } = useFormik({
-		initialValues,
-		validationSchema,
-		onSubmit,
-	});
+  const onSubmit = async (formValues) => {
+    try {
+      if (formValues.date_end === "") delete formValues.date_end;
+      if (new Date(formValues.date_end) < new Date(formValues.date_start))
+        throw new Error(
+          "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
+        );
+      if (Date.now() < new Date(formValues.date_start))
+        throw new Error(
+          "Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui."
+        );
+      let response;
+      if (isEditMode) {
+        response = await apiGateway.put(
+          `/project/update/${uuid}`,
+          formValues,
+          config
+        );
+      } else {
+        response = await apiGateway.post(
+          "/project/create/",
+          formValues,
+          config
+        );
+        const body = {
+          project_uuid: response.data.uuid,
+          collaborators: selectedUsers,
+        };
+        await apiGateway.post("/collaborators/add/", body);
+      }
+      resetForm();
+      navigate("/project/" + response.data.uuid);
+    } catch (error) {
+      setError(error.response ? error.response.data.message : error.message);
+    }
+  };
 
-	return (
-		<form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
-			<img className="rounded-xl justify-center items-center" src={"https://dummyimage.com/1200x300.png/5fa2dd/ffffff"} alt="Projet" loading="lazy" />
-			<div className="flex justify-between py-3">
-				<div className="flex flex-col gap-1">
-					<InputBis type="text" placeholder="Nom du projet" name="name" value={values.name} onChange={handleChange} onBlur={handleBlur} />
-					{touched.name && errors.name && <small className="error">{errors.name}</small>}
-				</div>
-				<div className="flex flex-col gap-1">
-					<InputBis type="date" placeholder="Date de Début" name="date_start" value={values.date_start} onChange={handleChange} onBlur={handleBlur} />
-					{touched.date_start && errors.date_start && <small className="error">{errors.date_start}</small>}
+  const {
+    handleSubmit,
+    values,
+    setValues,
+    touched,
+    isValid,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    resetForm,
+    errors,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
-					<InputBis type="date" placeholder="Date de Fin" name="date_end" value={values.date_end} onChange={handleChange} onBlur={handleBlur} />
-					{touched.date_end && errors.date_end && <small className="error">{errors.date_end}</small>}
-				</div>
-			</div>
-			<TextArea placeholder={"Description du projet"} className="w-full" rows={"10"} name="description" value={values.description} onChange={handleChange} onBlur={handleBlur} />
-			{touched.description && errors.description && <small className="error">{errors.description}</small>}
-			{error && <p className="error p-5 m-1 border-2 border-red-700 bg-white">{error}</p>}
-			<Button type="submit" disabled={!isValid || isSubmitting} className="flex mx-auto mt-3" title="Créer le projet" />
-		</form>
-	);
+  return (
+    <Fragment>
+      <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
+        <div className="flex justify-between my-3 pt-3">
+          <div className="flex flex-col gap-1">
+            <InputBis
+              type="text"
+              placeholder={isEditMode ? values.name : "Nom du projet"}
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.name && errors.name && (
+              <small className="error">{errors.name}</small>
+            )}
+          </div>
+          <div className="flex flex-col gap-1">
+            <InputBis
+              type="date"
+              name="date_start"
+              value={values.date_start}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.date_start && errors.date_start && (
+              <small className="error">{errors.date_start}</small>
+            )}
+            <InputBis
+              type="date"
+              name="date_end"
+              value={values.date_end}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.date_end && errors.date_end && (
+              <small className="error">{errors.date_end}</small>
+            )}
+          </div>
+        </div>
+        <button
+          type="button"
+          className="w-full sm:w-3/5 md:w-3/5 lg:w-2/6 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2"
+          title="Ajouter des collaborateurs"
+          onClick={() => setShowModal(true)}
+        >
+          Ajouter des collaborateurs
+        </button>
+        {selectedUsers.length > 0 && (
+          <div className="flex flex-wrap">
+            {collaborators.map((item) => (
+              <CollaboratorCard
+                key={item.user.uuid}
+                firstname={item.user.firstname}
+                username={item.user.username}
+                email={item.user.email}
+              />
+            ))}
+          </div>
+        )}
+        <TextArea
+          placeholder={
+            isEditMode ? values.description : "Description du projet"
+          }
+          className="w-full"
+          rows={"10"}
+          name="description"
+          value={values.description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {touched.description && errors.description && (
+          <small className="error">{errors.description}</small>
+        )}
+        {error && (
+          <p className="error p-5 m-1 border-2 border-red-700 bg-white">
+            {error}
+          </p>
+        )}
+        <Button
+          type="submit"
+          disabled={!isValid || isSubmitting}
+          className="flex mx-auto mt-3"
+          title={isEditMode ? "Modifier le projet" : "Créer le projet"}
+        />
+      </form>
+      <ModalAdd
+        isVisible={showModal}
+        onClose={() => setShowModal(false)}
+        onClose1={handleModalClose}
+      ></ModalAdd>
+    </Fragment>
+  );
 }
