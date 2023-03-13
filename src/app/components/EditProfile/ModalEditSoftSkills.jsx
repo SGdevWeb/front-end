@@ -3,7 +3,7 @@ import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
-import { URL_BACK_UPDATE_SOFTSKILL } from '../../constants/urls/urlBackEnd';
+import {updateSoftSkill} from '../../api/backend/profile';
 import validationSchema from '../../utils//soft_skillSchema';
 
 export default function ModalEditSoftSkills(props) {
@@ -25,7 +25,7 @@ export default function ModalEditSoftSkills(props) {
                         valueJson.soft_skill = values;
                         valueJson.soft_skill.uuid = props.uuid;
                         console.log(valueJson)
-                        await apiGateway.post(URL_BACK_UPDATE_SOFTSKILL, values).then((res) => {
+                        await updateSoftSkill(valueJson).then((res) => {
                             props.handleUpdate(res.data.result);
                             setShowModal(false);
                         }).catch((err) => {

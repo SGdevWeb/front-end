@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis';
-import apiGateway from '../../api/backend/apiGateway';
-import { URL_BACK_UPDATE_EXPERIENCE } from '../../constants/urls/urlBackEnd';
+import {updateExperience} from '../../api/backend/profile';
 import validationSchema from '../../utils/experienceSchema';
 
 export default function ModalEditExperience(props) {
@@ -32,7 +31,7 @@ export default function ModalEditExperience(props) {
                         const valueJson = {};
                         valueJson.experience = values;
                         valueJson.experience.uuid = props.uuid;
-                        await apiGateway.post(URL_BACK_UPDATE_EXPERIENCE, values).then((res) => {
+                        await updateExperience(valueJson).then((res) => {
                             props.handleUpdate(res.data.result);
                             setShowModal(false);
                         }).catch((err) => {

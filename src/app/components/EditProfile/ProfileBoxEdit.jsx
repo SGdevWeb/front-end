@@ -3,7 +3,8 @@ import { XIcon } from "@heroicons/react/solid";
 import ModalEditExperience from "./ModalEditExeperience";
 import ModalEditSoftSkills from "./ModalEditSoftSkills";
 import apiGateway from '../../api/backend/apiGateway';
-import { URL_BACK_DELETE_EXPERIENCE, URL_BACK_DELETE_SOFTSKILL } from '../../constants/urls/urlBackEnd';
+import {deleteExperience, deleteSoftSkill} from '../../api/backend/profile';
+
 
 function ProfileBoxEdit(props) {
     const [experience, setExperience] = useState({
@@ -40,7 +41,7 @@ function ProfileBoxEdit(props) {
                 {props.exptitle ? (
                     <div className="flex flex-col justify-between ml-1">
                         <button onClick={async () => {
-                            await apiGateway.post(URL_BACK_DELETE_EXPERIENCE, { uuid: props.uuid }).then((res) => {
+                            await deleteExperience({ uuid: props.uuid }).then((res) => {
                                 props.handleDelete(res.data.result);
                             }).catch((err) => {
                                 if (err) {
@@ -65,7 +66,7 @@ function ProfileBoxEdit(props) {
                 {props.softtitle ? (
                     <div className="flex flex-col justify-between ml-1">
                         <button onClick={async () => {
-                            await apiGateway.post(URL_BACK_DELETE_SOFTSKILL, { uuid: props.uuid }).then((res) => {
+                            await deleteSoftSkill({ uuid: props.uuid }).then((res) => {
                                 props.handleDelete(res.data.result);
                             }).catch((err) => {
                                 if (err) {

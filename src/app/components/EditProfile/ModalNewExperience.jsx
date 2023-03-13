@@ -3,7 +3,7 @@ import { XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
-import { URL_BACK_NEW_EXPERIENCE } from '../../constants/urls/urlBackEnd';
+import {postExperience} from '../../api/backend/profile';
 import validationSchema from '../../utils/experienceSchema'
 
 export default function ModalNewExperience(props) {
@@ -27,7 +27,7 @@ export default function ModalNewExperience(props) {
                     onSubmit={async (values, actions) => {
                         const valueJson = {};
                         valueJson.experience = values;
-                        await apiGateway.post(URL_BACK_NEW_EXPERIENCE, values).then((res) => {
+                        await postExperience(valueJson).then((res) => {
                             props.handleAdd(res.data.result)
                             setShowModal(false);
                         }).catch((err) => {

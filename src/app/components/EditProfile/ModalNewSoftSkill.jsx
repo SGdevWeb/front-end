@@ -3,7 +3,7 @@ import { XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
-import { URL_BACK_NEW_SOFTSKILL } from '../../constants/urls/urlBackEnd';
+import {postSoftSkill} from '../../api/backend/profile';
 import validationSchema from '../../utils//soft_skillSchema';
 
 export default function ModalNewSoftSkills(props) {
@@ -24,7 +24,7 @@ export default function ModalNewSoftSkills(props) {
                     onSubmit={async (values, actions) => {
                         const valueJson = {};
                         valueJson.soft_skill = values;
-                        await apiGateway.post(URL_BACK_NEW_SOFTSKILL, values).then((res) => {
+                        await postSoftSkill(valueJson).then((res) => {
                             props.handleAdd(res.data.result)
                             setShowModal(false);
                         }).catch((err) => {

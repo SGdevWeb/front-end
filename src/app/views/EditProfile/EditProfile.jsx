@@ -6,6 +6,7 @@ import ModalNewExperience from "../../components/EditProfile/ModalNewExperience"
 import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
 import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import apiGateway from '../../api/backend/apiGateway';
+import {getProfile} from '../../api/backend/profile';
 
 export default function EditProfile() {
   const expTitle = "Ajouter une expérience ";
@@ -20,7 +21,7 @@ export default function EditProfile() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await apiGateway.get(URL_BACK_GET_PROFILE);
+        const response = getProfile();
         const userData = response.data;
         setUser({
           ...userData,
