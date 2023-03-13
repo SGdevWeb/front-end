@@ -148,8 +148,8 @@ function SignInCard() {
             <InputPassword
               type="password"
               placeholder="********"
-              name="password"
-              value={values.password || ""}
+              name="passwordConfirmation"
+              value={values.passwordConfirmation || ""}
               onChange={handleChange}
               onBlur={handleBlur}
             />
