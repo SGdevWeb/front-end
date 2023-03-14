@@ -140,6 +140,7 @@ export default function CreateProject({ isEditMode }) {
             )}
           </div>
           <div className="flex flex-col gap-1">
+            <label htmlFor="date_start">Date de début</label>
             <InputBis
               type="date"
               name="date_start"
@@ -150,6 +151,7 @@ export default function CreateProject({ isEditMode }) {
             {touched.date_start && errors.date_start && (
               <small className="error">{errors.date_start}</small>
             )}
+            <label htmlFor="date_end">Date de fin</label>
             <InputBis
               type="date"
               name="date_end"
@@ -203,7 +205,7 @@ export default function CreateProject({ isEditMode }) {
         )}
         <Button
           type="submit"
-          disabled={!isValid || isSubmitting}
+          disabled={isSubmitting}
           className="flex mx-auto mt-3"
           title={isEditMode ? "Modifier le projet" : "Créer le projet"}
         />
