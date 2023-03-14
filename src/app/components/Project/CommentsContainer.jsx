@@ -42,8 +42,7 @@ function CommentsContainer({ uuid_project }) {
   const delComment = (commentId) => {
     if (confirm("Etes-vous sûr de vouloir supprimer ce commentaire ?")) {
       deleteComment(commentId)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           getCommentByProjectId(uuid_project)
             .then((response) => {
               const comments = response.data;
