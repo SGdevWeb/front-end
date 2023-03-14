@@ -20,6 +20,7 @@ function Project() {
     date_start: "",
     date_end: "",
     description: "",
+    countLikes: 0
   });
 
   //dave
@@ -37,7 +38,6 @@ function Project() {
       .get("/project/" + uuid)
       .then(({ data }) => setProject(data))
       .catch(() => nav(URL_HOME));
-    
   }, []);
   useEffect(() => {
     apiGateway.get("/collaborators/project/" + uuid)
@@ -60,7 +60,7 @@ function Project() {
   }, []);
 
 
-  
+  console.log(project)
   return (
     <div className="items-center gap-4 p-2 bg-gray-1 rounded-md">
       <div className="flex justify-between">
@@ -77,9 +77,9 @@ function Project() {
         <div>
         <LikeButton 
           isLogged={selectIsLogged} 
-          countLike={project.countlikes} 
           isliked={false} 
-          uuid_project={project.uuid}
+          project={project}
+          setProject = {setProject}
         />
         </div>
       </div>
