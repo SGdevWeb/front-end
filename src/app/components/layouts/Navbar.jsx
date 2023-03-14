@@ -46,7 +46,7 @@ const Navbar = () => {
 			{isLoggued && enableDropdown && (
 				<div className="container mx-auto relative">
 					<div className="bg-gray-1 text-center px-3 pb-2 w-48 absolute right-0 rounded-b-md">
-						<Link to={`/profile/${user.userId}`}>
+						<Link to={`/profile/${user.uuid}`}>
 							<div className="border-2 border-neutral-400 rounded m-1">Mon profil</div>
 						</Link>
 						<Link to="/profile#projects">

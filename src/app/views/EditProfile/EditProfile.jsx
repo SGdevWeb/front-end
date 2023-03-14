@@ -69,19 +69,18 @@ export default function EditProfile() {
     setUser(currentUserData);
     setSoft_skills([...currentUserData.soft_skill]);
   }
-
-  console.log(user);
+  
   return (
     <div className="bg-[#ececec] justify-center flex-col">
       <ProfileUser
         uuid_user={uuid}
-        username={user.username}
-        work={user.work}
-        description={user.description}
-        date_birth={user.date_birth}
-        firstname={user.firstname}
-        lastname={user.lastname}
-        email={user.email}
+        username={user?.username}
+        work={user?.work}
+        description={user?.description}
+        date_birth={user?.date_birth}
+        firstname={user?.firstname}
+        lastname={user?.lastname}
+        email={user?.email}
       />
       <p className="text-center my-5">Liste des technos</p>
       <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">
