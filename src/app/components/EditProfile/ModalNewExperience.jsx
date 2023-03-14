@@ -25,9 +25,7 @@ export default function ModalNewExperience(props) {
                         description: ""
                     }}
                     onSubmit={async (values, actions) => {
-                        const valueJson = {};
-                        valueJson.experience = values;
-                        await postExperience(valueJson).then((res) => {
+                        await postExperience(values).then((res) => {
                             props.handleAdd(res.data.result)
                             setShowModal(false);
                         }).catch((err) => {
@@ -117,7 +115,7 @@ export default function ModalNewExperience(props) {
                                                     ) : null}
                                                 </div>
                                                 <ButtonBis
-                                                    title="Modifier"
+                                                    title="Ajouter une experience"
                                                     type="submit"
                                                 />
                                             </div>

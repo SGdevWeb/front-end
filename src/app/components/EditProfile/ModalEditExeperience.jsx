@@ -28,10 +28,8 @@ export default function ModalEditExperience(props) {
                         description: props.description ? props.description : ""
                     }}
                     onSubmit={async (values, actions) => {
-                        const valueJson = {};
-                        valueJson.experience = values;
-                        valueJson.experience.uuid = props.uuid;
-                        await updateExperience(valueJson).then((res) => {
+                        values.uuid = props.uuid;
+                        await updateExperience(values).then((res) => {
                             props.handleUpdate(res.data.result);
                             setShowModal(false);
                         }).catch((err) => {

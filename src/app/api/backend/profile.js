@@ -20,10 +20,11 @@ const config = () => {
 
 
 export function getProfile(uuid) {
-    return apiGateway.get(URL_BACK_GET_PROFILE, uuid, config());
+    return apiGateway.get(URL_BACK_GET_PROFILE, config());
   }
 
 export function postExperience(values) {
+  console.log(values)
   return apiGateway.post(URL_BACK_NEW_EXPERIENCE, values, config())
 }
 

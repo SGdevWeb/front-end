@@ -21,7 +21,7 @@ export default function EditProfile() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = getProfile();
+        const response = await getProfile();
         const userData = response.data;
         setUser({
           ...userData,

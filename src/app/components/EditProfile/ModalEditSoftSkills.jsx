@@ -21,11 +21,8 @@ export default function ModalEditSoftSkills(props) {
                         description: props.description ? props.description : ""
                     }}
                     onSubmit={async (values, actions) => {
-                        const valueJson = {};
-                        valueJson.soft_skill = values;
-                        valueJson.soft_skill.uuid = props.uuid;
-                        console.log(valueJson)
-                        await updateSoftSkill(valueJson).then((res) => {
+                        values.uuid = props.uuid;
+                        await updateSoftSkill(values).then((res) => {
                             props.handleUpdate(res.data.result);
                             setShowModal(false);
                         }).catch((err) => {

@@ -22,9 +22,7 @@ export default function ModalNewSoftSkills(props) {
                         description: ""
                     }}
                     onSubmit={async (values, actions) => {
-                        const valueJson = {};
-                        valueJson.soft_skill = values;
-                        await postSoftSkill(valueJson).then((res) => {
+                        await postSoftSkill(values).then((res) => {
                             props.handleAdd(res.data.result)
                             setShowModal(false);
                         }).catch((err) => {
