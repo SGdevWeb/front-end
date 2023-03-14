@@ -16,7 +16,7 @@ export default Yup.object({
     .required("Merci de renseigner votre prénom")
     .matches(
       ONLY_ALPHA,
-      "Le nom doit contenir uniquement des caractères alphabétiques"
+      "Le prénom doit contenir uniquement des caractères alphabétiques"
     ),
   username: Yup.string().required(
     "Veuillez choisir un nom d'utilisateur-trice"
