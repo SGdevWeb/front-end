@@ -29,7 +29,6 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             </Link>
           </div>
           <div className="border-2 border-red-500 flex flex-col ml-5 rounded-md pb-5 w-11/12">
-            <p className="text-center">Description</p>
             <p className="pt-5">{description}</p>
           </div>
         </div>

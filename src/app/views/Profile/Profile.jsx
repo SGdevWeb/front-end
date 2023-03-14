@@ -41,6 +41,7 @@ export default function Profile() {
           firstname={user.firstname}
           lastname={user.lastname}
           email={user.email}
+          description={user.description}
           date_birth={user.date_birth}
           work={user.work}
           username={user.username}
