@@ -1,10 +1,11 @@
 import * as Yup from "yup";
-import { ONLY_ALPHA, PASSWORD_VALID } from "../constants/regex";
+import { EMAIL, ONLY_ALPHA, PASSWORD_VALID } from "../constants/regex";
 
 export default Yup.object({
   email: Yup.string()
     .required("Le champ email est requis")
-    .email("Veuillez saisir une adresse email valide"),
+    .email("Veuillez saisir une adresse email valide")
+    .matches(EMAIL, "Veuillez saisir une adresse email valide"),
   lastname: Yup.string()
     .required("Merci de renseigner votre nom")
     .matches(
