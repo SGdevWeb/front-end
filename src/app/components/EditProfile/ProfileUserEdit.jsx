@@ -12,15 +12,6 @@ import { editProfile } from "../../api/backend/profile";
 const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description }) => {
     const { uuid } = useParams();
 
-    if (typeof date_birth === 'string') {
-        // Check if date_birth is not already in the ISO format
-        if (!date_birth.includes('T')) {
-          const [day, month, year] = date_birth.split("/");
-          const dateObj = new Date(`${year}-${month}-${day}`);
-          date_birth = dateObj.toISOString().substring(0, 10);
-        }
-      }
-      console.log(date_birth)
     const [users, setUsers] = useState({
         newPassword: "",
         confirmPassword: "",
@@ -62,7 +53,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                 const updatedValues = {
                     username: values.username || username,
                     avatar: values.avatar,
-                    date_birth: values.date_birth || users.date_birth,
+                    date_birth: values.date_birth || date_birth,
                     firstname: values.firstname || firstname,
                     lastname: values.lastname || lastname,
                     email: values.email || email,
@@ -190,7 +181,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                             type="date"
                             name="date_birth"
                             id="date_birth"
-                            value={props.values.date_birth ? props.values.date_birth : date_birth}
+                            value={props.values.date_birth || users.date_birth}
                             className="input mt-5 w-full"
                             onChange={(event) => {
                                 const value = event.target.value.trim();
