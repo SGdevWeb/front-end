@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 //import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
 
-const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description,uuid_user }) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, uuid_user }) => {
   if (typeof date_birth === 'string') {
     if (!date_birth.includes('T')) {
       const [day, month, year] = date_birth.split("-");
-     date_birth = `${year}/${month}/${day}`;
-       
+      date_birth = `${year}/${month}/${day}`;
+
     }
   }
   return (
@@ -35,8 +35,15 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
               <Button className="mt-3" title="Editer mon profil" />
             </Link>
           </div>
-          <div className="border-2 border-red-500 flex flex-col ml-5 rounded-md pb-5 w-11/12">
-            <p>{description}</p>
+          <div className="flex flex-col items-center w-3/4 ml-2">
+            <Field
+              className="border-2 border-gradient-v rounded-lg my-1 w-full h-full resize-none "
+              id="description"
+              name="description"
+              component="textarea"
+              value={description}
+            />
+
           </div>
         </div>
         <h3 className=" mt-5 mx-5">Paramètres utilisateurs</h3>
@@ -47,26 +54,26 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             <Field
               type="text"
               name="firstname"
-              placeholder={firstname}
+              value={firstname}
               className="input w-1/3"
               disabled
             />
             <Field
               type="text"
               name="lastname"
-              placeholder={lastname}
+              value={lastname}
               className="input w-1/3"
               disabled
             />
           </div>
           <div className="flex mx-5 ">
-              <input
-                type="text"
-                name="date_birth"
-                value={date_birth ? date_birth : "date non renseigné"}
-                className="input flex mt-5 w-full"
-                disabled
-              />
+            <input
+              type="text"
+              name="date_birth"
+              value={date_birth ? date_birth : "date non renseigné"}
+              className="input flex mt-5 w-full"
+              disabled
+            />
           </div>
           <div>
             <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
@@ -75,7 +82,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             <Field
               type="text"
               name="email"
-              placeholder={email}
+              value={email}
               className="input flex mt-5 w-full "
               disabled
             />
