@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 
 import Button from "../base/Button";
 import Input from "../base/Input";
+import InputPassword from "../base/InputPassword";
 import ReCAPTCHA from "react-google-recaptcha";
 import { URL_HOME } from "../../constants/urls/urlFrontEnd";
 import { authenticate } from "../../api/backend/account";
@@ -106,7 +107,7 @@ function LoginCard() {
         {touched.email && errors.email && (
           <small className="error">{errors.email}</small>
         )}
-        <Input
+        <InputPassword
           type="password"
           placeholder="********"
           description="Vous avez oublié votre mot de passe ?"
