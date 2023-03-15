@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { ONLY_ALPHA} from '../constants/regex'
 
 export default Yup.object().shape({
     firstname: Yup.string().test('same-firstname', 'firstname est trop court', function (value) {
@@ -10,6 +11,8 @@ export default Yup.object().shape({
     })
         .notRequired()
         .min(3, "Le prénom doit comporter au moins 2 caractères.")
+        .matches(ONLY_ALPHA,
+            "Le nom doit contenir uniquement des caractères alphabétiques")
     ,
     username: Yup.string().test('same-username', 'Username est trop court', function (value) {
         if (value === this.parent.username) {
@@ -19,9 +22,10 @@ export default Yup.object().shape({
         }
     })
         .notRequired()
-        .matches(/^[a-zA-Z0-9_]*$/,
-            "Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des traits de soulignement.")
+        .matches(ONLY_ALPHA,
+            "Le nom doit contenir uniquement des caractères alphabétiques")
         .min(3, "Le nom d'utilisateur doit comporter au moins 3 caractères.")
+        .max(20)
     ,
     lastname: Yup.string().test('same-lastname', 'Lastname est trop court', function (value) {
         if (value === this.parent.Lastname) {
@@ -31,8 +35,10 @@ export default Yup.object().shape({
         }
     })
         .notRequired()
-        .matches(/^[a-zA-Z0-9_]*$/, "Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des traits de soulignement.")
+        .matches(ONLY_ALPHA,
+            "Le nom doit contenir uniquement des caractères alphabétiques")
         .min(3, "Le nom d'utilisateur doit comporter au moins 3 caractères.")
+        
     ,
     email: Yup.string().test('same-email', 'email est incorrect', function (value) {
         if (value === this.parent.Lastname) {

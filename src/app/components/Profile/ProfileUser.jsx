@@ -2,7 +2,7 @@ import React from "react";
 import { Field, Form, Formik } from "formik";
 import Button from "../Base/Button";
 import { Link } from "react-router-dom";
-import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
+//import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
 
 const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description,uuid_user }) => {
@@ -29,7 +29,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             </Link>
           </div>
           <div className="border-2 border-red-500 flex flex-col ml-5 rounded-md pb-5 w-11/12">
-            <p className="pt-5">{description}</p>
+            <p>{description}</p>
           </div>
         </div>
         <h3 className=" mt-5 mx-5">Paramètres utilisateurs</h3>

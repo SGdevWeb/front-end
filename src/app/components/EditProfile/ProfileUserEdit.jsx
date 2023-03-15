@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import apiGateway from '../../api/backend/apiGateway';
+import { format } from 'date-fns';
 import { useParams } from "react-router-dom";
 import ButtonBis from "../Base/ButtonBis";
-import { URL_BACK_UPDATE_USER } from "../../constants/urls/urlBackEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import validationSchema from '../../utils/editProfileUserSchema';
 import { useNavigate } from 'react-router-dom';
 import { editProfile } from "../../api/backend/profile";
 
 
-const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description}) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description }) => {
     const { uuid } = useParams();
+
+    if (typeof date_birth === 'string') {
+        // Check if date_birth is not already in the ISO format
+        if (!date_birth.includes('T')) {
+          const [day, month, year] = date_birth.split("/");
+          const dateObj = new Date(`${year}-${month}-${day}`);
+          date_birth = dateObj.toISOString().substring(0, 10);
+        }
+      }
+      console.log(date_birth)
     const [users, setUsers] = useState({
         newPassword: "",
         confirmPassword: "",
@@ -25,8 +34,6 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
         username: username,
     });
     const navigate = useNavigate();
-
-
     useEffect(() => {
         setUsers({
             firstname: firstname,
@@ -38,6 +45,9 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             username: username,
         });
     }, [firstname, lastname, date_birth, email, work, description, username]);
+    console.log(date_birth)
+    
+
     return (
         <Formik
             initialValues={{
@@ -46,6 +56,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                 confirmPassword: users.confirmPassword,
                 oldPassword: users.oldPassword,
             }}
+            
             onSubmit={async (values, { setFieldError, setErrors }) => {
 
                 const updatedValues = {
