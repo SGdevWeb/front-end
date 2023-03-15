@@ -1,7 +1,7 @@
 import Logo from "../../assets/img/LogoTreeUp100x100.png";
 import React from "react";
 
-function CollaboratorCard2({ firstname, username, descripcion, }) {
+function CollaboratorCard2({ firstname, lastname, username, descripcion, }) {
 
   return ( 
     <div className="min-w-[300px]  h-[100px] bg-gray-200 ml-3 mb-3 p-2 border-gradient-v rounded-2xl shadow-sm hover:shadow-inner shadow-dark">
@@ -11,8 +11,8 @@ function CollaboratorCard2({ firstname, username, descripcion, }) {
                   alt="Logo de TreeUp"
                   width={80} /> */}
         <div className="flex flex-col">
-          <h6 className="ml-2">{username} {firstname}</h6>
-          <p className="ml-2">Descripcion {descripcion}</p> 
+          <h6 className="ml-2">{firstname} {lastname}</h6>
+          <p className="ml-2">{username} {descripcion}</p> 
         </div>
         <div> 
           <button className="ml-4" type="button" ></button>

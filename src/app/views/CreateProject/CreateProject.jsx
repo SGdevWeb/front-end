@@ -9,7 +9,6 @@ import OwnerCard from "../../components/Project/OwnerCard";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
-import { selectUser } from "../../redux-store/authenticationSlice";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/createProjectSchema";
 
@@ -25,9 +24,9 @@ export default function CreateProject({ isEditMode }) {
   const [isCollaboratorsLoaded, setIsCollaboratorsLoaded] = useState(false);
   const [ownersids, setOwnersids] = useState([]);
   const [owners, setOwners] = useState([]);
-  console.log('owners',owners);
-  console.log('collaborators',collaborators[0]);
-  console.log('ownresid',ownersids);
+  // console.log('owners',owners);
+  // console.log('collaborators',collaborators[0]);
+  // console.log('ownresid',ownersids);
 
   //para adjuntar solo id nuevos al array
   const handleModalClose = (selectedUsersModal) => {
@@ -84,12 +83,12 @@ export default function CreateProject({ isEditMode }) {
     //recuperar los colaboradores existentes
     const fetchExistingCollaborators = async () => {
       const response = await apiGateway.get(`/collaborators/project/${uuid}`);
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data) {
         const { collaborators } = response.data;
         const { owners } = response.data;
         const existingCollaborators = Object.values(collaborators);
-        console.log("algunos", existingCollaborators);
+        // console.log("algunos", existingCollaborators);
         setExistingCollaborators(existingCollaborators);
         setSelectedUsers(existingCollaborators);
         setOwnersids(owners);
@@ -147,12 +146,12 @@ export default function CreateProject({ isEditMode }) {
         );
         if (true) {
           const allCollaborators = [...existingCollaborators, ...selectedUsers];
-          console.log("all", allCollaborators);
+          // console.log("all", allCollaborators);
           const body = {
             project_uuid: response.data.uuid,
             collaborators: selectedUsers,
           };
-          console.log(body);
+          // console.log(body);
           await apiGateway.post("/collaborators/update/", body);
         }
       } else {
@@ -191,6 +190,10 @@ export default function CreateProject({ isEditMode }) {
     onSubmit,
   });
 
+  const collaboratorsWithoutOwners = collaborators.filter(
+    (collaborator) => !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
+  );
+  
   return (
     <Fragment>
       <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
@@ -243,29 +246,30 @@ export default function CreateProject({ isEditMode }) {
           Ajouter des collaborateurs
         </button>
 
-        {selectedUsers.length > 0 && (
+        {/* {selectedUsers.length > 0 && ( */}
           <div className="overflow-x-auto flex">
             {owners.map((item, index) => (
               <OwnerCard
                 key={item.user.uuid}
                 firstname={item.user.firstname}
                 username={item.user.username}
-                
+                lastname={item.user.lastname}
                 descripcion={item.user.profile.descripcion}
               />
             ))}
 
-            {collaborators.map((item, index) => (
+            {collaboratorsWithoutOwners.map((item, index) => (
               <CollaboratorCard
                 key={item.user.uuid}
                 firstname={item.user.firstname}
+                lastname={item.user.lastname}
                 username={item.user.username}
                 onDelete={() => handleDeleteCollaborator(index)}
                 descripcion={item.user.profile.descripcion}
               />
             ))}
           </div>
-        )}
+        {/* )} */}
 
         <TextArea
           placeholder={
