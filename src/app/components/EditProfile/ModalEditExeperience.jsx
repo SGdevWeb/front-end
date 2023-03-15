@@ -63,6 +63,7 @@ export default function ModalEditExperience(props) {
                                                         name="name"
                                                         type="text"
                                                         placeholder='Titre'
+                                                        maxLength="30"
                                                     />
                                                     {props.errors.name && props.touched.name ? (
                                                         <div>{props.errors.name}</div>
@@ -112,6 +113,7 @@ export default function ModalEditExperience(props) {
                                                         name="description"
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
                                                         placeholder='Description'
+                                                        maxLength="1000"
                                                     />
                                                     {props.errors.description && props.touched.description ? (
                                                         <div>{props.errors.description}</div>
