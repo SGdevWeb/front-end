@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 export default Yup.object().shape({
-    firstname: Yup.string().test('same-firstname', 'firstname is too short', function (value) {
+    firstname: Yup.string().test('same-firstname', 'firstname est trop court', function (value) {
         if (value === this.parent.firstname) {
             return true; // la valeur n'a pas été modifiée
         } else {
@@ -11,7 +11,7 @@ export default Yup.object().shape({
         .notRequired()
         .min(3, "Le prénom doit comporter au moins 2 caractères.")
     ,
-    username: Yup.string().test('same-username', 'Username is too short', function (value) {
+    username: Yup.string().test('same-username', 'Username est trop court', function (value) {
         if (value === this.parent.username) {
             return true;
         } else {
@@ -23,7 +23,7 @@ export default Yup.object().shape({
             "Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des traits de soulignement.")
         .min(3, "Le nom d'utilisateur doit comporter au moins 3 caractères.")
     ,
-    lastname: Yup.string().test('same-lastname', 'Lastname is too short', function (value) {
+    lastname: Yup.string().test('same-lastname', 'Lastname est trop court', function (value) {
         if (value === this.parent.Lastname) {
             return true; 
         } else {
@@ -34,7 +34,7 @@ export default Yup.object().shape({
         .matches(/^[a-zA-Z0-9_]*$/, "Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des traits de soulignement.")
         .min(3, "Le nom d'utilisateur doit comporter au moins 3 caractères.")
     ,
-    email: Yup.string().test('same-email', 'email is too short', function (value) {
+    email: Yup.string().test('same-email', 'email est incorrect', function (value) {
         if (value === this.parent.Lastname) {
             return true; 
         } else {
@@ -54,18 +54,18 @@ export default Yup.object().shape({
         .notRequired()
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character")
+            "Le mot de passse doit contenir 1 majuscule, 1 minuscule, 1 chiffre et un caractère spécial ")
     ,
     newPassword: Yup.string()
         .notRequired()
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character")
+            "Le mot de passse doit contenir 1 majuscule, 1 minuscule, 1 chiffre et un caractère spécial ")
     ,
     confirmPassword: Yup.string()
-        .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+        .oneOf([Yup.ref('newPassword'), null], 'Le mot de passe doit correspondre')
         .notRequired()
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character")
+            "Le mot de passse doit contenir 1 majuscule, 1 minuscule, 1 chiffre et un caractère spécial ")
 });

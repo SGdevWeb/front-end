@@ -9,6 +9,7 @@ import apiGateway from '../../api/backend/apiGateway';
 import { useParams } from "react-router";
 import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import technologies from "../../fakeData/Techno";
+import { getProfile } from "../../api/backend/profile";
 
 
 export default function Profile() {
@@ -19,7 +20,7 @@ export default function Profile() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await apiGateway.get(URL_BACK_GET_PROFILE);
+        const response = await getProfile();
         const userData = response.data;
         setUser({
           ...userData,

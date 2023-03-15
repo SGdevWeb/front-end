@@ -74,7 +74,7 @@ export default function EditProfile() {
   return (
     <div className="bg-[#ececec] justify-center flex-col">
       <ProfileUser
-        uuid_user={uuid}
+        uuid_user={user.uuid}
         username={user?.username}
         work={user?.work}
         description={user?.description}

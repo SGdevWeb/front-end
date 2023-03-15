@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import apiGateway from '../../api/backend/apiGateway';
+import { useParams } from "react-router-dom";
 import ButtonBis from "../Base/ButtonBis";
 import { URL_BACK_UPDATE_USER } from "../../constants/urls/urlBackEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import validationSchema from '../../utils/editProfileUserSchema';
+import { useNavigate } from 'react-router-dom';
+import { editProfile } from "../../api/backend/profile";
 
 
-const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description }) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description}) => {
+    const { uuid } = useParams();
     const [users, setUsers] = useState({
         newPassword: "",
         confirmPassword: "",
@@ -20,6 +24,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
         description: description,
         username: username,
     });
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -58,8 +63,11 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                     city: values.city
                 };
                 try {
-                    const res = await apiGateway.put(URL_BACK_UPDATE_USER, updatedValues);
+                    console.log(updatedValues)
+                    const res = await editProfile(updatedValues);
                     setUsers(updatedValues);
+
+                    navigate(`/profile/${uuid}`)
                 } catch (err) {
                     setFieldError('oldPassword', err.response.data.message.message);
 
@@ -70,14 +78,12 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
 
             {props => (
                 <Form onSubmit={props.handleSubmit}>
-                    <ErrorMessage name="oldPassword" className="content-center">
-                        {message => <div className="error">{message}</div>}
+                    <ErrorMessage name="oldPassword" >
+                        {message => <div className="error  flex items-center justify-center text-red-500 text-xl italic">{message}</div>}
                     </ErrorMessage>
                     <div className="flex p-5">
-
                         <div className="flex flex-col w-1/4 ">
                             <UserCircleIcon />
-
                             <Field
                                 className="text-center border-2 border-gradient-v rounded-lg my-1 "
                                 id="username"
@@ -139,7 +145,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                         <Field
                             type="text"
                             name="firstname"
-                            placeholder={firstname} 
+                            placeholder={firstname}
                             className="input w-1/3"
                             onChange={(event) => {
                                 const value = event.target.value.trim();
@@ -218,9 +224,6 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                                 }
                             }}
                         />
-                        <div className=" mx-5 w-1/3">
-                            <ErrorMessage name="newPassword" component="div" className="text-red-500 text-sm" />
-                        </div>
                         <Field
                             type="password"
                             id="confirmPassword"
@@ -236,8 +239,13 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                             }}
                         />
                     </div>
-                    <div className="w-1/3 mx-5">
-                        <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm" />
+                    <div className="flex mt-5 mx-5 justify-between">
+                        <div className=" w-1/3">
+                            <ErrorMessage name="newPassword" component="div" className="text-red-500 text-sm" />
+                        </div>
+                        <div className="w-1/3">
+                            <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm" />
+                        </div>
                     </div>
                     <div className="flex mt-5 mx-5 ">
                         <Field
