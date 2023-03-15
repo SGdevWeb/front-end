@@ -34,7 +34,7 @@ function NewComment({ addComment, uuid_project }) {
       uuid_project,
     };
     commentPost(newComment)
-      .then((response) => {
+      .then(() => {
         setError(null);
         setInputValue("");
         addComment();
@@ -77,9 +77,7 @@ function NewComment({ addComment, uuid_project }) {
         <p className="text-red-600 text-base mt-1">
           {error ? "Message vide !" : ""}
         </p>
-        <small>
-          {charCount}/250 caractère<span>{charCount > 0 && "s"}</span>
-        </small>
+        <small className="mr-2">{charCount}/250 caractères</small>
       </div>
     </div>
   );
