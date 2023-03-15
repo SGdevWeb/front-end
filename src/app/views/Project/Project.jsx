@@ -7,10 +7,13 @@ import CollaboratorCard from "../../components/Project/CollaboratorCard";
 import CommentsContainer from "../../components/Project/CommentsContainer";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
+import { selectIsLogged } from "../../redux-store/authenticationSlice";
+import { useSelector } from "react-redux";
 
 function Project() {
   const nav = useNavigate();
   const { uuid } = useParams();
+  const isLoggued = useSelector(selectIsLogged);
 
   const [project, setProject] = useState({
     uuid: "",
@@ -103,11 +106,15 @@ function Project() {
       </div>
 
       <CommentsContainer uuid_project={uuid} />
-      <div className="flex justify-center">
-        <Link to={URL_PROJECT_UPDATE + uuid}>
-          <Button title="Mettre à jour"></Button>
-        </Link>
-      </div>
+      {isLoggued ? (
+        <div className="flex justify-center">
+          <Link to={URL_PROJECT_UPDATE + uuid}>
+            <Button title="Mettre à jour"></Button>
+          </Link>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
