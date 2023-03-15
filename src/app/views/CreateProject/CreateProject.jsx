@@ -19,6 +19,7 @@ export default function CreateProject({ isEditMode }) {
   const [showModal, setShowModal] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [collaborators, setCollaborators] = useState([]);
+  const [existingCollaborators, setExistingCollaborators] = useState([]);
   const handleModalClose = (selectedUsers) => {
     setSelectedUsers(selectedUsers);
   };
@@ -43,7 +44,17 @@ export default function CreateProject({ isEditMode }) {
       }
     };
     fetchCollaborators();
+    const fetchExistingCollaborators = async () => {
+      const response = await apiGateway.get(`/collaborators/project/${uuid}`);
+      if (response.data && response.data.success) {
+        const { owners, collaborators } = response.data.success;
+        const existingCollaborators = [...owners, ...collaborators];
+        setExistingCollaborators(existingCollaborators);
+      }
+    };
+
     if (isEditMode) {
+      fetchExistingCollaborators();
       apiGateway
         .get("/project/" + uuid, config)
         .then(({ data: { name, date_start, date_end, description } }) => {
@@ -86,6 +97,15 @@ export default function CreateProject({ isEditMode }) {
           formValues,
           config
         );
+        if (existingCollaborators.length > 0) {
+          const allCollaborators = [...existingCollaborators, ...selectedUsers];
+          console.log("all", allCollaborators);
+          const body = {
+            project_uuid: response.data.uuid,
+            collaborators: allCollaborators,
+          };
+          await apiGateway.post("/collaborators/update/", body);
+        }
       } else {
         response = await apiGateway.post(
           "/project/create/",
