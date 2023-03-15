@@ -1,11 +1,11 @@
 import {
-   URL_BACK_GET_PROFILE,
-   URL_BACK_NEW_EXPERIENCE,
-   URL_BACK_UPDATE_EXPERIENCE,
-   URL_BACK_DELETE_EXPERIENCE,
-   URL_BACK_NEW_SOFTSKILL,
-   URL_BACK_UPDATE_SOFTSKILL,
-   URL_BACK_DELETE_SOFTSKILL
+  URL_BACK_GET_PROFILE,
+  URL_BACK_NEW_EXPERIENCE,
+  URL_BACK_UPDATE_EXPERIENCE,
+  URL_BACK_DELETE_EXPERIENCE,
+  URL_BACK_NEW_SOFTSKILL,
+  URL_BACK_UPDATE_SOFTSKILL,
+  URL_BACK_DELETE_SOFTSKILL
 } from "../../constants/urls/urlBackEnd";
 import apiGateway from "./apiGateway";
 import { getToken } from "../../services/tokenServices";
@@ -20,8 +20,8 @@ const config = () => {
 
 
 export function getProfile(uuid) {
-    return apiGateway.get(URL_BACK_GET_PROFILE, config());
-  }
+  return apiGateway.get(URL_BACK_GET_PROFILE, config());
+}
 
 export function postExperience(values) {
   console.log(values)
