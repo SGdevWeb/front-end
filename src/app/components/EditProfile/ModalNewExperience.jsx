@@ -67,23 +67,23 @@ export default function ModalNewExperience(props) {
                                                 </div>
 
                                                 <div className="flex justify-between ">
-                                                    <div className="flex flex-col">
+                                                    <div className="flex flex-col items-start">
                                                         <Field
                                                             id="date_start"
                                                             name="date_start"
                                                             type="date"
-                                                            className="border-2 border-gradient-v rounded-lg my-2 "
+                                                            className="border-2 border-gradient-v rounded-lg my-2 w-36"
                                                         />
                                                         {props.errors.date_start && props.touched.date_start ? (
                                                             <div>{props.errors.date_start}</div>
                                                         ) : null}
                                                     </div>
-                                                    <div className="flex flex-col">
+                                                    <div className="flex flex-col items-end">
                                                         <Field
                                                             id="date_end"
                                                             name="date_end"
                                                             type="date"
-                                                            className="border-2 border-gradient-v rounded-lg my-2 "
+                                                            className="border-2 border-gradient-v rounded-lg my-2 w-36"
                                                         />
                                                         {props.errors.date_end && props.touched.date_end ? (
                                                             <div>{props.errors.date_end}</div>
