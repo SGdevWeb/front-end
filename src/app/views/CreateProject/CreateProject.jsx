@@ -127,6 +127,7 @@ export default function CreateProject({ isEditMode }) {
       <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
         <div className="flex justify-between my-3 pt-3">
           <div className="flex flex-col gap-1">
+            <label htmlFor="name">Nom du projet</label>
             <InputBis
               type="text"
               placeholder={isEditMode ? values.name : "Nom du projet"}
