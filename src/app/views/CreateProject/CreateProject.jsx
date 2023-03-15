@@ -2,26 +2,39 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../components/Base/ButtonBis";
-import CollaboratorCard from "../../components/Project/CollaboratorCard";
 import InputBis from "../../components/base/InputBis";
-import { ModalAdd } from "../../components/Project/ModalAdd";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/createProjectSchema";
 
+// import CollaboratorCard from "../../components/Project/CollaboratorCard";
+
+
+
+
+
+
+
+// import { ModalAdd } from "../../components/Project/ModalAdd";
+
+
+
+
+
+
 export default function CreateProject({ isEditMode }) {
   const navigate = useNavigate();
   const [error, setError] = useState();
   const { uuid } = useParams();
   const token = getToken();
-  const [showModal, setShowModal] = useState(null);
+  // const [showModal, setShowModal] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [collaborators, setCollaborators] = useState([]);
-  const handleModalClose = (selectedUsers) => {
-    setSelectedUsers(selectedUsers);
-  };
+  // const [collaborators, setCollaborators] = useState([]);
+  // const handleModalClose = (selectedUsers) => {
+  //   setSelectedUsers(selectedUsers);
+  // };
 
   const config = {
     headers: {
@@ -30,19 +43,19 @@ export default function CreateProject({ isEditMode }) {
   };
 
   useEffect(() => {
-    const fetchCollaborators = async () => {
-      if (selectedUsers.length > 0) {
-        const promises = selectedUsers.map(async (userId) => {
-          const response = await apiGateway.get(`/users/${userId}`, config);
-          return response.data;
-        });
-        const users = await Promise.all(promises);
-        setCollaborators(users);
-      } else {
-        setCollaborators([]);
-      }
-    };
-    fetchCollaborators();
+    // const fetchCollaborators = async () => {
+    //   if (selectedUsers.length > 0) {
+    //     const promises = selectedUsers.map(async (userId) => {
+    //       const response = await apiGateway.get(`/users/${userId}`, config);
+    //       return response.data;
+    //     });
+    //     const users = await Promise.all(promises);
+    //     setCollaborators(users);
+    //   } else {
+    //     setCollaborators([]);
+    //   }
+    // };
+    // fetchCollaborators();
     if (isEditMode) {
       apiGateway
         .get("/project/" + uuid, config)
@@ -59,7 +72,7 @@ export default function CreateProject({ isEditMode }) {
           });
         });
     }
-  }, [selectedUsers, isEditMode, uuid]); //modif dave
+  }, [selectedUsers, isEditMode, uuid]);
 
   const initialValues = {
     name: "",
@@ -91,11 +104,11 @@ export default function CreateProject({ isEditMode }) {
         : await apiGateway.post("/project/create/", formValues, config);
       resetForm();
       navigate("/project/" + response.data.uuid);
-      const body = {
-        project_uuid: response.data.uuid,
-        collaborators: selectedUsers,
-      };
-      await apiGateway.post("/collaborators/add/", body);
+      // const body = {
+      //   project_uuid: response.data.uuid,
+      //   collaborators: selectedUsers,
+      // };
+      // await apiGateway.post("/collaborators/add/", body);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError(
@@ -166,7 +179,7 @@ export default function CreateProject({ isEditMode }) {
               )}
             </div>
           </div>
-          <button
+          {/* <button
             type="button"
             className="w-full sm:w-3/5 md:w-3/5 lg:w-2/6 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2"
             title="Ajouter des collaborateurs"
@@ -185,7 +198,7 @@ export default function CreateProject({ isEditMode }) {
                 />
               ))}
             </div>
-          )}
+          )} */}
           <TextArea
             placeholder={
               isEditMode ? values.description : "Description du projet"
@@ -212,11 +225,11 @@ export default function CreateProject({ isEditMode }) {
             title={isEditMode ? "Modifier le projet" : "Créer le projet"}
           />
         </form>
-        <ModalAdd
+        {/* <ModalAdd
           isVisible={showModal}
           onClose={() => setShowModal(false)}
           onClose1={handleModalClose}
-        ></ModalAdd>
+        ></ModalAdd> */}
       </Fragment>
     );
 }

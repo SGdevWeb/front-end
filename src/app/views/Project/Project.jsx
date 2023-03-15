@@ -80,28 +80,28 @@ function Project() {
         <h2 className="text-2xl underline">Description du projet</h2>
         <p className="text-base break-words">{project.description}</p>
       </div>
-      <h2 className="text-2xl underline mb-2">Collaborateurs</h2>
+      {/* <h2 className="text-2xl underline mb-2">Collaborateurs</h2> */}
 
       <div className="overflow-x-auto flex">
         {/* <div className="flex flex-wrap"> */}
-        {owners.map((item) => (
+        {/* {owners.map((item) => (
           <CollaboratorCard
             key={item.user.uuid}
             firstname={item.user.firstname}
             username={item.user.username}
             email={item.user.email}
           />
-        ))}
+        ))} */}
         {/* </div>
   <div className="flex flex-wrap"> */}
-        {collaborators.map((item) => (
+        {/* {collaborators.map((item) => (
           <CollaboratorCard
             key={item.user.uuid}
             firstname={item.user.firstname}
             username={item.user.username}
             email={item.user.email}
           />
-        ))}
+        ))} */}
         {/* </div> */}
       </div>
 
