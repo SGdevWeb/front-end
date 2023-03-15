@@ -6,6 +6,13 @@ import { Link } from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/solid";
 
 const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description,uuid_user }) => {
+  if (typeof date_birth === 'string') {
+    if (!date_birth.includes('T')) {
+      const [day, month, year] = date_birth.split("-");
+     date_birth = `${year}/${month}/${day}`;
+       
+    }
+  }
   return (
     <Formik
       initialValues={{
