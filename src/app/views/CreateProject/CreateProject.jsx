@@ -5,9 +5,11 @@ import Button from "../../components/Base/ButtonBis";
 import CollaboratorCard from "../../components/Project/CollaboratorCard";
 import InputBis from "../../components/base/InputBis";
 import { ModalAdd } from "../../components/Project/ModalAdd";
+import OwnerCard from "../../components/Project/OwnerCard";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
+import { selectUser } from "../../redux-store/authenticationSlice";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/createProjectSchema";
 
@@ -17,11 +19,30 @@ export default function CreateProject({ isEditMode }) {
   const { uuid } = useParams();
   const token = getToken();
   const [showModal, setShowModal] = useState(null);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState(new Set());
   const [collaborators, setCollaborators] = useState([]);
   const [existingCollaborators, setExistingCollaborators] = useState([]);
-  const handleModalClose = (selectedUsers) => {
-    setSelectedUsers(selectedUsers);
+  const [isCollaboratorsLoaded, setIsCollaboratorsLoaded] = useState(false);
+  const [ownersids, setOwnersids] = useState([]);
+  const [owners, setOwners] = useState([]);
+  console.log('owners',owners);
+  console.log('collaborators',collaborators[0]);
+  console.log('ownresid',ownersids);
+
+  //para adjuntar solo id nuevos al array
+  const handleModalClose = (selectedUsersModal) => {
+    const selectedUserIds = [...selectedUsers];
+    selectedUsersModal.forEach((user) => {
+      if (!selectedUserIds.includes(user)) {
+        selectedUserIds.push(user);
+      }
+    });
+    setSelectedUsers(selectedUserIds);
+  };
+  //para eliminar desde la x
+  const handleDeleteCollaborator = (index) => {
+    const newSelectedUsers = selectedUsers.filter((item, i) => i !== index);
+    setSelectedUsers(newSelectedUsers);
   };
 
   const config = {
@@ -31,6 +52,7 @@ export default function CreateProject({ isEditMode }) {
   };
 
   useEffect(() => {
+    // Aqui recuperamos la informacion personal de los ids
     const fetchCollaborators = async () => {
       if (selectedUsers.length > 0) {
         const promises = selectedUsers.map(async (userId) => {
@@ -44,17 +66,43 @@ export default function CreateProject({ isEditMode }) {
       }
     };
     fetchCollaborators();
+
+    const fetchOwners = async () => {
+      if (ownersids.length > 0) {
+        const promises = ownersids.map(async (userId) => {
+          const response = await apiGateway.get(`/users/${userId}`, config);
+          return response.data;
+        });
+        const users = await Promise.all(promises);
+        setOwners(users);
+      } else {
+        setOwners([]);
+      }
+    };
+    fetchOwners();
+
+    //recuperar los colaboradores existentes
     const fetchExistingCollaborators = async () => {
       const response = await apiGateway.get(`/collaborators/project/${uuid}`);
-      if (response.data && response.data.success) {
-        const { owners, collaborators } = response.data.success;
-        const existingCollaborators = [...owners, ...collaborators];
+      console.log(response.data);
+      if (response.data) {
+        const { collaborators } = response.data;
+        const { owners } = response.data;
+        const existingCollaborators = Object.values(collaborators);
+        console.log("algunos", existingCollaborators);
         setExistingCollaborators(existingCollaborators);
+        setSelectedUsers(existingCollaborators);
+        setOwnersids(owners);
+        setIsCollaboratorsLoaded(true);
       }
     };
 
     if (isEditMode) {
-      fetchExistingCollaborators();
+      //cuando editamos llamamos a los  colaboradores existentes
+      if (!isCollaboratorsLoaded) {
+        // Solo si los colaboradores aún no se han cargado
+        fetchExistingCollaborators();
+      }
       apiGateway
         .get("/project/" + uuid, config)
         .then(({ data: { name, date_start, date_end, description } }) => {
@@ -70,7 +118,7 @@ export default function CreateProject({ isEditMode }) {
           });
         });
     }
-  }, [selectedUsers, isEditMode, uuid]); //modif dave
+  }, [selectedUsers, isEditMode, uuid, setExistingCollaborators]); //modif dave
 
   const initialValues = {
     name: "",
@@ -97,13 +145,14 @@ export default function CreateProject({ isEditMode }) {
           formValues,
           config
         );
-        if (existingCollaborators.length > 0) {
+        if (true) {
           const allCollaborators = [...existingCollaborators, ...selectedUsers];
           console.log("all", allCollaborators);
           const body = {
             project_uuid: response.data.uuid,
-            collaborators: allCollaborators,
+            collaborators: selectedUsers,
           };
+          console.log(body);
           await apiGateway.post("/collaborators/update/", body);
         }
       } else {
@@ -193,18 +242,31 @@ export default function CreateProject({ isEditMode }) {
         >
           Ajouter des collaborateurs
         </button>
+
         {selectedUsers.length > 0 && (
-          <div className="flex flex-wrap">
-            {collaborators.map((item) => (
+          <div className="overflow-x-auto flex">
+            {owners.map((item, index) => (
+              <OwnerCard
+                key={item.user.uuid}
+                firstname={item.user.firstname}
+                username={item.user.username}
+                
+                descripcion={item.user.profile.descripcion}
+              />
+            ))}
+
+            {collaborators.map((item, index) => (
               <CollaboratorCard
                 key={item.user.uuid}
                 firstname={item.user.firstname}
                 username={item.user.username}
-                email={item.user.email}
+                onDelete={() => handleDeleteCollaborator(index)}
+                descripcion={item.user.profile.descripcion}
               />
             ))}
           </div>
         )}
+
         <TextArea
           placeholder={
             isEditMode ? values.description : "Description du projet"

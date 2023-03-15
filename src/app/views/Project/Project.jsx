@@ -4,7 +4,9 @@ import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
 
 import Button from "../../components/Base/ButtonBis";
 import CollaboratorCard from "../../components/Project/CollaboratorCard";
+import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
 import CommentsContainer from "../../components/Project/CommentsContainer";
+import OwnerCard from "../../components/Project/OwnerCard";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
 
@@ -82,21 +84,21 @@ function Project() {
       <div className="overflow-x-auto flex">
         {/* <div className="flex flex-wrap"> */}
         {owners.map((item) => (
-          <CollaboratorCard
+          <OwnerCard
             key={item.user.uuid}
             firstname={item.user.firstname}
             username={item.user.username}
-            email={item.user.email}
+            descripcion={item.user.profile.descripcion}
           />
         ))}
         {/* </div>
   <div className="flex flex-wrap"> */}
         {collaborators.map((item) => (
-          <CollaboratorCard
+          <CollaboratorCard2
             key={item.user.uuid}
             firstname={item.user.firstname}
             username={item.user.username}
-            email={item.user.email}
+            descripcion={item.user.profile.descripcion}
           />
         ))}
         {/* </div> */}
