@@ -71,11 +71,11 @@ function Comment({ comment, update, delComment, isModified }) {
                 </button>
               </div>
             )}
-          {!isUpdate && (
+          {/* {!isUpdate && (
             <div className="flex items-end ml-1">
               <img src={report} alt="" />
             </div>
-          )}
+          )} */}
           {!isUpdate &&
             isLogged &&
             user != null &&
