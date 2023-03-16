@@ -54,44 +54,50 @@ export default function Profile() {
           className="grid grid-cols-3 grid-rows-2 gap-4 mx-auto max-w-4xl"
           style={{ gridTemplateRows: "50px 50px" }}
         >
-          {technologies.map((items,index) => (
-            <div className="p-2"  key={index} style={{ height: "50px" }}>
+          {technologies.map((items, index) => (
+            <div className="p-2" key={index} style={{ height: "50px" }}>
               <PillTechnologie {...items} />
             </div>
           ))}
         </div>
       </div>
-      <p className="text-center my-5">Mes expériences</p>
+      <p className="text-center text-4xl my-5">Mes expériences</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {user.experience && user.experience.length > 0 ? (
-          user.experience?.map((item,index) => (
+          user.experience?.map((item, index) => (
             <div className="w-1/2 p-2" key={index}>
-              <ProfileBox {...item}  />
+              <ProfileBox {...item} />
             </div>
           ))
         ) : (
-          <p>Aucune expérience disponible</p>
+          <div className="flex justify-center items-center w-full">
+          <div className="bg-gray-100 rounded-lg p-8">
+            <h4 className="text-dark-500 font-medium text-center">Aucune Expérience disponible</h4>
+          </div>
+        </div>
         )}
       </div>
-      <p className="text-center my-5">Mes SoftSkills</p>
+      <p className="text-center text-4xl my-5">Mes SoftSkills</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {user.soft_skill && user.soft_skill.length > 0 ? (
-          user.soft_skill?.map((item,index) => (
+          user.soft_skill?.map((item, index) => (
             <div className="w-1/2 p-2" key={index} >
               <ProfileBox {...item} />
             </div>
           ))
         ) : (
-          <div className="flex justify-center items-center h-64">
-            <h4 className="">Aucun soft-skill disponible</h4>
+          <div className="flex justify-center items-center w-full">
+          <div className="bg-gray-100 rounded-lg p-8">
+            <h4 className="text-dark-500 font-medium text-center">Aucun soft-skill disponible</h4>
           </div>
+        </div>
         )}
-        </div>
-
-        <div className="pb-5">
-          <p className="text-center my-5">Mes projets</p>
-          <ProfileProject />
-        </div>
       </div>
+
+      <div className="pb-5">
+        <p className="text-center my-5">Mes projets</p>
+        <ProfileProject />
+      </div>
+    </div>
   );
 }

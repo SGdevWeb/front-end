@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { ONLY_ALPHA} from '../constants/regex'
+import { ONLY_ALPHA } from '../constants/regex'
 
 export default Yup.object().shape({
     firstname: Yup.string().test('same-firstname', 'firstname est trop court', function (value) {
@@ -18,7 +18,7 @@ export default Yup.object().shape({
         if (value === this.parent.username) {
             return true;
         } else {
-            return value.length >= 3; 
+            return value.length >= 3;
         }
     })
         .notRequired()
@@ -27,24 +27,28 @@ export default Yup.object().shape({
         .min(3, "Le nom d'utilisateur doit comporter au moins 3 caractères.")
         .max(20)
     ,
+    date_birth: Yup.date()
+        .min(new Date('1960-01-01'), "La date de naissance doit être supérieure ou égale à 1960 PREND TA RETRAITE MAINTEANT")
+        .max(new Date(), "la date de naissance ne peut être superieure à la date d'aujourd'hui")
+    ,
     lastname: Yup.string().test('same-lastname', 'Lastname est trop court', function (value) {
         if (value === this.parent.Lastname) {
-            return true; 
+            return true;
         } else {
-            return value.length >= 3; 
+            return value.length >= 3;
         }
     })
         .notRequired()
         .matches(ONLY_ALPHA,
             "Le nom doit contenir uniquement des caractères alphabétiques")
         .min(3, "Le nom d'utilisateur doit comporter au moins 3 caractères.")
-        
+
     ,
     email: Yup.string().test('same-email', 'email est incorrect', function (value) {
         if (value === this.parent.Lastname) {
-            return true; 
+            return true;
         } else {
-            return value.length >= 3; 
+            return value.length >= 3;
         }
     })
         .notRequired()
@@ -52,9 +56,9 @@ export default Yup.object().shape({
     ,
     oldPassword: Yup.string().test('same-oldPassword', function (value) {
         if (value === this.parent.oldPassword) {
-            return true; 
+            return true;
         } else {
-            return value; 
+            return value;
         }
     })
         .notRequired()

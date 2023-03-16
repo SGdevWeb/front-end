@@ -3,7 +3,7 @@ import { XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
-import {postExperience} from '../../api/backend/profile';
+import { postExperience } from '../../api/backend/profile';
 import validationSchema from '../../utils/experienceSchema'
 
 export default function ModalNewExperience(props) {
@@ -12,6 +12,7 @@ export default function ModalNewExperience(props) {
     return (
         <div>
             <ButtonBis
+                className="mt-6"
                 title="Ajouter une expérience"
                 onClick={() => setShowModal(true)}
             />

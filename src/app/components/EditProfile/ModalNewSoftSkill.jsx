@@ -3,7 +3,7 @@ import { XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
 import apiGateway from '../../api/backend/apiGateway';
-import {postSoftSkill} from '../../api/backend/profile';
+import { postSoftSkill } from '../../api/backend/profile';
 import validationSchema from '../../utils//soft_skillSchema';
 
 export default function ModalNewSoftSkills(props) {
@@ -12,7 +12,8 @@ export default function ModalNewSoftSkills(props) {
     return (
         <div>
             <ButtonBis
-                title="Ajouter un soft_skill"
+                className="mt-6"
+                title="Ajouter un soft skill"
                 onClick={() => setShowModal(true)}
             />
             {showModal ? (
