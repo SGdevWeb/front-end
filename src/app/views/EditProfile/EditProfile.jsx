@@ -6,7 +6,7 @@ import ModalNewExperience from "../../components/EditProfile/ModalNewExperience"
 import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
 import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import apiGateway from '../../api/backend/apiGateway';
-import {getProfile} from '../../api/backend/profile';
+import { getProfile } from '../../api/backend/profile';
 
 export default function EditProfile() {
   const expTitle = "Ajouter une expérience ";
@@ -70,7 +70,7 @@ export default function EditProfile() {
     setUser(currentUserData);
     setSoft_skills([...currentUserData.soft_skill]);
   }
-  
+
   return (
     <div className="bg-[#ececec] justify-center flex-col">
       <ProfileUser
@@ -93,7 +93,7 @@ export default function EditProfile() {
               ))} */}
         </div>
       </div>
-      <p className="text-center my-5">Mes expériences</p>
+      <p className="text-center text-4xl my-5">Mes expériences</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {experiences?.map((item) => {
           item.exptitle = expTitle
@@ -108,7 +108,7 @@ export default function EditProfile() {
       <div className="flex justify-center">
         <ModalNewExperience handleAdd={handleAddExperience} />
       </div>
-      <p className="text-center my-5">Mes SoftSkills</p>
+      <p className="text-center text-4xl my-5">Mes SoftSkills</p>
       <div className="flex flex-wrap h-64 overflow-auto scrollbar">
         {soft_skills?.map((item) => {
           item.softtitle = softTitle;

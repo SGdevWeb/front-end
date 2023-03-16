@@ -6,13 +6,6 @@ import { Link } from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/solid";
 
 const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, uuid_user }) => {
-  if (typeof date_birth === 'string') {
-    if (!date_birth.includes('T')) {
-      const [day, month, year] = date_birth.split("-");
-      date_birth = `${year}/${month}/${day}`;
-
-    }
-  }
   return (
     <Formik
       initialValues={{
@@ -67,13 +60,24 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             />
           </div>
           <div className="flex mx-5 ">
-            <input
-              type="text"
-              name="date_birth"
-              value={date_birth ? date_birth : "date non renseigné"}
-              className="input flex mt-5 w-full"
-              disabled
-            />
+            {date_birth ? (
+              <input
+                type="date"
+                name="date_birth"
+                value={date_birth}
+                className="input flex mt-5 w-full"
+                disabled
+              />
+            ) : (
+              <input
+                type="text"
+                name="date_birth"
+                placeholder="Date de naissance non renseignée"
+                className="input flex mt-5 w-full"
+                disabled
+              />
+            )}
+
           </div>
           <div>
             <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
