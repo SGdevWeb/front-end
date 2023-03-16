@@ -6,15 +6,12 @@ import axios from "axios";
  * @author Peter Mollet
  */
 // const apiBackEnd = axios.create({
-//   baseURL: "http://localhost:8080/api",  
+//   baseURL: "http://localhost:8080/api",
 // });
 // export default apiBackEnd;
 
 const apiGateway = axios.create({
   baseURL: "http://localhost:8000/tree-up-api",
-  headers: {
-    Authorization : `Bearer ${localStorage.getItem("token")}`
-    }
 });
 
 export default apiGateway;

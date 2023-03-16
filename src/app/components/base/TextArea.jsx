@@ -22,6 +22,7 @@ export default function TextArea({
         rows={rows}
         id={id}
         onChange={onChange}
+        style={{ resize: "none" }}
       ></textarea>
       {description && <div className="text-xs">{description}</div>}
     </>
