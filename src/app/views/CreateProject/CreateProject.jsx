@@ -10,35 +10,14 @@ import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/createProjectSchema";
-
 // import CollaboratorCard from "../../components/Project/CollaboratorCard";
-
-
-
-
-
-
-
 // import { ModalAdd } from "../../components/Project/ModalAdd";
-
-
-
-
-
 
 export default function CreateProject({ isEditMode }) {
   const navigate = useNavigate();
   const [error, setError] = useState();
   const { uuid } = useParams();
   const token = getToken();
-<<<<<<< HEAD
-  // const [showModal, setShowModal] = useState(null);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  // const [collaborators, setCollaborators] = useState([]);
-  // const handleModalClose = (selectedUsers) => {
-  //   setSelectedUsers(selectedUsers);
-  // };
-=======
   const [showModal, setShowModal] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState(new Set());
   const [collaborators, setCollaborators] = useState([]);
@@ -65,7 +44,6 @@ export default function CreateProject({ isEditMode }) {
     const newSelectedUsers = selectedUsers.filter((item, i) => i !== index);
     setSelectedUsers(newSelectedUsers);
   };
->>>>>>> b7c9be945903081af5326b9cc69341a9c294d1be
 
   const config = {
     headers: {
@@ -74,21 +52,6 @@ export default function CreateProject({ isEditMode }) {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    // const fetchCollaborators = async () => {
-    //   if (selectedUsers.length > 0) {
-    //     const promises = selectedUsers.map(async (userId) => {
-    //       const response = await apiGateway.get(`/users/${userId}`, config);
-    //       return response.data;
-    //     });
-    //     const users = await Promise.all(promises);
-    //     setCollaborators(users);
-    //   } else {
-    //     setCollaborators([]);
-    //   }
-    // };
-    // fetchCollaborators();
-=======
     // Aqui recuperamos la informacion personal de los ids
     const fetchCollaborators = async () => {
       if (selectedUsers.length > 0) {
@@ -134,7 +97,6 @@ export default function CreateProject({ isEditMode }) {
       }
     };
 
->>>>>>> b7c9be945903081af5326b9cc69341a9c294d1be
     if (isEditMode) {
       //cuando editamos llamamos a los  colaboradores existentes
       if (!isCollaboratorsLoaded) {
@@ -156,11 +118,7 @@ export default function CreateProject({ isEditMode }) {
           });
         });
     }
-<<<<<<< HEAD
-  }, [selectedUsers, isEditMode, uuid]);
-=======
   }, [selectedUsers, isEditMode, uuid, setExistingCollaborators]); //modif dave
->>>>>>> b7c9be945903081af5326b9cc69341a9c294d1be
 
   const initialValues = {
     name: "",
@@ -187,11 +145,6 @@ export default function CreateProject({ isEditMode }) {
       return;
     }
     try {
-<<<<<<< HEAD
-      const response = isEditMode
-        ? await apiGateway.put(`/project/update/${uuid}`, formValues, config)
-        : await apiGateway.post("/project/create/", formValues, config);
-=======
       if (formValues.date_end === "") delete formValues.date_end;
       if (new Date(formValues.date_end) < new Date(formValues.date_start))
         throw new Error(
@@ -230,7 +183,6 @@ export default function CreateProject({ isEditMode }) {
         };
         await apiGateway.post("/collaborators/add/", body);
       }
->>>>>>> b7c9be945903081af5326b9cc69341a9c294d1be
       resetForm();
       navigate("/project/" + response.data.uuid);
       // const body = {
@@ -249,41 +201,26 @@ export default function CreateProject({ isEditMode }) {
     }
   }
 
-    const {
-      handleSubmit,
-      values,
-      setValues,
-      touched,
-      isSubmitting,
-      handleChange,
-      handleBlur,
-      resetForm,
-      errors,
-    } = useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit,
-    });
+  const {
+    handleSubmit,
+    values,
+    setValues,
+    touched,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    resetForm,
+    errors,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
-<<<<<<< HEAD
-    return (
-      <Fragment>
-        <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
-          <div className="flex justify-between my-3 pt-3">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="name">Nom du projet</label>
-              <InputBis
-                type="text"
-                placeholder={isEditMode ? values.name : "Nom du projet"}
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-=======
   const collaboratorsWithoutOwners = collaborators.filter(
     (collaborator) => !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
   );
-  
+
   return (
     <Fragment>
       <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
@@ -356,92 +293,9 @@ export default function CreateProject({ isEditMode }) {
                 username={item.user.username}
                 onDelete={() => handleDeleteCollaborator(index)}
                 descripcion={item.user.profile.descripcion}
->>>>>>> b7c9be945903081af5326b9cc69341a9c294d1be
               />
-              {touched.name && errors.name && (
-                <small className="error">{errors.name}</small>
-              )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="date_start">Date de début</label>
-              <InputBis
-                type="date"
-                name="date_start"
-                value={values.date_start}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.date_start && errors.date_start && (
-                <small className="error">{errors.date_start}</small>
-              )}
-              <label htmlFor="date_end">Date de fin</label>
-              <InputBis
-                type="date"
-                name="date_end"
-                value={values.date_end}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.date_end && errors.date_end && (
-                <small className="error">{errors.date_end}</small>
-              )}
-            </div>
+            ))}
           </div>
-<<<<<<< HEAD
-          {/* <button
-            type="button"
-            className="w-full sm:w-3/5 md:w-3/5 lg:w-2/6 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2"
-            title="Ajouter des collaborateurs"
-            onClick={() => setShowModal(true)}
-          >
-            Ajouter des collaborateurs
-          </button>
-          {selectedUsers.length > 0 && (
-            <div className="flex flex-wrap">
-              {collaborators.map((item) => (
-                <CollaboratorCard
-                  key={item.user.uuid}
-                  firstname={item.user.firstname}
-                  username={item.user.username}
-                  email={item.user.email}
-                />
-              ))}
-            </div>
-          )} */}
-          <TextArea
-            placeholder={
-              isEditMode ? values.description : "Description du projet"
-            }
-            className="w-full"
-            rows={"10"}
-            name="description"
-            value={values.description}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {touched.description && errors.description && (
-            <small className="error">{errors.description}</small>
-          )}
-          {error && (
-            <p className="error p-5 m-1 border-2 border-red-700 bg-white">
-              {error}
-            </p>
-          )}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="flex mx-auto mt-3"
-            title={isEditMode ? "Modifier le projet" : "Créer le projet"}
-          />
-        </form>
-        {/* <ModalAdd
-          isVisible={showModal}
-          onClose={() => setShowModal(false)}
-          onClose1={handleModalClose}
-        ></ModalAdd> */}
-      </Fragment>
-    );
-=======
         {/* )} */}
 
         <TextArea
@@ -476,6 +330,6 @@ export default function CreateProject({ isEditMode }) {
         onClose1={handleModalClose}
       ></ModalAdd>
     </Fragment>
+
   );
->>>>>>> b7c9be945903081af5326b9cc69341a9c294d1be
 }
