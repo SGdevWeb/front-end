@@ -10,6 +10,7 @@ import { signIn } from "../../redux-store/authenticationSlice";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/loginSchema";
+import InputPassword from "../base/InputPassword";
 
 /* Les composants sont dans le dossier assets/components/theme
 Le style des composants se trouve dans le dossier assets/styles/components
@@ -106,7 +107,7 @@ function LoginCard() {
         {touched.email && errors.email && (
           <small className="error">{errors.email}</small>
         )}
-        <Input
+        <InputPassword
           type="password"
           placeholder="********"
           description="Vous avez oublié votre mot de passe ?"

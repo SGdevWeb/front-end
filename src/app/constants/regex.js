@@ -7,6 +7,6 @@ export const FIRSTNAME = /^[a-zA-ZÀ-ÿ-]+$/;
 
 export const LASTNAME = /^[a-zA-ZÀ-ÿ\s-]+$/;
 
-export const PROJECTNAME = /^[A-Za-z- ]{3,50}$/;
+export const PROJECT_NAME = /^[A-Za-z- ]{3,50}$/;
 
 export const EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;

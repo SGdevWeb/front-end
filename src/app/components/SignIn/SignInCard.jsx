@@ -161,7 +161,7 @@ function SignInCard() {
             {touched.password && errors.password && (
               <small className="error">{errors.password}</small>
             )}
-            <Input
+            <InputPassword
               type="password"
               placeholder="********"
               name="passwordConfirmation"
