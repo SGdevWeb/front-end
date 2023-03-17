@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { EMAIL, ONLY_ALPHA, PASSWORD_VALID } from "../constants/regex";
+import { EMAIL, FIRSTNAME, LASTNAME, PASSWORD_VALID } from "../constants/regex";
 
 export default Yup.object({
   email: Yup.string()
@@ -10,15 +10,15 @@ export default Yup.object({
     .required("Merci de renseigner votre nom")
     .max(25, "Le nom doit contenir moins de 25 caractères")
     .matches(
-      ONLY_ALPHA,
-      "Le nom doit contenir uniquement des caractères alphabétiques"
+      LASTNAME,
+      "Le nom doit contenir uniquement des lettres, des accents et les espaces"
     ),
   firstname: Yup.string()
     .required("Merci de renseigner votre prénom")
     .max(25, "Le prénom doit contenir moins de 25 caractères")
     .matches(
-      ONLY_ALPHA,
-      "Le prénom doit contenir uniquement des caractères alphabétiques"
+      FIRSTNAME,
+      "Le prénom doit contenir uniquement des lettres, des accents et le tiret"
     ),
   username: Yup.string()
     .required("Veuillez choisir un nom d'utilisateur-trice")
