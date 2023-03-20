@@ -29,7 +29,7 @@ const Routes = () => {
 				element={
 					<div className=" flex container mx-auto pt-3 gap-3">
 						<SideBar />
-						<div className="w-full body overflow-y-scroll md:w-3/4 lg:w-4/5">
+						<div className="w-full body overflow-y-auto md:w-3/4 lg:w-4/5">
 							<RoutesContainer>
 								<Route path="/" element={<Home />} />
 								<Route path={URL.URL_PROFILE} element={<Profile />} />

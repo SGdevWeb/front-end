@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import ButtonBis from "../base/ButtonBis";
 import CardProject from "./CardProject";
 import { Link } from "react-router-dom";
 import { URL_BACK_PROJECT } from "../../constants/urls/urlBackEnd";
@@ -8,17 +9,39 @@ import apiGateway from "../../api/backend/apiGateway"
 
 const ListProject = () => {
 
+	const [loadingProject, setLoadingProject] = useState([]);
 	const [projects, setProjects] = useState([]);
+	const [blacklistProjectIds, setBlacklistProjectIds] = useState([]);
 	const [error, setError] = useState();
 	
 	useEffect(() => {
-		apiGateway.get(URL_BACK_PROJECT)
-		.then((({data}) => setProjects(data)))
-		.catch(({error}) => setError(error.message));
+		getMoreProjects();
 	}, []);
 
+	const scrolled = (myDiv)=> {
+		if (myDiv.offsetHeight + myDiv.scrollTop >= myDiv.scrollHeight) {
+			if (!loadingProject) {
+				getMoreProjects();
+			}
+		}
+	}
+
+	useEffect(() => {
+		setBlacklistProjectIds([...blacklistProjectIds, ...projects.map((project) => project.uuid)]);
+	}, [projects]);
+
+	const getMoreProjects = () => {
+		setLoadingProject(true)
+		apiGateway.post(URL_BACK_PROJECT, {blacklistIds: blacklistProjectIds})
+		.then((({data}) => {
+			setProjects([...projects, ...data])
+			setLoadingProject(false);
+		}))
+		.catch((error) => setError(error.message));
+	};
+
 	return (
-		<div className="flex flex-wrap justify-center content-start h-full gap-10">
+		<div className="flex flex-wrap justify-center content-start overflow-y-auto h-full gap-10" onScroll={(e) => scrolled(e.target)}>
 			<div className="border-gradient-v rounded-3xl p-3 h-fit">
 				<p>Tree-Up vous permets de partager et d’échanger sur les divers projets d’actualité postés par nos jeunes développeurs !</p>
 				<p>N’hésitez pas à faire un tour sur nos projets récents et de partager votre avis dans la section commentaires !</p>
@@ -28,7 +51,6 @@ const ListProject = () => {
 				<p className="inline-block ml-1">si vous souhaitez créer un projet afin de le mettre en avant !</p>
 			</div>
 			{projects
-				.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 				.map((project) => (
 				<CardProject key={project.uuid} {...project} />
 			))}
