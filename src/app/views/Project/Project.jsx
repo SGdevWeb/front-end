@@ -46,10 +46,16 @@ function Project() {
   };
 
   useEffect(() => {
+    isLoggued ? 
     apiGateway
+    .get("/project/getprojectlogged/" + uuid)
+    .then(({ data }) => setProject(data))
+    .catch(() => nav(URL_HOME)) 
+    : apiGateway
       .get("/project/" + uuid)
       .then(({ data }) => setProject(data))
       .catch(() => nav(URL_HOME));
+    
   }, []);
   useEffect(() => {
     apiGateway
@@ -97,7 +103,7 @@ function Project() {
         </div>
         <div>
         <LikeButton 
-          isLogged={selectIsLogged} 
+          isLogged={isLoggued} 
           isliked={false} 
           project={project}
           setProject = {setProject}

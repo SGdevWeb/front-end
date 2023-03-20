@@ -28,3 +28,5 @@ export const URL_BACK_PROJECT = "/project";
 export const URL_BACK_USER = '/users';
 
 export const URL_BACK_ADDCOLL = '/collaborators/add/';
+
+export const URL_BACK_GET_PROJECT_LOGGED = "/project/getprojectlogged/";
