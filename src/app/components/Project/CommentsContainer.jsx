@@ -40,18 +40,16 @@ function CommentsContainer({ uuid_project }) {
   };
 
   const delComment = (commentId) => {
-    if (confirm("Etes-vous sûr de vouloir supprimer ce commentaire ?")) {
-      deleteComment(commentId)
-        .then(() => {
-          getCommentByProjectId(uuid_project)
-            .then((response) => {
-              const comments = response.data;
-              setComments(comments);
-            })
-            .catch((error) => console.log(error));
-        })
-        .catch((error) => console.log(error));
-    }
+    deleteComment(commentId)
+      .then(() => {
+        getCommentByProjectId(uuid_project)
+          .then((response) => {
+            const comments = response.data;
+            setComments(comments);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

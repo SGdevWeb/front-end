@@ -27,7 +27,9 @@ const ProfileProject = ({uuid = "744966ab-07f3-48b3-9799-4b074c553230"}) => {
         </Link>
       </div>
       <div className="flex gap-3 overflow-x-scroll w-auto border-red-500 scrollbar">
-      {projects.map((project) => (
+      {projects
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .map((project) => (
         <CardProject key={project.uuid} {...project} />
       ))}
       {error && (
