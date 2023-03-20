@@ -102,26 +102,26 @@ function Project() {
 
       <div className="overflow-x-auto flex">
         {/* <div className="flex flex-wrap"> */}
-        {/* {owners.map((item) => (
-          <CollaboratorCard
+        {owners.map((item) => (
+          <OwnerCard
             key={item.user.uuid}
             firstname={item.user.firstname}
             lastname={item.user.lastname}
             username={item.user.username}
             descripcion={item.user.profile.descripcion}
           />
-        ))} */}
+        ))}
         {/* </div>
   <div className="flex flex-wrap"> */}
-        {/* {collaborators.map((item) => (
-          <CollaboratorCard
+        {collaboratorsWithoutOwners.map((item) => (
+          <CollaboratorCard2
             key={item.user.uuid}
             firstname={item.user.firstname}
             lastname={item.user.lastname}
             username={item.user.username}
             descripcion={item.user.profile.descripcion}
           />
-        ))} */}
+        ))}
         {/* </div> */}
       </div>
 
