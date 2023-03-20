@@ -35,7 +35,7 @@ function Project() {
   // console.log('col',collaborators)
 
 
-
+  
   const token = getToken();
   const config = {
     headers: {
@@ -56,7 +56,7 @@ function Project() {
         const { owners, collaborators } = data;
         // setOwnersID(owners);
         // setCollaboratorsID(collaborators)
-
+        
         // console.log('owner',owners);
         Promise.all(
           collaborators.map((collaboratorId) =>
@@ -101,28 +101,28 @@ function Project() {
       {/* <h2 className="text-2xl underline mb-2">Collaborateurs</h2> */}
 
       <div className="overflow-x-auto flex">
-        <div className="flex flex-wrap">
-          {owners.map((item) => (
-            <OwnerCard
-              key={item.user.uuid}
-              firstname={item.user.firstname}
-              lastname={item.user.lastname}
-              username={item.user.username}
-              descripcion={item.user.profile.descripcion}
-            />
-          ))}
-        </div>
-        <div className="flex flex-wrap">
-          {collaboratorsWithoutOwners.map((item) => (
-            <CollaboratorCard2
-              key={item.user.uuid}
-              firstname={item.user.firstname}
-              lastname={item.user.lastname}
-              username={item.user.username}
-              descripcion={item.user.profile.descripcion}
-            />
-          ))}
-        </div>
+        {/* <div className="flex flex-wrap"> */}
+        {/* {owners.map((item) => (
+          <CollaboratorCard
+            key={item.user.uuid}
+            firstname={item.user.firstname}
+            lastname={item.user.lastname}
+            username={item.user.username}
+            descripcion={item.user.profile.descripcion}
+          />
+        ))} */}
+        {/* </div>
+  <div className="flex flex-wrap"> */}
+        {/* {collaborators.map((item) => (
+          <CollaboratorCard
+            key={item.user.uuid}
+            firstname={item.user.firstname}
+            lastname={item.user.lastname}
+            username={item.user.username}
+            descripcion={item.user.profile.descripcion}
+          />
+        ))} */}
+        {/* </div> */}
       </div>
 
       <CommentsContainer uuid_project={uuid} />
