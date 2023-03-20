@@ -7,7 +7,7 @@ import Logo from "../../assets/img/LogoTreeUp100x100.png";
 import { SearchIcon } from "@heroicons/react/solid";
 
 export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
-
+ 
 
   
   if (!isVisible) return null;
@@ -85,15 +85,15 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
                 key={user.uuid}
                 className="w-full h-[100px] mb-2 p-3 bg-gray-200 flex justify-around rounded-xl"
               >
-                <img
+                {/* <img
                   className="border-gradient-v rounded-2xl shadow-sm hover:shadow-inner shadow-dark"
                   src={Logo}
                   alt="Logo de TreeUp"
                   width={80}
-                />
+                /> */}
                 <div className="grow flex flex-col justify-evenly ">
                   <div className="pl-2">
-                    <h5>{user.firstname}</h5>
+                    <h5>{user.firstname} {user.lastname}</h5>
                   </div>
                   <div className="pl-2">{user.username} </div>
                 </div>
@@ -115,7 +115,11 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
         
         <button
           className="w-full sm:w-4/5 md:w-4/5 lg:w-3/5 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2 m-auto "
-          onClick={handleSubmit}
+          // onClick={handleSubmit}
+          onClick={() => {
+            handleSubmit();
+            onClose();
+          }}
         >
           Ajouter les utilisateurs sélectionnés
         </button>
