@@ -1,12 +1,10 @@
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { getToken, isTokenValid } from "../services/tokenServices";
-import { selectIsLogged, selectToken } from "../redux-store/authenticationSlice";
 
 import { URL_LOGIN } from "../constants/urls/urlFrontEnd";
-import { useSelector } from "react-redux";
 
-export const ConnectedRoute = ({ children }) => {
+const ConnectedRoute = ({ children }) => {
 	const [redirection, setRedirection] = useState();
 	const location = useLocation();
     
@@ -17,8 +15,9 @@ export const ConnectedRoute = ({ children }) => {
         }
 	}, []);
 
-
 	if (redirection) return redirection;
 
 	return children;
 };
+
+export default ConnectedRoute;

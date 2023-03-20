@@ -2,6 +2,7 @@ import * as URL from "../constants/urls/urlFrontEnd";
 
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 
+import ConnectedRoute from "./ConnectedRoute";
 import CreateProject from "../views/CreateProject/CreateProject";
 import EditProfile from "../views/EditProfile/EditProfile";
 import Home from "../views/Home/Home";
@@ -33,9 +34,9 @@ const Routes = () => {
 								<Route path="/" element={<Home />} />
 								<Route path={URL.URL_PROFILE} element={<Profile />} />
 								<Route path={URL.URL_EDITPROFILE} element ={<EditProfile />} />
-								<Route path={URL.URL_CREATEPROJECT} element={<CreateProject isEditMode={false} />} />
+								<Route path={URL.URL_CREATEPROJECT} element={<ConnectedRoute><CreateProject isEditMode={false} /></ConnectedRoute>} />
 								<Route path={URL.URL_PROJETVIEW + ":uuid"} element={<Project />} />
-								<Route path={URL.URL_PROJECT_UPDATE + ":uuid"} element={<CreateProject isEditMode={true} />} />
+								<Route path={URL.URL_PROJECT_UPDATE + ":uuid"} element={<ConnectedRoute><CreateProject isEditMode={true} /></ConnectedRoute> } />
 							</RoutesContainer>
 						</div>
 					</div>

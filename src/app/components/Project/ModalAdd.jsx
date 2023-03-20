@@ -7,6 +7,9 @@ import Logo from "../../assets/img/LogoTreeUp100x100.png";
 import { SearchIcon } from "@heroicons/react/solid";
 
 export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
+
+
+  
   if (!isVisible) return null;
   const handleClose = (e) => {
     if (e.target.id === "wrapper") onClose();
@@ -96,7 +99,7 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
                 </div>
                 <div className="m-auto">
                   <CheckBox
-                    text="click"
+                    text=""
                     id={user.uuid}
                     onChange={(e) =>
                       handleUserSelection(user.uuid, e.target.checked)
@@ -109,37 +112,12 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
             <p>Chargement des utilisateurs...</p>
           )}
         </div>
-        {selectedUsers.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                <th>User</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedUsers.map((userId) => (
-                <tr key={userId}>
-                  <td className="text-center">
-                    {users.find((user) => user.uuid === userId).firstname}
-                  </td>
-                  <td className="text-start"> ✅</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {/* <Button
-          className="w-full sm:w-4/5 m-auto"
-          title="Ajouter les utilisateurs sélectionnés"
-          type="submit"
-          onClick={handleSubmit}
-        /> */}
+        
         <button
-          className="w-full sm:w-3/5 md:w-3/5 lg:w-2/5 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2 m-auto "
+          className="w-full sm:w-4/5 md:w-4/5 lg:w-3/5 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2 m-auto "
           onClick={handleSubmit}
         >
-          Add
+          Ajouter les utilisateurs sélectionnés
         </button>
       </div>
     </div>

@@ -9,11 +9,13 @@ import pencil from "../../assets/img/icons/pencil.svg";
 import report from "../../assets/img/icons/report.svg";
 import trash from "../../assets/img/icons/trash.svg";
 import { getUser } from "../../api/backend/account";
+import ConfirmDelete from "./ConfirmDelete";
 
 function Comment({ comment, update, delComment, isModified }) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const isLogged = useSelector(selectIsLogged);
   const user = useSelector(selectUser);
@@ -71,21 +73,28 @@ function Comment({ comment, update, delComment, isModified }) {
                 </button>
               </div>
             )}
-          {!isUpdate && (
+          {/* {!isUpdate && (
             <div className="flex items-end ml-1">
               <img src={report} alt="" />
             </div>
-          )}
+          )} */}
           {!isUpdate &&
             isLogged &&
             user != null &&
             comment.uuid_user === user.uuid && (
               <div className="flex items-end ml-1 w-5">
-                <button type="submit" onClick={() => delComment(comment.uuid)}>
+                <button type="submit" onClick={() => setShowConfirm(true)}>
                   <img src={trash} alt="" />
                 </button>
               </div>
             )}
+          {showConfirm && (
+            <ConfirmDelete
+              setShowConfirm={setShowConfirm}
+              delComment={delComment}
+              uuid={comment.uuid}
+            />
+          )}
         </div>
       </div>
     </div>

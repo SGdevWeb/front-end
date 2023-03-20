@@ -1,26 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { commentPost } from "../../api/backend/comment";
 
 function NewComment({ addComment, uuid_project }) {
   const [inputValue, setInputValue] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
+  const [charCount, setCharCount] = useState(0);
+  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (inputValue.length === 0 && error !== null) {
+      setError(true);
+    }
+    if (inputValue.length > 0) {
+      setError(false);
+    }
+    if (!isTextareaFocused) {
+      setError(null);
+    }
+    setCharCount(inputValue.length);
+  }, [inputValue, isTextareaFocused]);
 
   function handleSubmit(e) {
     e.preventDefault();
+    textareaRef.current.focus();
     const value = inputValue;
     if (!value) {
       return setError(true);
-    } else {
-      setError(false);
     }
     const newComment = {
       comment: value,
       uuid_project,
     };
     commentPost(newComment)
-      .then((response) => {
+      .then(() => {
+        setError(null);
         setInputValue("");
+        addComment();
       })
       .catch((error) => console.log(error));
   }
@@ -29,10 +46,6 @@ function NewComment({ addComment, uuid_project }) {
     e.target.style.height = "auto";
     e.target.style.height = e.target.scrollHeight + "px";
   }
-
-  useEffect(() => {
-    addComment();
-  }, [inputValue]);
 
   return (
     <div className="mb-3">
@@ -45,6 +58,10 @@ function NewComment({ addComment, uuid_project }) {
           placeholder="Ecrire un message ..."
           onChange={(e) => setInputValue(e.target.value)}
           value={inputValue}
+          maxLength={250}
+          onBlur={() => setIsTextareaFocused(false)}
+          onFocus={() => setIsTextareaFocused(true)}
+          ref={textareaRef}
         />
         <button
           className="flex items-end cursor-pointer"
@@ -56,7 +73,12 @@ function NewComment({ addComment, uuid_project }) {
           </span>
         </button>
       </form>
-      {error && <p className="text-red-600 text-base mt-1">Message vide !</p>}
+      <div className="flex justify-between">
+        <p className="text-red-600 text-base mt-1">
+          {error ? "Message vide !" : ""}
+        </p>
+        <small className="mr-2">{charCount}/250 caractères</small>
+      </div>
     </div>
   );
 }
