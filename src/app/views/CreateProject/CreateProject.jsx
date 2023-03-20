@@ -18,29 +18,29 @@ export default function CreateProject({ isEditMode }) {
   const { uuid } = useParams();
   const token = getToken();
 //dave
-const [showModal, setShowModal] = useState(null);
-const [selectedUsers, setSelectedUsers] = useState(new Set());
-const [collaborators, setCollaborators] = useState([]);
-const [existingCollaborators, setExistingCollaborators] = useState([]);
-const [isCollaboratorsLoaded, setIsCollaboratorsLoaded] = useState(false);
-const [ownersids, setOwnersids] = useState([]);
-const [owners, setOwners] = useState([]);
+// const [showModal, setShowModal] = useState(null);
+// const [selectedUsers, setSelectedUsers] = useState(new Set());
+// const [collaborators, setCollaborators] = useState([]);
+// const [existingCollaborators, setExistingCollaborators] = useState([]);
+// const [isCollaboratorsLoaded, setIsCollaboratorsLoaded] = useState(false);
+// const [ownersids, setOwnersids] = useState([]);
+// const [owners, setOwners] = useState([]);
 
-  //para adjuntar solo id nuevos al array
-  const handleModalClose = (selectedUsersModal) => {
-    const selectedUserIds = [...selectedUsers];
-    selectedUsersModal.forEach((user) => {
-      if (!selectedUserIds.includes(user)) {
-        selectedUserIds.push(user);
-      }
-    });
-    setSelectedUsers(selectedUserIds);
-  };
-  //para eliminar desde la x
-  const handleDeleteCollaborator = (index) => {
-    const newSelectedUsers = selectedUsers.filter((item, i) => i !== index);
-    setSelectedUsers(newSelectedUsers);
-  };
+//   //para adjuntar solo id nuevos al array
+//   const handleModalClose = (selectedUsersModal) => {
+//     const selectedUserIds = [...selectedUsers];
+//     selectedUsersModal.forEach((user) => {
+//       if (!selectedUserIds.includes(user)) {
+//         selectedUserIds.push(user);
+//       }
+//     });
+//     setSelectedUsers(selectedUserIds);
+//   };
+//   //para eliminar desde la x
+//   const handleDeleteCollaborator = (index) => {
+//     const newSelectedUsers = selectedUsers.filter((item, i) => i !== index);
+//     setSelectedUsers(newSelectedUsers);
+//   };
 
   const config = {
     headers: {
@@ -49,57 +49,57 @@ const [owners, setOwners] = useState([]);
   };
 
   useEffect(() => {
-     // Aqui recuperamos la informacion personal de los ids
-     const fetchCollaborators = async () => {
-      if (selectedUsers.length > 0) {
-        const promises = selectedUsers.map(async (userId) => {
-          const response = await apiGateway.get(`/users/${userId}`, config);
-          return response.data;
-        });
-        const users = await Promise.all(promises);
-        setCollaborators(users);
-      } else {
-        setCollaborators([]);
-      }
-    };
-    fetchCollaborators();
+    //  // Aqui recuperamos la informacion personal de los ids
+    //  const fetchCollaborators = async () => {
+    //   if (selectedUsers.length > 0) {
+    //     const promises = selectedUsers.map(async (userId) => {
+    //       const response = await apiGateway.get(`/users/${userId}`, config);
+    //       return response.data;
+    //     });
+    //     const users = await Promise.all(promises);
+    //     setCollaborators(users);
+    //   } else {
+    //     setCollaborators([]);
+    //   }
+    // };
+    // fetchCollaborators();
     
-    const fetchOwners = async () => {
-      if (ownersids.length > 0) {
-        const promises = ownersids.map(async (userId) => {
-          const response = await apiGateway.get(`/users/${userId}`, config);
-          return response.data;
-        });
-        const users = await Promise.all(promises);
-        setOwners(users);
-      } else {
-        setOwners([]);
-      }
-    };
-    fetchOwners();
+    // const fetchOwners = async () => {
+    //   if (ownersids.length > 0) {
+    //     const promises = ownersids.map(async (userId) => {
+    //       const response = await apiGateway.get(`/users/${userId}`, config);
+    //       return response.data;
+    //     });
+    //     const users = await Promise.all(promises);
+    //     setOwners(users);
+    //   } else {
+    //     setOwners([]);
+    //   }
+    // };
+    // fetchOwners();
     
-    //recuperar los colaboradores existentes
-    const fetchExistingCollaborators = async () => {
-      const response = await apiGateway.get(`/collaborators/project/${uuid}`);
-      // console.log(response.data);
-      if (response.data) {
-        const { collaborators } = response.data;
-        const { owners } = response.data;
-        const existingCollaborators = Object.values(collaborators);
-        // console.log("algunos", existingCollaborators);
-        setExistingCollaborators(existingCollaborators);
-        setSelectedUsers(existingCollaborators);
-        setOwnersids(owners);
-        setIsCollaboratorsLoaded(true);
-      }
-    };
+    // //recuperar los colaboradores existentes
+    // const fetchExistingCollaborators = async () => {
+    //   const response = await apiGateway.get(`/collaborators/project/${uuid}`);
+    //   // console.log(response.data);
+    //   if (response.data) {
+    //     const { collaborators } = response.data;
+    //     const { owners } = response.data;
+    //     const existingCollaborators = Object.values(collaborators);
+    //     // console.log("algunos", existingCollaborators);
+    //     setExistingCollaborators(existingCollaborators);
+    //     setSelectedUsers(existingCollaborators);
+    //     setOwnersids(owners);
+    //     setIsCollaboratorsLoaded(true);
+    //   }
+    // };
     
     if (isEditMode) {
-      //cuando editamos llamamos a los  colaboradores existentes
-      if (!isCollaboratorsLoaded) {
-        // Solo si los colaboradores aún no se han cargado
-        fetchExistingCollaborators();
-      }
+      // //cuando editamos llamamos a los  colaboradores existentes
+      // if (!isCollaboratorsLoaded) {
+      //   // Solo si los colaboradores aún no se han cargado
+      //   fetchExistingCollaborators();
+      // }
       apiGateway
         .get("/project/" + uuid, config)
         .then(({ data: { name, date_start, date_end, description } }) => {
@@ -115,7 +115,7 @@ const [owners, setOwners] = useState([]);
           });
         });
     }
-  },[selectedUsers, isEditMode, uuid, setExistingCollaborators]); 
+  },[/*selectedUsers, setExistingCollaborators,*/ isEditMode, uuid, ]); 
 
   const initialValues = {
     name: "",
@@ -146,27 +146,27 @@ const [owners, setOwners] = useState([]);
         ? await apiGateway.put(`/project/update/${uuid}`, formValues, config)
         : await apiGateway.post("/project/create/", formValues, config);
      
-      if (true) {
-        const allCollaborators = [...existingCollaborators, ...selectedUsers];
-        // console.log("all", allCollaborators);
-        const body = {
-          project_uuid: response.data.uuid,
-          collaborators: selectedUsers,
-        };
-        // console.log(body);
-        await apiGateway.post("/collaborators/update/", body);
-      } else {
-      response = await apiGateway.post(
-        "/project/create/",
-        formValues,
-        config
-      );
-      const body = {
-        project_uuid: response.data.uuid,
-        collaborators: selectedUsers,
-      };
-      await apiGateway.post("/collaborators/add/", body);
-    }
+    //   if (true) {
+    //     const allCollaborators = [...existingCollaborators, ...selectedUsers];
+    //     // console.log("all", allCollaborators);
+    //     const body = {
+    //       project_uuid: response.data.uuid,
+    //       collaborators: selectedUsers,
+    //     };
+    //     // console.log(body);
+    //     await apiGateway.post("/collaborators/update/", body);
+    //   } else {
+    //   response = await apiGateway.post(
+    //     "/project/create/",
+    //     formValues,
+    //     config
+    //   );
+    //   const body = {
+    //     project_uuid: response.data.uuid,
+    //     collaborators: selectedUsers,
+    //   };
+    //   await apiGateway.post("/collaborators/add/", body);
+    // }
     resetForm();
     navigate("/project/" + response.data.uuid);
     } catch (error) {
@@ -196,9 +196,9 @@ const [owners, setOwners] = useState([]);
       onSubmit,
     });
 
-    const collaboratorsWithoutOwners = collaborators.filter(
-      (collaborator) => !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
-    );
+    // const collaboratorsWithoutOwners = collaborators.filter(
+    //   (collaborator) => !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
+    // );
     
     
     return (
@@ -244,7 +244,7 @@ const [owners, setOwners] = useState([]);
               )}
             </div>
           </div>
-          <button
+          {/* <button
           type="button"
           className="w-full sm:w-3/5 md:w-3/5 lg:w-2/6 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2"
           title="Ajouter des collaborateurs"
@@ -253,7 +253,7 @@ const [owners, setOwners] = useState([]);
           Ajouter des collaborateurs
         </button>
 
-        {/* {selectedUsers.length > 0 && ( */}
+       
           <div className="overflow-x-auto flex">
             {owners.map((item, index) => (
               <OwnerCard
@@ -275,8 +275,8 @@ const [owners, setOwners] = useState([]);
                 descripcion={item.user.profile.descripcion}
               />
             ))}
-          </div>
-        {/* )} */}
+          </div> */}
+       
 
           <TextArea
             placeholder={
@@ -304,11 +304,11 @@ const [owners, setOwners] = useState([]);
             title={isEditMode ? "Modifier le projet" : "Créer le projet"}
           />
         </form>
-        <ModalAdd
+        {/* <ModalAdd
         isVisible={showModal}
         onClose={() => setShowModal(false)}
         onClose1={handleModalClose}
-      ></ModalAdd>
+      ></ModalAdd> */}
       </Fragment>
     );
 }
