@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis'
@@ -8,6 +8,28 @@ import validationSchema from '../../utils//soft_skillSchema';
 
 export default function ModalEditSoftSkills(props) {
     const [showModal, setShowModal] = useState(false);
+    const [initial, setInitial] = useState({});
+
+    useEffect(() => {
+      setInitial({
+        name: props.name ? props.name : "",
+        description: props.description ? props.description : ""
+    })
+    }, [])
+
+    const initialEqualCurrent = (initial, current) => {
+        const keysInitial = Object.keys(initial);
+        const keysCurrent = Object.keys(current);
+        if (keysInitial.length !== keysCurrent.length) {
+            return false;
+        }
+        for (let key of keysInitial) {
+            if (initial[key] !== current[key]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     return (
         <div>
@@ -16,14 +38,12 @@ export default function ModalEditSoftSkills(props) {
             </button>
             {showModal ? (
                 <Formik
-                    initialValues={{
-                        name: props.name ? props.name : "",
-                        description: props.description ? props.description : ""
-                    }}
+                    initialValues={initial}
                     onSubmit={async (values, actions) => {
                         values.uuid = props.uuid;
                         values.name = values.name.trim();
                         values.description = values.description.trim();
+                        initialEqualCurrent(initial, values) ? null :
                         await updateSoftSkill(values).then((res) => {
                             props.handleUpdate(res.data.result);
                             setShowModal(false);

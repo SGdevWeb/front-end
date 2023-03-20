@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis';
@@ -7,6 +7,18 @@ import validationSchema from '../../utils/experienceSchema';
 
 export default function ModalEditExperience(props) {
     const [showModal, setShowModal] = useState(false);
+    const [initial, setInitial] = useState({});
+
+    useEffect(() => {
+      setInitial({
+        name: props.name ? props.name : "",
+        date_start: isoDateToInputFormat(props.date_start),
+        date_end: props.date_end ? isoDateToInputFormat(props.date_end) : "",
+        place: props.place ? props.place : "",
+        description: props.description ? props.description : ""
+    })
+    }, [])
+    
 
     const isoDateToInputFormat = (isoDate) => {
         const dateSplit = isoDate.split('/');
@@ -14,8 +26,6 @@ export default function ModalEditExperience(props) {
     }
 
     const initialEqualCurrent = (initial, current) => {
-        console.log(initial)
-        console.log(current)
         const keysInitial = Object.keys(initial);
         const keysCurrent = Object.keys(current);
         if (keysInitial.length !== keysCurrent.length) {
@@ -36,20 +46,14 @@ export default function ModalEditExperience(props) {
             </button>
             {showModal ? (
                 <Formik
-                    initialValues={{
-                        name: props.name ? props.name : "",
-                        date_start: isoDateToInputFormat(props.date_start),
-                        date_end: props.date_end ? isoDateToInputFormat(props.date_end) : "",
-                        place: props.place ? props.place : "",
-                        description: props.description ? props.description : ""
-                    }}
-                    onSubmit={async (values, actions) => {
+                    initialValues={initial}
+                    onSubmit={async (values, actions, initialValues) => {
                         values.name = values.name.trim();
                         values.place = values.place.trim();
                         values.description = values.description.trim();
                         values.uuid = props.uuid;
-                        console.log(initialEqualCurrent(actions, values));
-                        await updateExperience(values).then((res) => {
+                        initialEqualCurrent(initial,values) ? null : 
+                            await updateExperience(values).then((res) => {
                             props.handleUpdate(res.data.result);
                             setShowModal(false);
                         }).catch((err) => {
