@@ -57,6 +57,11 @@ export default function CreateProject({ isEditMode }) {
     // };
     // fetchCollaborators();
     if (isEditMode) {
+      // //cuando editamos llamamos a los  colaboradores existentes
+      // if (!isCollaboratorsLoaded) {
+      //   // Solo si los colaboradores aún no se han cargado
+      //   fetchExistingCollaborators();
+      // }
       apiGateway
         .get("/project/" + uuid, config)
         .then(({ data: { name, date_start, date_end, description } }) => {
@@ -72,7 +77,7 @@ export default function CreateProject({ isEditMode }) {
           });
         });
     }
-  }, [selectedUsers, isEditMode, uuid]);
+  }, [/*selectedUsers,*/ isEditMode, uuid]);
 
   const initialValues = {
     name: "",
