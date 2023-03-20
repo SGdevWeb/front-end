@@ -89,7 +89,7 @@ function Project() {
             {project.date_start.slice(0, project.date_start.indexOf("T"))}
             {project.date_end
               ? " - " +
-                project.date_end.slice(0, project.date_start.indexOf("T"))
+              project.date_end.slice(0, project.date_start.indexOf("T"))
               : ""}
           </h3>
         </div>
