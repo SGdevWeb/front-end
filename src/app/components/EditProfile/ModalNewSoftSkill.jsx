@@ -22,6 +22,8 @@ export default function ModalNewSoftSkills(props) {
                         description: ""
                     }}
                     onSubmit={async (values, actions) => {
+                        values.name = values.name.trim();
+                        values.description = values.description.trim();
                         await postSoftSkill(values).then((res) => {
                             props.handleAdd(res.data.result)
                             setShowModal(false);

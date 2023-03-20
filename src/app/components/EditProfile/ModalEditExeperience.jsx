@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PencilIcon, XIcon } from "@heroicons/react/solid";
 import { Field, Formik } from 'formik';
 import ButtonBis from '../base/ButtonBis';
-import {updateExperience} from '../../api/backend/profile';
+import { updateExperience } from '../../api/backend/profile';
 import validationSchema from '../../utils/experienceSchema';
 
 export default function ModalEditExperience(props) {
@@ -10,7 +10,23 @@ export default function ModalEditExperience(props) {
 
     const isoDateToInputFormat = (isoDate) => {
         const dateSplit = isoDate.split('/');
-        return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`
+        return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
+    }
+
+    const initialEqualCurrent = (initial, current) => {
+        console.log(initial)
+        console.log(current)
+        const keysInitial = Object.keys(initial);
+        const keysCurrent = Object.keys(current);
+        if (keysInitial.length !== keysCurrent.length) {
+            return false;
+        }
+        for (let key of keysInitial) {
+            if (initial[key] !== current[key]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     return (
@@ -28,13 +44,17 @@ export default function ModalEditExperience(props) {
                         description: props.description ? props.description : ""
                     }}
                     onSubmit={async (values, actions) => {
+                        values.name = values.name.trim();
+                        values.place = values.place.trim();
+                        values.description = values.description.trim();
                         values.uuid = props.uuid;
+                        console.log(initialEqualCurrent(actions, values));
                         await updateExperience(values).then((res) => {
                             props.handleUpdate(res.data.result);
                             setShowModal(false);
                         }).catch((err) => {
                             if (err) {
-                                alert("erreur server")
+                                alert("erreur server");
                             }
                             console.log(err);
                             setShowModal(false);

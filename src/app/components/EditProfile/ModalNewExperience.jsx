@@ -25,6 +25,9 @@ export default function ModalNewExperience(props) {
                         description: ""
                     }}
                     onSubmit={async (values, actions) => {
+                        values.name = values.name.trim();
+                        values.place = values.place.trim();
+                        values.description = values.description.trim();
                         await postExperience(values).then((res) => {
                             props.handleAdd(res.data.result)
                             setShowModal(false);
