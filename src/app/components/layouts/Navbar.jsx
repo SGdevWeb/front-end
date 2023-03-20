@@ -10,7 +10,6 @@ import { URL_LOGIN } from "../../constants/urls/urlFrontEnd";
 const Navbar = () => {
 	const [enableDropdown, setEnableDropdown] = useState(false);
 	const isLoggued = useSelector(selectIsLogged);
-
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
 	const nav = useNavigate();
@@ -47,7 +46,7 @@ const Navbar = () => {
 			{isLoggued && enableDropdown && (
 				<div className="container mx-auto relative">
 					<div className="bg-gray-1 text-center px-3 pb-2 w-48 absolute right-0 rounded-b-md">
-						<Link to="/profile">
+						<Link to={`/profile/${user.uuid}`}>
 							<div className="border-2 border-neutral-400 rounded m-1">Mon profil</div>
 						</Link>
 						<Link to="/profile#projects">

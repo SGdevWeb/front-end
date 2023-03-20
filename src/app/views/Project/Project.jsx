@@ -8,10 +8,13 @@ import CommentsContainer from "../../components/Project/CommentsContainer";
 import OwnerCard from "../../components/Project/OwnerCard";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
+import { selectIsLogged } from "../../redux-store/authenticationSlice";
+import { useSelector } from "react-redux";
 
 function Project() {
   const nav = useNavigate();
   const { uuid } = useParams();
+  const isLoggued = useSelector(selectIsLogged);
 
   const [project, setProject] = useState({
     uuid: "",
@@ -95,39 +98,43 @@ function Project() {
         <h2 className="text-2xl underline">Description du projet</h2>
         <p className="text-base break-words">{project.description}</p>
       </div>
-      <h2 className="text-2xl underline mb-2">Collaborateurs</h2>
+      {/* <h2 className="text-2xl underline mb-2">Collaborateurs</h2> */}
 
       <div className="overflow-x-auto flex">
         {/* <div className="flex flex-wrap"> */}
-        {owners.map((item) => (
-          <OwnerCard
+        {/* {owners.map((item) => (
+          <CollaboratorCard
             key={item.user.uuid}
             firstname={item.user.firstname}
             lastname={item.user.lastname}
             username={item.user.username}
             descripcion={item.user.profile.descripcion}
           />
-        ))}
+        ))} */}
         {/* </div>
   <div className="flex flex-wrap"> */}
-        {collaboratorsWithoutOwners.map((item) => (
-          <CollaboratorCard2
+        {/* {collaborators.map((item) => (
+          <CollaboratorCard
             key={item.user.uuid}
             firstname={item.user.firstname}
             lastname={item.user.lastname}
             username={item.user.username}
             descripcion={item.user.profile.descripcion}
           />
-        ))}
+        ))} */}
         {/* </div> */}
       </div>
 
       <CommentsContainer uuid_project={uuid} />
-      <div className="flex justify-center">
-        <Link to={URL_PROJECT_UPDATE + uuid}>
-          <Button title="Mettre à jour"></Button>
-        </Link>
-      </div>
+      {isLoggued ? (
+        <div className="flex justify-center">
+          <Link to={URL_PROJECT_UPDATE + uuid}>
+            <Button title="Mettre à jour"></Button>
+          </Link>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
