@@ -4,7 +4,7 @@ import owner from "../../assets/img/icons/Owner.svg";
 function OwnerCard({ firstname, lastname, username, descripcion, }) {
 
   return ( 
-    <div className="min-w-[300px]  h-[100px] bg-white ml-3 mb-3 p-3 rounded-xl border-2 border-gray-700 ">
+    <div className="min-w-[300px]  h-[100px] bg-white mr-3 my-3 p-3 rounded-xl border-2 border-gray-700 ">
       <div className="flex justify-around items-center p-2">
         {/* <img className="card-img-top border-gradient-v rounded-2xl shadow-sm hover:shadow-inner shadow-dark"
                   src={Logo}
