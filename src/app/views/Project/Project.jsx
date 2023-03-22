@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
-
+import { getProjectLogged } from "../../api/backend/project.js";
 import Button from "../../components/Base/ButtonBis";
 import LikeButton from "../../components/Project/LikeButton";
 import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
@@ -16,14 +16,14 @@ function Project() {
   const nav = useNavigate();
   const { uuid } = useParams();
   const isLoggued = useSelector(selectIsLogged);
-
   const [project, setProject] = useState({
     uuid: "",
     name: "",
     date_start: "",
     date_end: "",
     description: "",
-    countLikes: 0
+    countLikes: 0,
+    liked : false
   });
 
   //dave
@@ -47,16 +47,15 @@ function Project() {
 
   useEffect(() => {
     isLoggued ? 
-    apiGateway
-    .get("/project/getprojectlogged/" + uuid)
+    getProjectLogged(uuid)
     .then(({ data }) => setProject(data))
     .catch(() => nav(URL_HOME)) 
     : apiGateway
       .get("/project/" + uuid)
       .then(({ data }) => setProject(data))
       .catch(() => nav(URL_HOME));
-    
-  }, []);
+  }, [isLoggued]);
+  
   useEffect(() => {
     apiGateway
       .get("/collaborators/project/" + uuid)
@@ -103,8 +102,7 @@ function Project() {
         </div>
         <div>
         <LikeButton 
-          isLogged={isLoggued} 
-          isliked={false} 
+          isLogged={isLoggued}
           project={project}
           setProject = {setProject}
         />

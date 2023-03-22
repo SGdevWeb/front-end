@@ -10,6 +10,6 @@ const config = () => {
     return { headers };
 };
 
-export function postLike(values) {
-    return apiGateway.post(URL_BACK_GET_PROJECT_LOGGED, values, config());
+export function getProjectLogged(uuid) {
+    return apiGateway.get(URL_BACK_GET_PROJECT_LOGGED+uuid, config());
 }
