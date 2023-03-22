@@ -31,7 +31,8 @@ function LikeButton({ isLogged, project, setProject}) {
                 )}
 			    
 		        </button>
-            ) : null}
+            ) : <HeartIconEmpty className='h-5 w-5 my-1 mr-1'/>
+            }
             {`${project.countLikes}`}
         </div>
 		
