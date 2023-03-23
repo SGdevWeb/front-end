@@ -129,6 +129,12 @@ export default function CreateProject({ isEditMode }) {
     if (date_end === "") {
       delete formValues.date_end;
     }
+    
+    let trimedValue = {};
+    for (const key in formValues) {
+      trimedValue[key] = formValues[key].trim();
+    }
+
     if (new Date(date_end) < new Date(date_start)) {
       setError(
         "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
@@ -143,8 +149,8 @@ export default function CreateProject({ isEditMode }) {
     }
     try {
       let response = isEditMode
-        ? await apiGateway.put(`/project/update/${uuid}`, formValues, config)
-        : await apiGateway.post("/project/create/", formValues, config);
+        ? await apiGateway.put(`/project/update/${uuid}`, trimedValue, config)
+        : await apiGateway.post("/project/create/", trimedValue, config);
      
     //   if (true) {
     //     const allCollaborators = [...existingCollaborators, ...selectedUsers];

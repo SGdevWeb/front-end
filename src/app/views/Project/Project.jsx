@@ -1,8 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
-
+import { getProjectLogged } from "../../api/backend/project.js";
 import Button from "../../components/Base/ButtonBis";
+import LikeButton from "../../components/Project/LikeButton";
 import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
 import CommentsContainer from "../../components/Project/CommentsContainer";
 import OwnerCard from "../../components/Project/OwnerCard";
@@ -15,13 +16,14 @@ function Project() {
   const nav = useNavigate();
   const { uuid } = useParams();
   const isLoggued = useSelector(selectIsLogged);
-
   const [project, setProject] = useState({
     uuid: "",
     name: "",
     date_start: "",
     date_end: "",
     description: "",
+    countLikes: 0,
+    liked : false
   });
 
   //dave
@@ -44,11 +46,16 @@ function Project() {
   };
 
   useEffect(() => {
-    apiGateway
+    isLoggued ? 
+    getProjectLogged(uuid)
+    .then(({ data }) => setProject(data))
+    .catch(() => nav(URL_HOME)) 
+    : apiGateway
       .get("/project/" + uuid)
       .then(({ data }) => setProject(data))
       .catch(() => nav(URL_HOME));
-  }, []);
+  }, [isLoggued]);
+  
   useEffect(() => {
     apiGateway
       .get("/collaborators/project/" + uuid)
@@ -82,7 +89,7 @@ function Project() {
 
   return (
     <div className="items-center gap-4 p-2 bg-gray-1 rounded-md">
-      <div>
+      <div className="flex justify-between">
         <div>
           <h1 className="text-2xl">{project.name}</h1>
           <h3 className="text-xs">
@@ -92,6 +99,13 @@ function Project() {
               project.date_end.slice(0, project.date_start.indexOf("T"))
               : ""}
           </h3>
+        </div>
+        <div>
+        <LikeButton 
+          isLogged={isLoggued}
+          project={project}
+          setProject = {setProject}
+        />
         </div>
       </div>
       <div>
