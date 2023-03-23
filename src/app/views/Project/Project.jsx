@@ -18,6 +18,7 @@ function Project() {
   const { uuid } = useParams();
   const isLoggued = useSelector(selectIsLogged);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [errorPopup, setErrorPopup] = useState();
 
   const [project, setProject] = useState({
     uuid: "",
@@ -88,6 +89,9 @@ function Project() {
     .then(() => {
       nav(URL_HOME); 
       setShowDeletePopup(false);
+    }).catch((err) => {
+      console.log(err.response.data);
+      setErrorPopup(err.response ? err.response.data.message : err.message);
     });
   };
 
@@ -160,6 +164,7 @@ function Project() {
         show={showDeletePopup}
         yesAction={removeProject}
         noAction={() => setShowDeletePopup(false)}
+        error={errorPopup}
       />
     </div>
   );

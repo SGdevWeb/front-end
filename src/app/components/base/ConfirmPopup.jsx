@@ -1,7 +1,7 @@
 import Button from './ButtonBis';
 import React from 'react';
 
-const ConfirmPopup = ({body, show = false, yesAction = () => {}, noAction = () => {}}) => {
+const ConfirmPopup = ({body, show = false, yesAction = () => {}, noAction = () => {}, error}) => {
 
     if (!show) return null;
     
@@ -13,6 +13,7 @@ const ConfirmPopup = ({body, show = false, yesAction = () => {}, noAction = () =
                     <Button title={"Oui"} onClick={() => yesAction()}/>
                     <Button title={"Annuler"} onClick={() => noAction()}/>
                 </div>
+                {error && <p className='text-red-700'>Erreur : {error}</p>}
             </div>
         </div>
     );
