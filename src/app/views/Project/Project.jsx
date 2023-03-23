@@ -5,7 +5,9 @@ import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
 import Button from "../../components/Base/ButtonBis";
 import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
 import CommentsContainer from "../../components/Project/CommentsContainer";
+import ConfirmPopup from "../../components/base/ConfirmPopup";
 import OwnerCard from "../../components/Project/OwnerCard";
+import { URL_BACK_PROJECT } from "../../constants/urls/urlBackEnd";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
 import { selectIsLogged } from "../../redux-store/authenticationSlice";
@@ -15,6 +17,7 @@ function Project() {
   const nav = useNavigate();
   const { uuid } = useParams();
   const isLoggued = useSelector(selectIsLogged);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   const [project, setProject] = useState({
     uuid: "",
@@ -80,6 +83,14 @@ function Project() {
     (collaborator) => !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
   );
 
+  const removeProject = () => {
+    apiGateway.delete(URL_BACK_PROJECT + "/" + uuid, config)
+    .then(() => {
+      nav(URL_HOME); 
+      setShowDeletePopup(false);
+    });
+  };
+
   return (
     <div className="items-center gap-4 p-2 bg-gray-1 rounded-md">
       <div>
@@ -127,6 +138,11 @@ function Project() {
       <CommentsContainer uuid_project={uuid} />
       {isLoggued ? (
         <div className="flex justify-center">
+          <Button 
+            title="Demande de suppression" 
+            onClick={() => setShowDeletePopup(true)} 
+            className="mr-3"
+          />
           <Link to={URL_PROJECT_UPDATE + uuid}>
             <Button title="Mettre à jour"></Button>
           </Link>
@@ -134,6 +150,17 @@ function Project() {
       ) : (
         ""
       )}
+      <ConfirmPopup 
+        body={
+          <>
+            <h3 className="h3 text-center">Supprimer le projet</h3>
+            <p className="text-center">Êtes-vous sur ?</p>
+          </>
+        }
+        show={showDeletePopup}
+        yesAction={removeProject}
+        noAction={() => setShowDeletePopup(false)}
+      />
     </div>
   );
 }
