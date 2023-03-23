@@ -177,13 +177,14 @@ export default function CreateProject({ isEditMode }) {
           formValues,
           config
         );
+        resetForm();
+        navigate("/project/" + response.data.uuid);
         const body = {
           project_uuid: response.data.uuid,
           collaborators: selectedUsers,
         };
         await apiGateway.post("/collaborators/add/", body);
-        resetForm();
-        navigate("/project/" + response.data.uuid);
+        
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
