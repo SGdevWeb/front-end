@@ -1,24 +1,21 @@
-import Logo from "../../assets/img/LogoTreeUp100x100.png";
 import React from "react";
+import avatar from "../../assets/img/icons/avatar.svg";
 
 function CollaboratorCard2({ firstname, lastname, username, descripcion, }) {
 
   return ( 
-    <div className="min-w-[300px]  h-[100px] bg-white ml-3 mb-3 p-2 rounded-xl border-2 border-gray-700 ">
-      <div className="flex justify-around p-2">
-        {/* <img className="card-img-top border-gradient-v rounded-2xl shadow-sm hover:shadow-inner shadow-dark"
-                  src={Logo}
+    <div className="divColl_6 ">
+     
+        <img className="divColl_7 "
+                  src={avatar}
                   alt="Logo de TreeUp"
-                  width={80} /> */}
-        <div className="flex flex-col">
-          <h6 className="ml-2">{firstname} {lastname}</h6>
-          <p className="ml-2">{username} {descripcion}</p> 
+                  />
+        <div className="divColl_8">
+          <div className="divColl_9 "> {firstname} {lastname}</div>
+          <div className="divColl_10">{username}{descripcion}</div> 
         </div>
-        <div> 
-          <button className="ml-4" type="button" ></button>
-        </div>
+        
       </div>
-    </div>
   );
 }
 

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../components/Base/ButtonBis";
 import CollaboratorCard from "../../components/Project/CollaboratorCard";
+import ConfirmDelete2 from "../../components/Project/ConfirmDelete2";
 import InputBis from "../../components/base/InputBis";
 import { ModalAdd } from "../../components/Project/ModalAdd";
 import OwnerCard from "../../components/Project/OwnerCard";
@@ -17,30 +18,38 @@ export default function CreateProject({ isEditMode }) {
   const [error, setError] = useState();
   const { uuid } = useParams();
   const token = getToken();
-//dave
-// const [showModal, setShowModal] = useState(null);
-// const [selectedUsers, setSelectedUsers] = useState(new Set());
-// const [collaborators, setCollaborators] = useState([]);
-// const [existingCollaborators, setExistingCollaborators] = useState([]);
-// const [isCollaboratorsLoaded, setIsCollaboratorsLoaded] = useState(false);
-// const [ownersids, setOwnersids] = useState([]);
-// const [owners, setOwners] = useState([]);
+  //dave
+  const [showModal, setShowModal] = useState(null);
+  const [selectedUsers, setSelectedUsers] = useState(new Set());
+  const [collaborators, setCollaborators] = useState([]);
+  const [existingCollaborators, setExistingCollaborators] = useState([]);
+  const [isCollaboratorsLoaded, setIsCollaboratorsLoaded] = useState(false);
+  const [ownersids, setOwnersids] = useState([]);
+  const [owners, setOwners] = useState([]);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [selectedCollaboratorIndex, setSelectedCollaboratorIndex] =
+    useState(null);
+  const handleShowConfirmationModal = (index) => {
+    setSelectedCollaboratorIndex(index);
+    setShowConfirmationModal(true);
+  };
+  const handleDeleteCollaborator = () => {
+    const newSelectedUsers = selectedUsers.filter(
+      (item, i) => i !== selectedCollaboratorIndex
+    );
+    setSelectedUsers(newSelectedUsers);
+    setShowConfirmationModal(false);
+  };
 
-//   //para adjuntar solo id nuevos al array
-//   const handleModalClose = (selectedUsersModal) => {
-//     const selectedUserIds = [...selectedUsers];
-//     selectedUsersModal.forEach((user) => {
-//       if (!selectedUserIds.includes(user)) {
-//         selectedUserIds.push(user);
-//       }
-//     });
-//     setSelectedUsers(selectedUserIds);
-//   };
-//   //para eliminar desde la x
-//   const handleDeleteCollaborator = (index) => {
-//     const newSelectedUsers = selectedUsers.filter((item, i) => i !== index);
-//     setSelectedUsers(newSelectedUsers);
-//   };
+  const handleModalClose = (selectedUsersModal) => {
+    const selectedUserIds = [...selectedUsers];
+    selectedUsersModal.forEach((user) => {
+      if (!selectedUserIds.includes(user)) {
+        selectedUserIds.push(user);
+      }
+    });
+    setSelectedUsers(selectedUserIds);
+  };
 
   const config = {
     headers: {
@@ -49,57 +58,53 @@ export default function CreateProject({ isEditMode }) {
   };
 
   useEffect(() => {
-    //  // Aqui recuperamos la informacion personal de los ids
-    //  const fetchCollaborators = async () => {
-    //   if (selectedUsers.length > 0) {
-    //     const promises = selectedUsers.map(async (userId) => {
-    //       const response = await apiGateway.get(`/users/${userId}`, config);
-    //       return response.data;
-    //     });
-    //     const users = await Promise.all(promises);
-    //     setCollaborators(users);
-    //   } else {
-    //     setCollaborators([]);
-    //   }
-    // };
-    // fetchCollaborators();
-    
-    // const fetchOwners = async () => {
-    //   if (ownersids.length > 0) {
-    //     const promises = ownersids.map(async (userId) => {
-    //       const response = await apiGateway.get(`/users/${userId}`, config);
-    //       return response.data;
-    //     });
-    //     const users = await Promise.all(promises);
-    //     setOwners(users);
-    //   } else {
-    //     setOwners([]);
-    //   }
-    // };
-    // fetchOwners();
-    
-    // //recuperar los colaboradores existentes
-    // const fetchExistingCollaborators = async () => {
-    //   const response = await apiGateway.get(`/collaborators/project/${uuid}`);
-    //   // console.log(response.data);
-    //   if (response.data) {
-    //     const { collaborators } = response.data;
-    //     const { owners } = response.data;
-    //     const existingCollaborators = Object.values(collaborators);
-    //     // console.log("algunos", existingCollaborators);
-    //     setExistingCollaborators(existingCollaborators);
-    //     setSelectedUsers(existingCollaborators);
-    //     setOwnersids(owners);
-    //     setIsCollaboratorsLoaded(true);
-    //   }
-    // };
-    
+    const fetchCollaborators = async () => {
+      if (selectedUsers.length > 0) {
+        const promises = selectedUsers.map(async (userId) => {
+          const response = await apiGateway.get(`/users/${userId}`, config);
+          return response.data;
+        });
+        const users = await Promise.all(promises);
+        setCollaborators(users);
+      } else {
+        setCollaborators([]);
+      }
+    };
+    fetchCollaborators();
+
+    const fetchOwners = async () => {
+      if (ownersids.length > 0) {
+        const promises = ownersids.map(async (userId) => {
+          const response = await apiGateway.get(`/users/${userId}`, config);
+          return response.data;
+        });
+        const users = await Promise.all(promises);
+        setOwners(users);
+      } else {
+        setOwners([]);
+      }
+    };
+    fetchOwners();
+
+    const fetchExistingCollaborators = async () => {
+      const response = await apiGateway.get(`/collaborators/project/${uuid}`);
+
+      if (response.data) {
+        const { collaborators } = response.data;
+        const { owners } = response.data;
+        const existingCollaborators = Object.values(collaborators);
+
+        setExistingCollaborators(existingCollaborators);
+        setSelectedUsers(existingCollaborators);
+        setOwnersids(owners);
+        setIsCollaboratorsLoaded(true);
+      }
+    };
+
     if (isEditMode) {
-      // //cuando editamos llamamos a los  colaboradores existentes
-      // if (!isCollaboratorsLoaded) {
-      //   // Solo si los colaboradores aún no se han cargado
-      //   fetchExistingCollaborators();
-      // }
+      if (!isCollaboratorsLoaded) {
+        fetchExistingCollaborators();
+      }
       apiGateway
         .get("/project/" + uuid, config)
         .then(({ data: { name, date_start, date_end, description } }) => {
@@ -115,7 +120,7 @@ export default function CreateProject({ isEditMode }) {
           });
         });
     }
-  },[/*selectedUsers, setExistingCollaborators,*/ isEditMode, uuid, ]); 
+  }, [selectedUsers, setExistingCollaborators, isEditMode, uuid]);
 
   const initialValues = {
     name: "",
@@ -129,7 +134,7 @@ export default function CreateProject({ isEditMode }) {
     if (date_end === "") {
       delete formValues.date_end;
     }
-    
+
     let trimedValue = {};
     for (const key in formValues) {
       trimedValue[key] = formValues[key].trim();
@@ -148,33 +153,39 @@ export default function CreateProject({ isEditMode }) {
       return;
     }
     try {
-      let response = isEditMode
-        ? await apiGateway.put(`/project/update/${uuid}`, trimedValue, config)
-        : await apiGateway.post("/project/create/", trimedValue, config);
-     
-    //   if (true) {
-    //     const allCollaborators = [...existingCollaborators, ...selectedUsers];
-    //     // console.log("all", allCollaborators);
-    //     const body = {
-    //       project_uuid: response.data.uuid,
-    //       collaborators: selectedUsers,
-    //     };
-    //     // console.log(body);
-    //     await apiGateway.post("/collaborators/update/", body);
-    //   } else {
-    //   response = await apiGateway.post(
-    //     "/project/create/",
-    //     formValues,
-    //     config
-    //   );
-    //   const body = {
-    //     project_uuid: response.data.uuid,
-    //     collaborators: selectedUsers,
-    //   };
-    //   await apiGateway.post("/collaborators/add/", body);
-    // }
-    resetForm();
-    navigate("/project/" + response.data.uuid);
+      /*   ? await apiGateway.put(`/project/update/${uuid}`, formValues, config)*/
+      //   : await apiGateway.post("/project/create/", formValues, config);
+      if (isEditMode) {
+        let response = await apiGateway.put(
+          `/project/update/${uuid}`,
+          formValues,
+          config
+        );
+        const allCollaborators = [...existingCollaborators, ...selectedUsers];
+
+        const body = {
+          project_uuid: response.data.uuid,
+          collaborators: selectedUsers,
+        };
+
+        await apiGateway.post("/collaborators/update/", body);
+        resetForm();
+        navigate("/project/" + response.data.uuid);
+      } else {
+        let response = await apiGateway.post(
+          "/project/create/",
+          formValues,
+          config
+        );
+        resetForm();
+        navigate("/project/" + response.data.uuid);
+        const body = {
+          project_uuid: response.data.uuid,
+          collaborators: selectedUsers,
+        };
+        await apiGateway.post("/collaborators/add/", body);
+        
+      }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError(
@@ -184,73 +195,73 @@ export default function CreateProject({ isEditMode }) {
         setError(error.response ? error.response.data.message : error.message);
       }
     }
-  }
+  };
 
-    const {
-      handleSubmit,
-      values,
-      setValues,
-      touched,
-      isSubmitting,
-      handleChange,
-      handleBlur,
-      resetForm,
-      errors,
-    } = useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit,
-    });
+  const {
+    handleSubmit,
+    values,
+    setValues,
+    touched,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    resetForm,
+    errors,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
-    // const collaboratorsWithoutOwners = collaborators.filter(
-    //   (collaborator) => !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
-    // );
-    
-    
-    return (
-      <Fragment>
-        <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
-          <div className="flex justify-between my-3 pt-3">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="name">Nom du projet</label>
-              <InputBis
-                type="text"
-                placeholder={isEditMode ? values.name : "Nom du projet"}
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.name && errors.name && (
-                <small className="error">{errors.name}</small>
-              )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="date_start">Date de début</label>
-              <InputBis
-                type="date"
-                name="date_start"
-                value={values.date_start}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.date_start && errors.date_start && (
-                <small className="error">{errors.date_start}</small>
-              )}
-              <label htmlFor="date_end">Date de fin</label>
-              <InputBis
-                type="date"
-                name="date_end"
-                value={values.date_end}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.date_end && errors.date_end && (
-                <small className="error">{errors.date_end}</small>
-              )}
-            </div>
+  const collaboratorsWithoutOwners = collaborators.filter(
+    (collaborator) =>
+      !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
+  );
+
+  return (
+    <Fragment>
+      <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
+        <div className="flex justify-between my-3 pt-3">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="name">Nom du projet</label>
+            <InputBis
+              type="text"
+              placeholder={isEditMode ? values.name : "Nom du projet"}
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.name && errors.name && (
+              <small className="error">{errors.name}</small>
+            )}
           </div>
-          {/* <button
+          <div className="flex flex-col gap-1">
+            <label htmlFor="date_start">Date de début</label>
+            <InputBis
+              type="date"
+              name="date_start"
+              value={values.date_start}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.date_start && errors.date_start && (
+              <small className="error">{errors.date_start}</small>
+            )}
+            <label htmlFor="date_end">Date de fin</label>
+            <InputBis
+              type="date"
+              name="date_end"
+              value={values.date_end}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.date_end && errors.date_end && (
+              <small className="error">{errors.date_end}</small>
+            )}
+          </div>
+        </div>
+        <button
           type="button"
           className="w-full sm:w-3/5 md:w-3/5 lg:w-2/6 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2"
           title="Ajouter des collaborateurs"
@@ -259,62 +270,66 @@ export default function CreateProject({ isEditMode }) {
           Ajouter des collaborateurs
         </button>
 
-       
-          <div className="overflow-x-auto flex">
-            {owners.map((item, index) => (
-              <OwnerCard
-                key={item.user.uuid}
-                firstname={item.user.firstname}
-                username={item.user.username}
-                lastname={item.user.lastname}
-                descripcion={item.user.profile.descripcion}
-              />
-            ))}
+        <div className="containerCollaboratorCreate overflow-x-auto">
+          {owners.map((item, index) => (
+            <OwnerCard
+              key={item.user.uuid}
+              firstname={item.user.firstname}
+              username={item.user.username}
+              lastname={item.user.lastname}
+              descripcion={item.user.profile.descripcion}
+            />
+          ))}
 
-            {collaboratorsWithoutOwners.map((item, index) => (
-              <CollaboratorCard
-                key={item.user.uuid}
-                firstname={item.user.firstname}
-                lastname={item.user.lastname}
-                username={item.user.username}
-                onDelete={() => handleDeleteCollaborator(index)}
-                descripcion={item.user.profile.descripcion}
-              />
-            ))}
-          </div> */}
-       
+          {collaboratorsWithoutOwners.map((item, index) => (
+            <CollaboratorCard
+              key={item.user.uuid}
+              firstname={item.user.firstname}
+              lastname={item.user.lastname}
+              username={item.user.username}
+              onDelete={() => handleShowConfirmationModal(index)}
+              descripcion={item.user.profile.descripcion}
+            />
+          ))}
+        </div>
+        {showConfirmationModal && (
+          <ConfirmDelete2
+            setShowConfirmationModal={setShowConfirmationModal}
+            handleDeleteCollaborator={handleDeleteCollaborator}
+          />
+        )}
 
-          <TextArea
-            placeholder={
-              isEditMode ? values.description : "Description du projet"
-            }
-            className="w-full"
-            rows={"10"}
-            name="description"
-            value={values.description}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {touched.description && errors.description && (
-            <small className="error">{errors.description}</small>
-          )}
-          {error && (
-            <p className="error p-5 m-1 border-2 border-red-700 bg-white">
-              {error}
-            </p>
-          )}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="flex mx-auto mt-3"
-            title={isEditMode ? "Modifier le projet" : "Créer le projet"}
-          />
-        </form>
-        {/* <ModalAdd
+        <TextArea
+          placeholder={
+            isEditMode ? values.description : "Description du projet"
+          }
+          className="w-full"
+          rows={"10"}
+          name="description"
+          value={values.description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {touched.description && errors.description && (
+          <small className="error">{errors.description}</small>
+        )}
+        {error && (
+          <p className="error p-5 m-1 border-2 border-red-700 bg-white">
+            {error}
+          </p>
+        )}
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="flex mx-auto mt-3"
+          title={isEditMode ? "Modifier le projet" : "Créer le projet"}
+        />
+      </form>
+      <ModalAdd
         isVisible={showModal}
         onClose={() => setShowModal(false)}
         onClose1={handleModalClose}
-      ></ModalAdd> */}
-      </Fragment>
-    );
+      ></ModalAdd>
+    </Fragment>
+  );
 }
