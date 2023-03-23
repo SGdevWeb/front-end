@@ -1,27 +1,28 @@
 import React from "react";
+import avatar from "../../assets/img/icons/avatar.svg";
 import owner from "../../assets/img/icons/Owner.svg";
 
 function OwnerCard({ firstname, lastname, username, descripcion, }) {
 
   return ( 
-    <div className="min-w-[300px]  h-[100px] bg-white mr-3 my-3 p-3 rounded-xl border-2 border-gray-700 ">
-      <div className="flex justify-around items-center p-2">
-        {/* <img className="card-img-top border-gradient-v rounded-2xl shadow-sm hover:shadow-inner shadow-dark"
-                  src={Logo}
+    
+      <div className="divColl_1">
+       <img className="avatarcoll"
+                  src={avatar}
                   alt="Logo de TreeUp"
-                  width={80} /> */}
-        <div className="flex flex-col">
-          <h6 className="ml-2"> {firstname} {lastname}</h6>
-          <p className="ml-2">{username} {descripcion}</p> 
+                   />
+        <div className="divColl_2">
+          <h6 className="divColl_3"> {firstname} {lastname}</h6>
+          <p className="divColl_4">{username} {descripcion}</p> 
         </div>
-        <div> 
-          <img className="card-img-top py-2"
+        <div className="divColl_11"> 
+          <img className=""
                   src={owner}
                   alt="Logo de TreeUp"
-                  width={25} />
+                  width={11} />
         </div>
       </div>
-    </div>
+    
   );
 }
 

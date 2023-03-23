@@ -1,28 +1,30 @@
 import React from "react";
+import avatar from "../../assets/img/icons/avatar.svg";
 import collaboratorSVG from "../../assets/img/icons/Collaborator.svg";
+import cross from "../../assets/img/icons/Cross.svg"
 
 function CollaboratorCard({ firstname, lastname, username, descripcion, onDelete }) {
 
   return ( 
-    <div className="min-w-[300px] h-[100px] bg-white mr-3 my-3 p-2 rounded-xl border-2 border-gray-700">
-      <div className="flex justify-around p-2">
-        {/* <img className="card-img-top border-gradient-v rounded-2xl shadow-sm hover:shadow-inner shadow-dark"
-                  src={Logo}
+    <div className="divColl_1">
+     
+        <img className="avatarcoll"
+                  src={avatar}
                   alt="Logo de TreeUp"
-                  width={80} /> */}
-        <div className="flex flex-col">
-          <h6 className="ml-2"> {firstname} {lastname}</h6>
-          <p className="ml-2">{username}{descripcion}</p> 
+                   />
+        <div className="divColl_2">
+          <div className="divColl_3"> {firstname} {lastname}</div>
+          <div className="divColl_4">{username}{descripcion}</div> 
         </div>
-        <div> 
-          <button className="ml-4" type="button" onClick={onDelete}>X</button>
-          <img className="card-img-top py-2 ml-2 mt-3"
+        <div className="divColl_5"> 
+          <button className="" type="button" onClick={onDelete}><img src={cross} alt="x" /></button>
+          <img className=""
                   src={collaboratorSVG}
                   alt="Logo de TreeUp"
-                  width={20} />
+                  width={11} />
         </div>
       </div>
-    </div>
+    
   );
 }
 

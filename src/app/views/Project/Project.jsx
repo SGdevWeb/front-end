@@ -1,13 +1,13 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
-import { getProjectLogged } from "../../api/backend/project.js";
+
 import Button from "../../components/Base/ButtonBis";
-import LikeButton from "../../components/Project/LikeButton";
 import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
 import CommentsContainer from "../../components/Project/CommentsContainer";
-import OwnerCard from "../../components/Project/OwnerCard";
+import LikeButton from "../../components/Project/LikeButton";
 import apiGateway from "../../api/backend/apiGateway";
+import { getProjectLogged } from "../../api/backend/project.js";
 import { getToken } from "../../services/tokenServices";
 import { selectIsLogged } from "../../redux-store/authenticationSlice";
 import { useSelector } from "react-redux";
@@ -23,21 +23,15 @@ function Project() {
     date_end: "",
     description: "",
     countLikes: 0,
-    liked : false
+    liked: false,
   });
 
   //dave
   const [collaborators, setCollaborators] = useState([]);
   const [owners, setOwners] = useState([]);
-  // const [ownersID, setOwnersID] = useState([]);
-  // const [collaboratorsID, setCollaboratorsID] = useState([]);
-  // console.log('ownerID',ownersID);
-  // console.log('CollaID',collaboratorsID);
-  // console.log('ow',owners);
-  // console.log('col',collaborators)
+  const [ownersID, setOwnersID] = useState([]);
+  const [collaboratorsID, setCollaboratorsID] = useState([]);
 
-
-  
   const token = getToken();
   const config = {
     headers: {
@@ -46,25 +40,22 @@ function Project() {
   };
 
   useEffect(() => {
-    isLoggued ? 
-    getProjectLogged(uuid)
-    .then(({ data }) => setProject(data))
-    .catch(() => nav(URL_HOME)) 
-    : apiGateway
-      .get("/project/" + uuid)
-      .then(({ data }) => setProject(data))
-      .catch(() => nav(URL_HOME));
+    isLoggued
+      ? getProjectLogged(uuid)
+          .then(({ data }) => setProject(data))
+          .catch(() => nav(URL_HOME))
+      : apiGateway
+          .get("/project/" + uuid)
+          .then(({ data }) => setProject(data))
+          .catch(() => nav(URL_HOME));
   }, [isLoggued]);
-  
+
   useEffect(() => {
     apiGateway
       .get("/collaborators/project/" + uuid)
       .then(({ data }) => {
         const { owners, collaborators } = data;
-        // setOwnersID(owners);
-        // setCollaboratorsID(collaborators)
-        
-        // console.log('owner',owners);
+
         Promise.all(
           collaborators.map((collaboratorId) =>
             apiGateway.get(`/users/${collaboratorId}`, config)
@@ -84,7 +75,8 @@ function Project() {
   }, []);
 
   const collaboratorsWithoutOwners = collaborators.filter(
-    (collaborator) => !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
+    (collaborator) =>
+      !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
   );
 
   return (
@@ -96,28 +88,25 @@ function Project() {
             {project.date_start.slice(0, project.date_start.indexOf("T"))}
             {project.date_end
               ? " - " +
-              project.date_end.slice(0, project.date_start.indexOf("T"))
+                project.date_end.slice(0, project.date_start.indexOf("T"))
               : ""}
           </h3>
         </div>
         <div>
-        <LikeButton 
-          isLogged={isLoggued}
-          project={project}
-          setProject = {setProject}
-        />
+          <LikeButton
+            isLogged={isLoggued}
+            project={project}
+            setProject={setProject}
+          />
         </div>
       </div>
       <div>
         <h2 className="text-2xl underline">Description du projet</h2>
         <p className="text-base break-words">{project.description}</p>
       </div>
-      {/* <h2 className="text-2xl underline mb-2">Collaborateurs</h2> */}
-{/* 
-      <div className="overflow-x-auto flex">
-       
+      <div className="containerCollaboratorProject  overflow-x-auto">
         {owners.map((item) => (
-          <OwnerCard
+          <CollaboratorCard2
             key={item.user.uuid}
             firstname={item.user.firstname}
             lastname={item.user.lastname}
@@ -125,7 +114,7 @@ function Project() {
             descripcion={item.user.profile.descripcion}
           />
         ))}
-      
+
         {collaboratorsWithoutOwners.map((item) => (
           <CollaboratorCard2
             key={item.user.uuid}
@@ -135,8 +124,7 @@ function Project() {
             descripcion={item.user.profile.descripcion}
           />
         ))}
-       
-      </div> */}
+      </div>
 
       <CommentsContainer uuid_project={uuid} />
       {isLoggued ? (
