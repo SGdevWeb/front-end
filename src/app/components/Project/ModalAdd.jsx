@@ -3,8 +3,8 @@ import { getUser, getUsers } from "../../api/backend/account";
 
 import Button from "../base/Button";
 import CheckBox from "../base/CheckBox";
-import Logo from "../../assets/img/LogoTreeUp100x100.png";
 import { SearchIcon } from "@heroicons/react/solid";
+import avatar from "../../assets/img/icons/avatar.svg";
 
 export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
  
@@ -57,11 +57,11 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
+      className="fixed inset-0 bg-black bg-opacity-25  flex justify-center items-center"
       id="wrapper"
       onClick={handleClose}
     >
-      <div className="w-[600px]  h-[700px] md:h-[650px] lg:h-[680px] xl:h-[600px] flex flex-col bg-white rounded-xl p-4 ">
+      <div className="w-[600px]  h-[700px] md:h-[650px] lg:h-[680px] xl:h-[600px] flex flex-col bg-gray-100 border_gray rounded-lg p-8 ">
         <button className="text-red bg-gray-200 px-2 mb-1  border-gradient-v rounded-md text-xl place-self-end" onClick={onClose}>
           X
         </button>
@@ -78,24 +78,22 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
           />
         </div>
         {/* afichar los elementos */}
-        <div className="bg-white p-2 my-3 rounded-xl h-[600px] overflow-y-scroll ">
+        <div className=" p-2 my-3 rounded-xl h-[600px] overflow-y-auto ">
           {results.length ? (
             results.map((user) => (
               <div
                 key={user.uuid}
-                className="w-full h-[100px] mb-2 p-3 bg-gray-200 flex justify-around rounded-xl"
+                className="w-full h-[90px] mb-2 p-3 bg-white border_gray flex justify-around rounded-lg"
               >
-                {/* <img
-                  className="border-gradient-v rounded-2xl shadow-sm hover:shadow-inner shadow-dark"
-                  src={Logo}
+                <img className="avatarcoll2"
+                  src={avatar}
                   alt="Logo de TreeUp"
-                  width={80}
-                /> */}
-                <div className="grow flex flex-col justify-evenly ">
-                  <div className="pl-2">
-                    <h5>{user.firstname} {user.lastname}</h5>
+                   />
+                <div className="grow flex flex-col ml-2 my-auto justify-evenly divColl_14_modal ">
+                  <div className="divColl_12_modal ">
+                    {user.firstname} {user.lastname}
                   </div>
-                  <div className="pl-2">{user.username} </div>
+                  <div className="divColl_13_modal">{user.username} </div>
                 </div>
                 <div className="m-auto">
                   <CheckBox
