@@ -1,23 +1,24 @@
 import "../../views/Profile/Scrollbar.css";
 
+import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import CardProject from "../Project/CardProject";
-import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import { URL_BACK_PROJECT } from "../../constants/urls/urlBackEnd";
 import { URL_CREATEPROJECT } from "../../constants/urls/urlFrontEnd";
 import apiGateway from "../../api/backend/apiGateway";
 
-const ProfileProject = ({uuid = "744966ab-07f3-48b3-9799-4b074c553230"}) => {
+const ProfileProject = () => {
+  const { uuid } = useParams();
 
   const [projects, setProjects] = useState([]);
 	const [error, setError] = useState();
 
   useEffect(() => {
 		apiGateway.get(URL_BACK_PROJECT + "/user/" + uuid)
-		.then((({data}) => setProjects(data)))
+		.then(({data}) => setProjects(data))
 		.catch(({error}) => setError(error.message));
-	}, []);
+	}, [uuid]);
   
   return (
     <div className="flex ml-7">
@@ -28,7 +29,6 @@ const ProfileProject = ({uuid = "744966ab-07f3-48b3-9799-4b074c553230"}) => {
       </div>
       <div className="flex gap-3 overflow-x-scroll w-auto border-red-500 scrollbar">
       {projects
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .map((project) => (
         <CardProject key={project.uuid} {...project} />
       ))}
