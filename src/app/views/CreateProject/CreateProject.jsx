@@ -141,7 +141,13 @@ export default function CreateProject({ isEditMode }) {
     for (const key in formValues) {
       trimedValue[key] = formValues[key].trim();
     }
-
+    
+    if (new Date(0) > new Date(date_start)) {
+      setError(
+        "La date de creation du projet ne peut pas être antérieure à 1970."
+      );
+      return;
+    }
     if (new Date(date_end) < new Date(date_start)) {
       setError(
         "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
