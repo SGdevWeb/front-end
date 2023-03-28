@@ -20,7 +20,7 @@ export default function Profile() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getProfile();
+        const response = await getProfile(uuid);
         const userData = response.data;
         setUser({
           ...userData,

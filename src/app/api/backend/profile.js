@@ -1,12 +1,13 @@
 import {
-   URL_BACK_GET_PROFILE,
-   URL_BACK_NEW_EXPERIENCE,
-   URL_BACK_UPDATE_EXPERIENCE,
-   URL_BACK_DELETE_EXPERIENCE,
-   URL_BACK_NEW_SOFTSKILL,
-   URL_BACK_UPDATE_SOFTSKILL,
-   URL_BACK_DELETE_SOFTSKILL,
-   URL_BACK_UPDATE_USER
+  URL_BACK_GET_PROFILE,
+  URL_BACK_GET_PROFILE_EDIT,
+  URL_BACK_NEW_EXPERIENCE,
+  URL_BACK_UPDATE_EXPERIENCE,
+  URL_BACK_DELETE_EXPERIENCE,
+  URL_BACK_NEW_SOFTSKILL,
+  URL_BACK_UPDATE_SOFTSKILL,
+  URL_BACK_DELETE_SOFTSKILL,
+  URL_BACK_UPDATE_USER
 } from "../../constants/urls/urlBackEnd";
 import apiGateway from "./apiGateway";
 import { getToken } from "../../services/tokenServices";
@@ -20,14 +21,18 @@ const config = () => {
 };
 
 
-export function getProfile() {
-    return apiGateway.get(URL_BACK_GET_PROFILE, config());
-  }
+export function getProfile(uuid) {
+  return apiGateway.get(URL_BACK_GET_PROFILE+uuid);
+}
 
-  export function editProfile(values) {
-    console.log(values)
-    return apiGateway.put(URL_BACK_UPDATE_USER,values, config());
-  }
+export function getProfileEdit() {
+  return apiGateway.get(URL_BACK_GET_PROFILE_EDIT, config());
+}
+
+export function editProfile(values) {
+  console.log(values)
+  return apiGateway.put(URL_BACK_UPDATE_USER, values, config());
+}
 
 export function postExperience(values) {
   console.log(values)

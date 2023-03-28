@@ -2,10 +2,13 @@ import React from "react";
 import { Field, Form, Formik } from "formik";
 import Button from "../Base/Button";
 import { Link } from "react-router-dom";
-//import { URL_EDITPROFILE } from "../../constants/urls/urlFrontEnd";
 import { UserCircleIcon } from "@heroicons/react/solid";
+import { useSelector } from "react-redux";
+import { selectUser, selectIsLogged } from '../../redux-store/authenticationSlice'
 
 const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, uuid_user }) => {
+  const userLogged = useSelector(selectUser);
+  const isUserLogged = userLogged?.uuid === uuid_user;
   return (
     <Formik
       initialValues={{
@@ -24,76 +27,85 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
             <UserCircleIcon />
             <p className="text-center">{username}</p>
             <p className="text-center mt-1">{work}</p>
-            <Link to={`/editprofile/${uuid_user}`}>
-              <Button className="mt-3" title="Editer mon profil" />
-            </Link>
-          </div>
-          <div className="flex flex-col items-center w-3/4 ml-2">
-            <Field
-              className="border-2 border-gradient-v rounded-lg my-1 w-full h-full resize-none "
-              id="description"
-              name="description"
-              component="textarea"
-              value={description}
-            />
+            {isUserLogged ? (
+                <Link to = {`/editprofile/${uuid_user}`} >
+                  <Button className="mt-3" title="Editer mon profil" />
+                </Link>
+            ) :null}
 
-          </div>
         </div>
-        <h3 className=" mt-5 mx-5">Paramètres utilisateurs</h3>
+        <div className="flex flex-col items-center w-3/4 ml-2">
+          <Field
+            className="border-2 border-gradient-v rounded-lg my-1 w-full h-full resize-none "
+            id="description"
+            name="description"
+            component="textarea"
+            value={description}
+            readOnly
+          />
 
-        <Form >
-          <div className="justify-between flex mt-5 mx-5">
-
-            <Field
-              type="text"
-              name="firstname"
-              value={firstname}
-              className="input w-1/3"
-              disabled
-            />
-            <Field
-              type="text"
-              name="lastname"
-              value={lastname}
-              className="input w-1/3"
-              disabled
-            />
-          </div>
-          <div className="flex mx-5 ">
-            {date_birth ? (
-              <input
-                type="date"
-                name="date_birth"
-                value={date_birth}
-                className="input flex mt-5 w-full"
-                disabled
-              />
-            ) : (
-              <input
-                type="text"
-                name="date_birth"
-                placeholder="Date de naissance non renseignée"
-                className="input flex mt-5 w-full"
-                disabled
-              />
-            )}
-
-          </div>
-          <div>
-            <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
-          </div>
-          <div className="flex mx-5">
-            <Field
-              type="text"
-              name="email"
-              value={email}
-              className="input flex mt-5 w-full "
-              disabled
-            />
-          </div>
-        </Form>
+        </div>
       </div>
-    </Formik>
+      <h3 className=" mt-5 mx-5">Paramètres utilisateurs</h3>
+
+      <Form >
+        <div className="justify-between flex mt-5 mx-5">
+
+          <Field
+            type="text"
+            name="firstname"
+            value={firstname}
+            className="input w-1/3"
+            disabled
+            readOnly
+          />
+          <Field
+            type="text"
+            name="lastname"
+            value={lastname}
+            className="input w-1/3"
+            disabled
+            readOnly
+          />
+        </div>
+        <div className="flex mx-5 ">
+          {date_birth ? (
+            <input
+              type="date"
+              name="date_birth"
+              value={date_birth}
+              className="input flex mt-5 w-full"
+              disabled
+              readOnly
+            />
+          ) : (
+            <input
+              type="text"
+              name="date_birth"
+              placeholder="Date de naissance non renseignée"
+              className="input flex mt-5 w-full"
+              disabled
+              readOnly
+            />
+          )}
+
+        </div>
+        <div>
+          <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
+        </div>
+        <div className="flex mx-5">
+          <Field
+            type="text"
+            name="email"
+            value={email}
+            className="input flex mt-5 w-full "
+            disabled
+            readOnly
+          />
+        </div>
+      </Form>
+    </div>
+    </Formik >
   );
 };
 
