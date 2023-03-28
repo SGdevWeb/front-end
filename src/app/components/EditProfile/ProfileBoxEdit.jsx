@@ -3,7 +3,8 @@ import { XIcon } from "@heroicons/react/solid";
 import ModalEditExperience from "./ModalEditExeperience";
 import ModalEditSoftSkills from "./ModalEditSoftSkills";
 import apiGateway from '../../api/backend/apiGateway';
-import {deleteExperience, deleteSoftSkill} from '../../api/backend/profile';
+import { deleteExperience, deleteSoftSkill } from '../../api/backend/profile';
+import ConfirmPopup from '../base/ConfirmPopup';
 
 
 function ProfileBoxEdit(props) {
@@ -15,9 +16,31 @@ function ProfileBoxEdit(props) {
         description: props.description,
         uuid: props.uuid ? props.uuid : null,
     });
+    const [showDeleteEXP, setShowDeleteEXP] = useState(false)
+    const [showDeleteSoft, setShowDeleteSoft] = useState(false)
 
     const handleUpdate = (experienceUpdate) => {
         setExperience(experienceUpdate);
+    }
+
+    const deleteExperienceCB = async () => {
+        await deleteExperience({ uuid: props.uuid }).then((res) => {
+            props.handleDelete(res.data.result);
+        }).catch((err) => {
+            if (err) {
+                alert("erreur server")
+            }
+        });
+    }
+
+    const deleteSoftSkillsCB = async () => {
+        await deleteSoftSkill({ uuid: props.uuid }).then((res) => {
+            props.handleDelete(res.data.result);
+        }).catch((err) => {
+            if (err) {
+                alert("erreur server")
+            }
+        });
     }
 
     return (
@@ -40,17 +63,17 @@ function ProfileBoxEdit(props) {
 
                 {props.exptitle ? (
                     <div className="flex flex-col justify-between ml-1">
-                        <button onClick={async () => {
-                            await deleteExperience({ uuid: props.uuid }).then((res) => {
-                                props.handleDelete(res.data.result);
-                            }).catch((err) => {
-                                if (err) {
-                                    alert("erreur server")
-                                }
-                            });
-                        }}>
+                        <button onClick={()=>{setShowDeleteEXP(true)}}>
                             <XIcon className='h-4 w-4 m-1' />
                         </button>
+                        <ConfirmPopup 
+                        body={(
+                            <div className="flex justify-center">êtes vous sur ?</div>
+                        )} 
+                        show={showDeleteEXP} 
+                        yesAction={deleteExperienceCB}
+                        noAction={()=>{setShowDeleteEXP(false)}}
+                        />
                         <ModalEditExperience
                             name={experience.name}
                             date_start={experience.date_start}
@@ -65,17 +88,17 @@ function ProfileBoxEdit(props) {
 
                 {props.softtitle ? (
                     <div className="flex flex-col justify-between ml-1">
-                        <button onClick={async () => {
-                            await deleteSoftSkill({ uuid: props.uuid }).then((res) => {
-                                props.handleDelete(res.data.result);
-                            }).catch((err) => {
-                                if (err) {
-                                    alert("erreur server")
-                                }
-                            });
-                        }}>
+                        <button onClick={()=>{setShowDeleteSoft(true)}}>
                             <XIcon className='h-4 w-4 m-1' />
                         </button>
+                        <ConfirmPopup 
+                        body={(
+                            <div className="flex justify-center">êtes vous sur ?</div>
+                        )} 
+                        show={showDeleteSoft} 
+                        yesAction={deleteSoftSkillsCB}
+                        noAction={()=>{setShowDeleteSoft(false)}}
+                        />
                         <ModalEditSoftSkills
                             name={experience.name}
                             description={experience.description}
