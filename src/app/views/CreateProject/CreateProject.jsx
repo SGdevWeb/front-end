@@ -10,7 +10,9 @@ import OwnerCard from "../../components/Project/OwnerCard";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
+import { selectUser } from "../../redux-store/authenticationSlice";
 import { useFormik } from "formik";
+import { useSelector } from "react-redux";
 import validationSchema from "../../utils/createProjectSchema";
 
 export default function CreateProject({ isEditMode }) {
@@ -213,6 +215,14 @@ export default function CreateProject({ isEditMode }) {
     onSubmit,
   });
 
+  
+  const userConect = useSelector(selectUser);
+  // useEffect(() => {
+  //   if (userConect.uuid) {
+     
+  //   }
+  // }, [userConect]);
+  
   const collaboratorsWithoutOwners = collaborators.filter(
     (collaborator) =>
       !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
@@ -325,11 +335,14 @@ export default function CreateProject({ isEditMode }) {
           title={isEditMode ? "Modifier le projet" : "Créer le projet"}
         />
       </form>
-      <ModalAdd
-        isVisible={showModal}
-        onClose={() => setShowModal(false)}
-        onClose1={handleModalClose}
-      ></ModalAdd>
+      {userConect.uuid && (
+        <ModalAdd
+          isVisible={showModal}
+          onClose={() => setShowModal(false)}
+          onClose1={handleModalClose}
+          userConecte={userConect.uuid}
+        />
+      )}
     </Fragment>
   );
 }

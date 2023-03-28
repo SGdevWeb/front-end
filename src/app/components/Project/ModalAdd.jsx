@@ -6,11 +6,11 @@ import CheckBox from "../base/CheckBox";
 import { SearchIcon } from "@heroicons/react/solid";
 import avatar from "../../assets/img/icons/avatar.svg";
 
-export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
- 
+export const ModalAdd = ({ isVisible, onClose, onClose1, children, userConecte}) => {
 
   
   if (!isVisible) return null;
+  
   const handleClose = (e) => {
     if (e.target.id === "wrapper") onClose();
   };
@@ -20,8 +20,9 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
 
   const showData = async () => {
     const response = await getUsers();
+    const filteredUsers = response.data.users.filter(user => user.uuid !== userConecte);
 
-    setUsers(response.data.users);
+    setUsers(filteredUsers);
   };
   //
 
@@ -37,8 +38,9 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
       const searchTerms = search.toLowerCase().split(" ");
       const firstName = dato.firstname.toLowerCase();
       const lastName = dato.lastname.toLowerCase();
-      return searchTerms.every((term) =>
+      return ( searchTerms.every((term) =>
         firstName.includes(term) || lastName.includes(term)
+        ) && dato.uuid !== userConecte
       );
     });
 
