@@ -1,6 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { URL_HOME, URL_PROJECT_UPDATE } from "../../constants/urls/urlFrontEnd";
+import {
+	selectIsLogged,
+	selectUser,
+} from "../../redux-store/authenticationSlice";
 
 import Button from "../../components/Base/ButtonBis";
 import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
@@ -11,7 +15,6 @@ import { URL_BACK_PROJECT } from "../../constants/urls/urlBackEnd";
 import apiGateway from "../../api/backend/apiGateway";
 import { getProjectLogged } from "../../api/backend/project.js";
 import { getToken } from "../../services/tokenServices";
-import { selectIsLogged } from "../../redux-store/authenticationSlice";
 import { useSelector } from "react-redux";
 
 function Project() {
@@ -20,6 +23,7 @@ function Project() {
   const isLoggued = useSelector(selectIsLogged);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [errorPopup, setErrorPopup] = useState();
+	const user = useSelector(selectUser);
 
   const [project, setProject] = useState({
     uuid: "",
@@ -143,7 +147,7 @@ function Project() {
       </div>
 
       <CommentsContainer uuid_project={uuid} />
-      {isLoggued ? (
+      {isLoggued && owners[0]?.user.uuid === user?.uuid ? (
         <div className="flex justify-center">
           <Button 
             title="Demande de suppression" 
