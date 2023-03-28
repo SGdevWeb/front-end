@@ -32,10 +32,15 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children }) => {
   };
 
   const results = !search
-    ? users
-    : users.filter((dato) =>
-        dato.firstname.toLowerCase().includes(search.toLocaleLowerCase())
+  ? users
+  : users.filter((dato) => {
+      const searchTerms = search.toLowerCase().split(" ");
+      const firstName = dato.firstname.toLowerCase();
+      const lastName = dato.lastname.toLowerCase();
+      return searchTerms.every((term) =>
+        firstName.includes(term) || lastName.includes(term)
       );
+    });
 
   useEffect(() => {
     showData();
