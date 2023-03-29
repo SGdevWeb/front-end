@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import {
   selectIsLogged,
   selectUser,
 } from "../../redux-store/authenticationSlice";
+
+import ConfirmDelete from "./ConfirmDelete";
 import UpdateComment from "./UpdateComment";
+import { getUser } from "../../api/backend/account";
 import pencil from "../../assets/img/icons/pencil.svg";
 import report from "../../assets/img/icons/report.svg";
 import trash from "../../assets/img/icons/trash.svg";
-import { getUser } from "../../api/backend/account";
-import ConfirmDelete from "./ConfirmDelete";
+import { useSelector } from "react-redux";
 
 function Comment({ comment, update, delComment, isModified }) {
   const [isUpdate, setIsUpdate] = useState(false);
@@ -48,7 +49,7 @@ function Comment({ comment, update, delComment, isModified }) {
             </div>
             {isModified && (
               <div className="mr-2 flex items-center">
-                <small>Modifié</small>
+                <small>Modifié le {new Date(comment.updatedAt).toLocaleDateString()} à {new Date(comment.updatedAt).toLocaleTimeString()}</small>
               </div>
             )}
           </div>

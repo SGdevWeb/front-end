@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { updateComment } from "../../api/backend/comment";
+
 import TextArea from "../base/TextArea";
+import { updateComment } from "../../api/backend/comment";
 
 function UpdateComment({ comment, setIsUpdate, update }) {
   const commentValue = comment.comment;
@@ -10,7 +10,7 @@ function UpdateComment({ comment, setIsUpdate, update }) {
 
   function handleSubmit() {
     // console.log(textareaValue);
-    if (!textareaValue) {
+    if (!textareaValue.trim()) {
       return setError(true);
     } else {
       setError(false);
