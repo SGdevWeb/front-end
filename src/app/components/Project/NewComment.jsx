@@ -27,7 +27,7 @@ function NewComment({ addComment, uuid_project }) {
       return;
     }
     const newComment = {
-      comment: value,
+      comment: value.replace(/\s+/g, " "),
       uuid_project,
     };
     commentPost(newComment)

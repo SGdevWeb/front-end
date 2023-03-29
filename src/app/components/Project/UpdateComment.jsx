@@ -9,7 +9,6 @@ function UpdateComment({ comment, setIsUpdate, update }) {
   const [error, setError] = useState(false);
 
   function handleSubmit() {
-    // console.log(textareaValue);
     if (!textareaValue.trim()) {
       return setError(true);
     } else {
@@ -17,12 +16,11 @@ function UpdateComment({ comment, setIsUpdate, update }) {
     }
     setIsUpdate(false);
     const updatedComment = {
-      comment: textareaValue,
+      comment: textareaValue.replace(/\s+/g, " "),
       uuid: comment.uuid,
     };
     updateComment(updatedComment)
       .then((response) => {
-        // console.log(response);
         update();
       })
       .catch((error) => console.log(error));
