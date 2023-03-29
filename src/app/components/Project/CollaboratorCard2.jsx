@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import { URL_PROFILE } from "../../constants/urls/urlFrontEnd";
+import { URL_PROFILE2 } from "../../constants/urls/urlFrontEnd";
 import avatar from "../../assets/img/icons/avatar.svg";
 
 function CollaboratorCard2({ firstname, lastname, username, descripcion, uuid }) {
 
   return ( 
-   <Link to={URL_PROFILE + uuid} >
+   <Link to={URL_PROFILE2 + uuid} >
     <div className="divColl_6 ">
       
         <img className="divColl_7 "
