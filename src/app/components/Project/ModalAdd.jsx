@@ -6,8 +6,8 @@ import CheckBox from "../base/CheckBox";
 import { SearchIcon } from "@heroicons/react/solid";
 import avatar from "../../assets/img/icons/avatar.svg";
 
-export const ModalAdd = ({ isVisible, onClose, onClose1, children, userConecte}) => {
-
+export const ModalAdd = ({ isVisible, onClose, onClose1, children, userConecte, userAdd}) => {
+console.log(userAdd)
   
   if (!isVisible) return null;
   
@@ -32,15 +32,20 @@ export const ModalAdd = ({ isVisible, onClose, onClose1, children, userConecte})
     setSearch(e.target.value);
   };
 
+ 
+
   const results = !search
-  ? users
+  ? users.filter((dato) => !userAdd.includes(dato.uuid) && dato.uuid !== userConecte)
   : users.filter((dato) => {
       const searchTerms = search.toLowerCase().split(" ");
       const firstName = dato.firstname.toLowerCase();
       const lastName = dato.lastname.toLowerCase();
-      return ( searchTerms.every((term) =>
-        firstName.includes(term) || lastName.includes(term)
-        ) && dato.uuid !== userConecte
+      return (
+        searchTerms.every((term) =>
+          firstName.includes(term) || lastName.includes(term)
+        ) &&
+        !userAdd.includes(dato.uuid) &&
+        dato.uuid !== userConecte
       );
     });
 

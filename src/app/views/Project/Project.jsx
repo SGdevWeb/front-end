@@ -128,16 +128,19 @@ function Project() {
         {owners.map((item) => (
           <CollaboratorCard2
             key={item.user.uuid}
+            uuid={item.user.uuid}
             firstname={item.user.firstname}
             lastname={item.user.lastname}
             username={item.user.username}
             descripcion={item.user.profile.descripcion}
           />
+          
         ))}
 
         {collaboratorsWithoutOwners.map((item) => (
           <CollaboratorCard2
             key={item.user.uuid}
+            uuid={item.user.uuid}
             firstname={item.user.firstname}
             lastname={item.user.lastname}
             username={item.user.username}

@@ -1,11 +1,14 @@
+import { Link } from "react-router-dom";
 import React from "react";
+import { URL_PROFILE } from "../../constants/urls/urlFrontEnd";
 import avatar from "../../assets/img/icons/avatar.svg";
 
-function CollaboratorCard2({ firstname, lastname, username, descripcion, }) {
+function CollaboratorCard2({ firstname, lastname, username, descripcion, uuid }) {
 
   return ( 
+   <Link to={URL_PROFILE + uuid} >
     <div className="divColl_6 ">
-     
+      
         <img className="divColl_7 "
                   src={avatar}
                   alt="Logo de TreeUp"
@@ -14,8 +17,9 @@ function CollaboratorCard2({ firstname, lastname, username, descripcion, }) {
           <div className="divColl_9 "> {firstname} {lastname}</div>
           <div className="divColl_10">{username}{descripcion}</div> 
         </div>
-        
+        	
       </div>
+      	</Link>
   );
 }
 

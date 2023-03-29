@@ -233,6 +233,7 @@ export default function CreateProject({ isEditMode }) {
     (collaborator) =>
       !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
   );
+  const uuidsAdd = collaboratorsWithoutOwners.map(collaborator => collaborator.user.uuid);
 
   return (
     <Fragment>
@@ -347,6 +348,7 @@ export default function CreateProject({ isEditMode }) {
           onClose={() => setShowModal(false)}
           onClose1={handleModalClose}
           userConecte={userConect.uuid}
+          userAdd= {uuidsAdd}
         />
       )}
     </Fragment>
