@@ -245,7 +245,7 @@ export default function CreateProject({ isEditMode }) {
               type="text"
               placeholder={isEditMode ? values.name : "Nom du projet"}
               name="name"
-              value={values.name}
+              value={values.name.replace(/\s+/g, " ")}
               onChange={handleChange}
               onBlur={handleBlur}
             />
@@ -323,7 +323,7 @@ export default function CreateProject({ isEditMode }) {
           className="w-full"
           rows={"10"}
           name="description"
-          value={values.description}
+          value={values.description.replace(/\s+/g, " ")}
           onChange={handleChange}
           onBlur={handleBlur}
         />
