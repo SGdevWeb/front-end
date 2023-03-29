@@ -14,7 +14,7 @@ function CollaboratorCard({ firstname, lastname, username, descripcion, onDelete
                    />
         <div className="divColl_2">
           <div className="divColl_3"> {firstname} {lastname}</div>
-          <div className="divColl_4">{username}{descripcion}</div> 
+          <div className="divColl_4">{descripcion}</div> 
         </div>
         <div className="divColl_5"> 
           <button className="" type="button" onClick={onDelete}><img src={cross} alt="x" /></button>

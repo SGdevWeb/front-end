@@ -13,7 +13,7 @@ function OwnerCard({ firstname, lastname, username, descripcion, }) {
                    />
         <div className="divColl_2">
           <h6 className="divColl_3"> {firstname} {lastname}</h6>
-          <p className="divColl_4">{username} {descripcion}</p> 
+          <p className="divColl_4">{descripcion}</p> 
         </div>
         <div className="divColl_11"> 
           <img className=""

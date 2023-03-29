@@ -15,7 +15,7 @@ function CollaboratorCard2({ firstname, lastname, username, descripcion, uuid })
                   />
         <div className="divColl_8">
           <div className="divColl_9 "> {firstname} {lastname}</div>
-          <div className="divColl_10">{username}{descripcion}</div> 
+          <div className="divColl_10">{descripcion}</div> 
         </div>
         	
       </div>
