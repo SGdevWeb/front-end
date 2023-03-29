@@ -119,7 +119,7 @@ console.log(userAdd)
               </div>
             ))
           ) : (
-            <p>Chargement des utilisateurs...</p>
+            <p></p>
           )}
         </div>
         
