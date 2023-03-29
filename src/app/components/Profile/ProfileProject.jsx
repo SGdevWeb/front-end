@@ -29,6 +29,7 @@ const ProfileProject = () => {
       </div>
       <div className="flex gap-3 overflow-x-scroll w-auto border-red-500 scrollbar">
       {projects
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .map((project) => (
         <CardProject key={project.uuid} {...project} />
       ))}
