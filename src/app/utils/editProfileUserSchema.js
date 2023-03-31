@@ -44,16 +44,6 @@ export default Yup.object().shape({
         .min(3, "Le nom d'utilisateur doit comporter au moins 3 caractères.")
 
     ,
-    email: Yup.string().test('same-email', 'email est incorrect', function (value) {
-        if (value === this.parent.Lastname) {
-            return true;
-        } else {
-            return value.length >= 3;
-        }
-    })
-        .notRequired()
-        .email("Email non valide")
-    ,
     oldPassword: Yup.string().test('same-oldPassword', function (value) {
         if (value === this.parent.oldPassword) {
             return true;

@@ -206,22 +206,6 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                             <div>
                                 <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
                             </div>
-                            <div className="flex mx-5">
-                                <Field
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    placeholder={email}
-                                    className="input flex mt-5 w-full "
-                                    onChange={(event) => {
-                                        const value = event.target.value.trim();
-                                        props.handleChange(event);
-                                        if (value === '') {
-                                            event.target.value = email;
-                                        }
-                                    }}
-                                />
-                            </div>
                             <div className="flex mt-5 mx-5 ">
                                 <Field
                                     type="password"
