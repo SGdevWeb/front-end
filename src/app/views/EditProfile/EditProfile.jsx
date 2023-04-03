@@ -121,7 +121,10 @@ export default function EditProfile() {
         })}
       </div>
       <div className="flex justify-center">
-        <ModalNewSoftSkills handleAdd={handleAddSoft_skill} />
+        {soft_skills.length < 10 ? (
+          <ModalNewSoftSkills handleAdd={handleAddSoft_skill} />
+        ) : null}
+
       </div>
       <div className="pb-5">
         <p className="text-center my-5">Mes projets</p>
