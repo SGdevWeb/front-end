@@ -7,6 +7,7 @@ import ConfirmDelete2 from "../../components/Project/ConfirmDelete2";
 import InputBis from "../../components/base/InputBis";
 import { ModalAdd } from "../../components/Project/ModalAdd";
 import OwnerCard from "../../components/Project/OwnerCard";
+import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
@@ -252,6 +253,13 @@ export default function CreateProject({ isEditMode }) {
             {touched.name && errors.name && (
               <small className="error">{errors.name}</small>
             )}
+            <Select 
+              label="Type de projet" 
+              name="uuid_type" 
+              dataList={typeList} 
+              onChange={handleChange} 
+              value={values.uuid_type}
+            />
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="date_start">Date de début</label>
