@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { LASTNAME } from "../constants/regex";
 
 export default Yup.object({
     name : Yup.string()
