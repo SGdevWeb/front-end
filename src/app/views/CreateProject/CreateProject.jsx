@@ -21,6 +21,7 @@ export default function CreateProject({ isEditMode }) {
   const [error, setError] = useState();
   const { uuid } = useParams();
   const token = getToken();
+  const [typeList, setTypeList] = useState([]);
   //dave
   const [showModal, setShowModal] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState(new Set());
@@ -110,7 +111,7 @@ export default function CreateProject({ isEditMode }) {
       }
       apiGateway
         .get("/project/" + uuid, config)
-        .then(({ data: { name, date_start, date_end, description } }) => {
+        .then(({ data: { name, date_start, date_end, description, type } }) => {
           const dateStart = date_start.slice(0, date_start.indexOf("T"));
           const dateEnd = date_end
             ? date_end.slice(0, date_end.indexOf("T"))
@@ -120,16 +121,27 @@ export default function CreateProject({ isEditMode }) {
             date_start: dateStart,
             date_end: dateEnd,
             description,
+            uuid_type: type.uuid,
           });
         });
     }
   }, [selectedUsers, setExistingCollaborators, isEditMode, uuid]);
+
+  useEffect(async () => {
+    try {
+      const response = await apiGateway.get("/project_type", config);
+      setTypeList(response.data);
+    } catch (error) {
+      setError(error.response.data?.message || error.message);
+    }
+  },[]);
 
   const initialValues = {
     name: "",
     date_start: "",
     date_end: "",
     description: "",
+    uuid_type: "",
   };
 
   const onSubmit = async (formValues) => {
@@ -201,7 +213,7 @@ export default function CreateProject({ isEditMode }) {
           "Il est impossible de modifier un projet dont vous n'êtes pas le propriétaire"
         );
       } else {
-        setError(error.response ? error.response.data.message : error.message);
+        setError(error.response ? error.response.data.message || error.response.data.error : error.message);
       }
     }
   };
@@ -350,7 +362,7 @@ export default function CreateProject({ isEditMode }) {
           title={isEditMode ? "Modifier le projet" : "Créer le projet"}
         />
       </form>
-      {userConect.uuid && (
+      {userConect && userConect.uuid && (
         <ModalAdd
           isVisible={showModal}
           onClose={() => setShowModal(false)}
