@@ -141,7 +141,7 @@ export default function EditProfile() {
       <div className="flex justify-center">
         {soft_skills.length < 10 ? (
           <ModalNewSoftSkills handleAdd={handleAddSoft_skill} />
-        ) : null}
+        ) : <p>10/10 soft skills</p>}
 
       </div>
       <div className="pb-5">
