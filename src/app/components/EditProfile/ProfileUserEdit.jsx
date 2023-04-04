@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { format } from 'date-fns';
 import { useParams } from "react-router-dom";
-import ButtonBis from "../Base/ButtonBis";
+import ButtonBis from "../base/ButtonBis";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import validationSchema from '../../utils/editProfileUserSchema';
 import { useNavigate } from 'react-router-dom';

@@ -50,8 +50,8 @@ function ProfileBoxEdit(props) {
                     <div className="flex justify-between">
                         <p className="text-xl font-bold">{experience.name}</p>
                         <div className="flex-col pr-1">
-                            {experience.date_start && <p className="text-xs">{experience.date_start}</p>}
-                            {experience.date_end && <p className="text-xs">{experience.date_end}</p>}
+                            {experience.date_start && <p className="text-xs">{new Date(experience.date_start).toLocaleDateString()}</p>}
+                            {experience.date_end && <p className="text-xs">{new Date(experience.date_end).toLocaleDateString()}</p>}
                         </div>
                     </div>
                     {experience.place && <p className="text-xs">{experience.place}</p>}
