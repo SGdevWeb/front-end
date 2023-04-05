@@ -121,7 +121,7 @@ export default function CreateProject({ isEditMode }) {
             date_start: dateStart,
             date_end: dateEnd,
             description,
-            uuid_type: type.uuid,
+            uuid_type: type?.uuid,
           });
         });
     }
@@ -272,6 +272,9 @@ export default function CreateProject({ isEditMode }) {
               onChange={handleChange} 
               value={values.uuid_type}
             />
+            {touched.uuid_type && errors.uuid_type && (
+              <small className="error">{errors.uuid_type}</small>
+            )}
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="date_start">Date de début</label>

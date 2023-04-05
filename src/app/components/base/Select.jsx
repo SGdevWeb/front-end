@@ -3,7 +3,7 @@ import React from "react";
 export default function Select({className, name, id, label, dataList = [] , onChange, value}) {
     return(
     <select className={`bg-gray-1 rounded-3xl border-none text-gray-500 py-1 ${className}`} name={name} id={id} onChange={onChange} value={value}>
-        <option disabled selected hidden>{label}</option>
+        <option unselectable selected hidden>{label}</option>
         {dataList.map(({uuid, name}) => <option key={uuid} value={uuid}>{name}</option>)}
     </select>
 )};
