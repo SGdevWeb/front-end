@@ -16,17 +16,19 @@ export default function Profile() {
 
   const { uuid } = useParams();
   const [user, setUser] = useState({});
+  const [avatar, setAvatar] = useState()
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await getProfile(uuid);
-        const userData = response.data;
+        const userData = response.data.user;
         setUser({
           ...userData,
           experience: userData?.experience ?? [],
           soft_skill: userData?.soft_skill ?? []
         });
+        setAvatar(`data:${response.data.avatar.contentType};base64,${response.data.avatar.data}`)
       } catch (error) {
         console.log(error);
       }
@@ -46,6 +48,7 @@ export default function Profile() {
           date_birth={user.date_birth}
           work={user.work}
           username={user.username}
+          avatar={avatar}
         />
       </div>
       <p className="text-center my-5">Liste des technos</p>

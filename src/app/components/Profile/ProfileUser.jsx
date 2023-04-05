@@ -6,7 +6,7 @@ import { UserCircleIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 import { selectUser, selectIsLogged } from '../../redux-store/authenticationSlice'
 
-const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, uuid_user }) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, uuid_user, avatar}) => {
   const userLogged = useSelector(selectUser);
   const isUserLogged = userLogged?.uuid === uuid_user;
   return (
@@ -24,7 +24,13 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
       <div>
         <div className="flex p-5">
           <div className="flex flex-col w-1/4">
-            <UserCircleIcon />
+            {avatar ? 
+            <img 
+              src={avatar} 
+              alt='user avatar' 
+              className="w-full"
+            /> :
+              <UserCircleIcon />}
             <p className="text-center">{username}</p>
             <p className="text-center mt-1">{work}</p>
             {isUserLogged ? (

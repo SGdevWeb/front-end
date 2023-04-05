@@ -7,9 +7,10 @@ import { UserCircleIcon } from "@heroicons/react/solid";
 import validationSchema from '../../utils/editProfileUserSchema';
 import { useNavigate } from 'react-router-dom';
 import { editProfile } from "../../api/backend/profile";
+import ModalEditAvatar from "./ModalEditAvatar";
 
 
-const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description }) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, avatar }) => {
     const { uuid } = useParams();
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -95,7 +96,13 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                             </ErrorMessage>
                             <div className="flex p-5">
                                 <div className="flex flex-col w-1/4 ">
-                                    <UserCircleIcon />
+                                    {avatar ?
+                                        <img
+                                            src={avatar}
+                                            alt='user avatar'
+                                            className="w-full"
+                                        /> :
+                                        <UserCircleIcon />}
                                     <Field
                                         className="text-center border-2 border-gradient-v rounded-lg my-1 "
                                         id="username"
@@ -126,7 +133,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                                             }
                                         }}
                                     />
-                                    <ButtonBis className="mt-3" title="Editer ma photo" />
+                                    <ModalEditAvatar avatar={avatar}/>
                                 </div>
                                 <div className="flex flex-col items-center w-3/4 ml-2">
                                     <Field

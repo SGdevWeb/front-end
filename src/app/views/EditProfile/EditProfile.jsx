@@ -14,6 +14,7 @@ export default function EditProfile() {
   const [user, setUser] = useState({});
   const [experiences, setExperiences] = useState([]);
   const [soft_skills, setSoft_skills] = useState([])
+  const [avatar, setAvatar] = useState()
   const { uuid } = useParams();
 
 
@@ -22,14 +23,15 @@ export default function EditProfile() {
     async function fetchData() {
       try {
         const response = await getProfileEdit();
-        const userData = response.data;
+        const userData = response.data.user;
         setUser({
           ...userData,
           experience: userData?.experience ?? [],
           soft_skill: userData?.soft_skill ?? []
         });
-        setExperiences(response.data.experience ? response.data.experience : []);
-        setSoft_skills(response.data.soft_skill ? response.data.soft_skill : []);
+        setExperiences(response.data.user.experience ? response.data.user.experience : []);
+        setSoft_skills(response.data.user.soft_skill ? response.data.user.soft_skill : []);
+        setAvatar(`data:${response.data.avatar.contentType};base64,${response.data.avatar.data}`)
       } catch (error) {
         console.log(error);
       }
@@ -100,6 +102,7 @@ export default function EditProfile() {
         firstname={user?.firstname}
         lastname={user?.lastname}
         email={user?.email}
+        avatar={avatar}
       />
       <p className="text-center my-5">Liste des technos</p>
       <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">
