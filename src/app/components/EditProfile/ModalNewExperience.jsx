@@ -56,7 +56,7 @@ export default function ModalNewExperience(props) {
                                                 </button>
                                             </div>
                                             <div className="relative px-8 flex-col justify-around text-center mb-3 ">
-                                                <p className="text-3x1">Modifier une experience</p>
+                                                <p className="text-3x1">Ajouter une experience</p>
                                                 <div className="flex flex-col">
                                                     <Field
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full"
@@ -114,7 +114,7 @@ export default function ModalNewExperience(props) {
                                                         name="description"
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
                                                         placeholder='Description'
-                                                        maxLength="500"
+                                                        maxLength="501"
                                                         minLength="50"
                                                     />
                                                     {props.errors.description && props.touched.description ? (
