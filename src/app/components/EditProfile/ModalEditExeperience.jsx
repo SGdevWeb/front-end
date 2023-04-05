@@ -21,7 +21,8 @@ export default function ModalEditExperience(props) {
     
 
     const isoDateToInputFormat = (isoDate) => {
-        const dateSplit = isoDate.split('/');
+        const localDate = new Date(isoDate).toLocaleDateString()
+        const dateSplit = localDate.split('/');
         return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
     }
 
@@ -137,7 +138,9 @@ export default function ModalEditExperience(props) {
                                                         name="description"
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
                                                         placeholder='Description'
-                                                        maxLength="1000"
+                                                        maxLength="500"
+                                                        minLength="50"
+                                                        
                                                     />
                                                     {props.errors.description && props.touched.description ? (
                                                         <div>{props.errors.description}</div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { format } from 'date-fns';
 import { useParams } from "react-router-dom";
-import ButtonBis from "../Base/ButtonBis";
+import ButtonBis from "../base/ButtonBis";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import validationSchema from '../../utils/editProfileUserSchema';
 import { useNavigate } from 'react-router-dom';
@@ -205,22 +205,6 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                             <ErrorMessage name="date_birth" component="div" className="text-red-500 text-sm mx-5" />
                             <div>
                                 <h3 className=" mt-5 mx-5">Paramètre du profil</h3>
-                            </div>
-                            <div className="flex mx-5">
-                                <Field
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    placeholder={email}
-                                    className="input flex mt-5 w-full "
-                                    onChange={(event) => {
-                                        const value = event.target.value.trim();
-                                        props.handleChange(event);
-                                        if (value === '') {
-                                            event.target.value = email;
-                                        }
-                                    }}
-                                />
                             </div>
                             <div className="flex mt-5 mx-5 ">
                                 <Field

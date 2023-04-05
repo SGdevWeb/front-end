@@ -46,33 +46,38 @@ function ProfileBoxEdit(props) {
     return (
         <div>
             <div className="bg-white rounded-lg mx-5 p-5 flex ">
-                <div className="w-full">
+                <div className="w-full h-auto">
                     <div className="flex justify-between">
                         <p className="text-xl font-bold">{experience.name}</p>
                         <div className="flex-col pr-1">
-                            {experience.date_start && <p className="text-xs">{experience.date_start}</p>}
-                            {experience.date_end && <p className="text-xs">{experience.date_end}</p>}
+                            {experience.date_start && <p className="text-xs">{new Date(experience.date_start).toLocaleDateString()}</p>}
+                            {experience.date_end && <p className="text-xs">{new Date(experience.date_end).toLocaleDateString()}</p>}
                         </div>
                     </div>
                     {experience.place && <p className="text-xs">{experience.place}</p>}
                     <hr className="my-2" />
                     <p className="font-bold">Description</p>
-                    <p className="text-sm">{experience.description}</p>
-                </div>
+                    <textarea
+                        className="w-full border-none h-fit resize-none"
+                        value={experience.description}
+                        disabled
+                        readOnly
+                    />
 
+                </div>
 
                 {props.exptitle ? (
                     <div className="flex flex-col justify-between ml-1">
-                        <button onClick={()=>{setShowDeleteEXP(true)}}>
+                        <button onClick={() => { setShowDeleteEXP(true) }}>
                             <XIcon className='h-4 w-4 m-1' />
                         </button>
-                        <ConfirmPopup 
-                        body={(
-                            <div className="flex justify-center">êtes vous sur ?</div>
-                        )} 
-                        show={showDeleteEXP} 
-                        yesAction={deleteExperienceCB}
-                        noAction={()=>{setShowDeleteEXP(false)}}
+                        <ConfirmPopup
+                            body={(
+                                <div className="flex justify-center">êtes vous sur ?</div>
+                            )}
+                            show={showDeleteEXP}
+                            yesAction={deleteExperienceCB}
+                            noAction={() => { setShowDeleteEXP(false) }}
                         />
                         <ModalEditExperience
                             name={experience.name}
@@ -88,16 +93,16 @@ function ProfileBoxEdit(props) {
 
                 {props.softtitle ? (
                     <div className="flex flex-col justify-between ml-1">
-                        <button onClick={()=>{setShowDeleteSoft(true)}}>
+                        <button onClick={() => { setShowDeleteSoft(true) }}>
                             <XIcon className='h-4 w-4 m-1' />
                         </button>
-                        <ConfirmPopup 
-                        body={(
-                            <div className="flex justify-center">êtes vous sur ?</div>
-                        )} 
-                        show={showDeleteSoft} 
-                        yesAction={deleteSoftSkillsCB}
-                        noAction={()=>{setShowDeleteSoft(false)}}
+                        <ConfirmPopup
+                            body={(
+                                <div className="flex justify-center">êtes vous sur ?</div>
+                            )}
+                            show={showDeleteSoft}
+                            yesAction={deleteSoftSkillsCB}
+                            noAction={() => { setShowDeleteSoft(false) }}
                         />
                         <ModalEditSoftSkills
                             name={experience.name}

@@ -114,7 +114,8 @@ export default function ModalNewExperience(props) {
                                                         name="description"
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
                                                         placeholder='Description'
-                                                        maxLength="100"
+                                                        maxLength="500"
+                                                        minLength="50"
                                                     />
                                                     {props.errors.description && props.touched.description ? (
                                                         <div>{props.errors.description}</div>
