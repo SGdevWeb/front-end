@@ -104,6 +104,7 @@ function Project() {
       <div className="flex justify-between">
         <div>
           <h1 className="text-2xl">{project.name}</h1>
+          <h2 className="text-xl text-gray-500">{project.type?.name}</h2>
           <h3 className="text-xs">
             {project.date_start.slice(0, project.date_start.indexOf("T"))}
             {project.date_end
