@@ -10,7 +10,7 @@ import { editProfile } from "../../api/backend/profile";
 import ModalEditAvatar from "./ModalEditAvatar";
 
 
-const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, avatar }) => {
+const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, description, avatar, handleAvatar }) => {
     const { uuid } = useParams();
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -133,7 +133,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                                             }
                                         }}
                                     />
-                                    <ModalEditAvatar avatar={avatar}/>
+                                    <ModalEditAvatar avatar={avatar} handleAvatar={handleAvatar}/>
                                 </div>
                                 <div className="flex flex-col items-center w-3/4 ml-2">
                                     <Field

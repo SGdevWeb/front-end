@@ -2,6 +2,7 @@
 
 export const URL_BACK_AUTHENTICATE = "/login";
 
+// URL LIKE
 export const URL_BACK_POSTLIKE = '/postlike'
 
 // URL EDIT PROFILE
@@ -31,3 +32,6 @@ export const URL_BACK_USER = '/users';
 export const URL_BACK_ADDCOLL = '/collaborators/add/';
 
 export const URL_BACK_GET_PROJECT_LOGGED = "/project/getprojectlogged/";
+
+//URL AVATAR
+export const URL_BACK_POST_AVATAR = "/postavatar/image/"

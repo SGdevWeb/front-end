@@ -39,6 +39,10 @@ export default function EditProfile() {
     fetchData();
   }, [uuid]);
 
+  const handleChangeAvatar = (avatarUrl) => {
+    setAvatar(avatarUrl);
+  }
+
   const handleDeleteExperience = (uuid) => {
     const currentUserData = user;
     const foundExperience = currentUserData.experience.findIndex((exp) => exp.uuid === uuid);
@@ -103,6 +107,7 @@ export default function EditProfile() {
         lastname={user?.lastname}
         email={user?.email}
         avatar={avatar}
+        handleAvatar={handleChangeAvatar}
       />
       <p className="text-center my-5">Liste des technos</p>
       <div className="flex-col w-full items-center justify-center h-64 border-2 border-white overflow-auto scrollbar">
