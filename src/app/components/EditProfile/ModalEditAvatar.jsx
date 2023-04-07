@@ -54,16 +54,20 @@ export default function ModalEditAvatar(props) {
                                         <XIcon className='h-4 w-4 m-1' />
                                     </button>
                                 </div>
-                                <div className="relative px-8 flex-col justify-around text-center mb-3 ">
+                                <div className="relative px-8 flex-col mb-3 h-fit text-center ">
                                     {avatarUrl ?
                                         <img
                                             src={avatarUrl}
                                             alt='user avatar'
-                                            className="w-80"
+                                            className="w-80 h-80"
                                         /> :
-                                        <UserCircleIcon className="w-80" />
+                                        <UserCircleIcon className="w-80 h-80" />
                                     }
-                                    <InputFile onChange={handleChangeAvatar} accept="image/*" />
+                                    <InputFile onChange={handleChangeAvatar} accept="image/*" className="my-1"/>
+                                    <div className="flex-row">
+                                        <p>votre image : </p>
+                                        <p>max : 5MB</p>
+                                    </div>
                                     <ButtonBis
                                         title="Modifier"
                                         onClick={handleUploadAvatar}

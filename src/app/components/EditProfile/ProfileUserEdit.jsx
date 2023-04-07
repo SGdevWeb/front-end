@@ -96,13 +96,16 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                             </ErrorMessage>
                             <div className="flex p-5">
                                 <div className="flex flex-col w-1/4 ">
-                                    {avatar ?
-                                        <img
-                                            src={avatar}
-                                            alt='user avatar'
-                                            className="w-full"
-                                        /> :
-                                        <UserCircleIcon />}
+                                    <div className="h-3/4">
+                                        {avatar ?
+                                            <img
+                                                src={avatar}
+                                                alt='user avatar'
+                                                className="w-full"
+                                            /> :
+                                            <UserCircleIcon className="w-full" />}
+                                    </div>
+
                                     <Field
                                         className="text-center border-2 border-gradient-v rounded-lg my-1 "
                                         id="username"
@@ -133,7 +136,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                                             }
                                         }}
                                     />
-                                    <ModalEditAvatar avatar={avatar} handleAvatar={handleAvatar}/>
+                                    <ModalEditAvatar avatar={avatar} handleAvatar={handleAvatar} />
                                 </div>
                                 <div className="flex flex-col items-center w-3/4 ml-2">
                                     <Field
