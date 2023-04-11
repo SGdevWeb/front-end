@@ -14,26 +14,47 @@ export default function ModalEditAvatar(props) {
         setAvatarUrl(props.avatar)
     }, [props.avatar])
 
+    const checkDimensions = (imgUrl) => {
+        const promise = new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = imgUrl;
+            img.onload = () => {
+                resolve(!(img.naturalWidth > 200 || img.naturalHeight > 200));
+            }
+            img.onerror = reject
+        })
+        return promise;
+    }
 
-    const handleChangeAvatar = e => {
+
+
+    const handleChangeAvatar = async e => {
         const [file] = e.target.files;
         if (file) {
-            console.log(file)
             const url = URL.createObjectURL(file)
-            setAvatarUrl(url);
-            setAvatarFile(file)
+            if (await checkDimensions(url)) {
+                setAvatarUrl(url);
+                setAvatarFile(file)
+            } else {
+                alert(`image superieure à 200x200`);
+            }
         }
     }
 
     const handleUploadAvatar = async () => {
         try {
-            const formData = new FormData();
-            formData.append('image', avatarFile);
-            const response = await postAvatar(formData);
-            if(response.status === 200){
-                props.handleAvatar(avatarUrl);
-                setShowModal(false);
+            if (avatarFile) {
+                const formData = new FormData();
+                formData.append('image', avatarFile);
+                const response = await postAvatar(formData);
+                if (response.status === 200) {
+                    props.handleAvatar(avatarUrl);
+                    setShowModal(false);
+                } else {
+                    return (<div>error</div>)
+                }
             }
+
         } catch (error) {
             console.log(error)
         }
@@ -63,10 +84,9 @@ export default function ModalEditAvatar(props) {
                                         /> :
                                         <UserCircleIcon className="w-80 h-80" />
                                     }
-                                    <InputFile onChange={handleChangeAvatar} accept="image/*" className="my-1"/>
+                                    <InputFile onChange={handleChangeAvatar} accept="image/jpg,image/png" className="my-1" />
                                     <div className="flex-row">
-                                        <p>votre image : </p>
-                                        <p>max : 5MB</p>
+                                        <p>Dimensions maximum : 200x200</p>
                                     </div>
                                     <ButtonBis
                                         title="Modifier"
