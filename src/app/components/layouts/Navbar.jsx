@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import { selectIsLogged, selectUser, signOut } from "../../redux-store/authenticationSlice";
+import React, { useEffect, useState } from "react";
+import { selectIsLogged, selectUser, signOut, selectAvatar } from "../../redux-store/authenticationSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { UserCircleIcon } from "@heroicons/react/solid";
 import Button from "../base/Button";
 import Logo from "../../assets/img/LogoTreeUp100x100.png";
 import { URL_LOGIN } from "../../constants/urls/urlFrontEnd";
@@ -12,7 +12,13 @@ const Navbar = () => {
 	const isLoggued = useSelector(selectIsLogged);
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
+	const avatarUrl = useSelector(selectAvatar);
 	const nav = useNavigate();
+
+	useEffect(() => {
+	  
+	}, [avatarUrl])
+	
 	
 	return (
 		<>
@@ -26,13 +32,20 @@ const Navbar = () => {
 						{isLoggued ? (
 							<div className="flex items-center gap-3">
 								<h5>{user.username}</h5>
+								{avatarUrl ?
 								<img
 									className="bg-white rounded-full border-gradient-v shadow-sm hover:shadow-inner shadow-dark cursor-pointer"
-									src={user.avatar}
-									alt="Logo de TreeUp"
+									src={avatarUrl}
+									alt="avatar user"
 									width={60}
 									onClick={() => setEnableDropdown(!enableDropdown)}
-								/>
+								/> :
+								<UserCircleIcon 
+								className="bg-white rounded-full border-gradient-v shadow-sm hover:shadow-inner shadow-dark cursor-pointer"
+								alt = "avatar user"
+								width={60}
+								onClick={() => setEnableDropdown(!enableDropdown)}
+								 />}
 							</div>
 						) : (
 							<Link to="/login">

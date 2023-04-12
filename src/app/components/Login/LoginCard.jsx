@@ -7,7 +7,7 @@ import InputPassword from "../base/InputPassword";
 import ReCAPTCHA from "react-google-recaptcha";
 import { URL_HOME } from "../../constants/urls/urlFrontEnd";
 import { authenticate } from "../../api/backend/account";
-import { signIn } from "../../redux-store/authenticationSlice";
+import { signIn, storeAvatar } from "../../redux-store/authenticationSlice";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import validationSchema from "../../utils/loginSchema";
@@ -63,8 +63,11 @@ function LoginCard() {
     const credentials = values;
     authenticate(credentials)
       .then((res) => {
-        const { token } = res.data;
+        const { token, avatar } = res.data;
         if (res.status === 200 && token) {
+          if(avatar){
+            dispatch(storeAvatar(`data:${avatar.contentType};base64,${avatar.data}`))
+          }
           dispatch(signIn(token));
           navigate(URL_HOME);
         }

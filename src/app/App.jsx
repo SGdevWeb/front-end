@@ -4,7 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/layouts/Navbar";
 import Routes from "./routes/Routes";
 import { getToken } from "./services/tokenServices";
-import { signIn } from "./redux-store/authenticationSlice";
+import {getAvatarUrl} from './services/avatarServices'
+import { signIn,storeAvatar } from "./redux-store/authenticationSlice";
 import { useDispatch } from "react-redux";
 
 /**
@@ -20,6 +21,8 @@ const App = () => {
   useEffect(() => {
     const token = getToken();
     if (token) dispatch(signIn(token));
+    const avatarUrl = getAvatarUrl()
+    if(avatarUrl) dispatch(storeAvatar(avatarUrl))
   }, []);
 
   return (

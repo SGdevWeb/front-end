@@ -21,20 +21,29 @@ export default function ModalEditAvatar(props) {
             img.onload = () => {
                 resolve(!(img.naturalWidth > 200 || img.naturalHeight > 200));
             }
-            img.onerror = reject
+            img.onerror = reject;
         })
         return promise;
     }
 
-
+    const fileToBase64 = (file) => {
+        const promise = new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                resolve(reader.result);
+            }
+        })
+        return promise
+    }
 
     const handleChangeAvatar = async e => {
         const [file] = e.target.files;
         if (file) {
-            const url = URL.createObjectURL(file)
-            if (await checkDimensions(url)) {
-                setAvatarUrl(url);
-                setAvatarFile(file)
+            let urlfile = await fileToBase64(file);
+            if (await checkDimensions(urlfile)) {
+                setAvatarUrl(urlfile);
+                setAvatarFile(file);
             } else {
                 alert(`image superieure à 200x200`);
             }
