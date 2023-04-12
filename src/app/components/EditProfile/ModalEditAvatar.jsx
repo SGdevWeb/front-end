@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { XIcon } from "@heroicons/react/solid";
-import { UserCircleIcon } from "@heroicons/react/solid";
 import ButtonBis from '../base/ButtonBis';
 import InputFile from "../base/InputFile";
 import { postAvatar } from '../../api/backend/avatar';
@@ -68,7 +67,6 @@ export default function ModalEditAvatar(props) {
             console.log(error)
         }
     }
-
 
     return (
         <div>

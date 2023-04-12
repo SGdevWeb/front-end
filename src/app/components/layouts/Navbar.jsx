@@ -14,11 +14,6 @@ const Navbar = () => {
 	const user = useSelector(selectUser);
 	const avatarUrl = useSelector(selectAvatar);
 	const nav = useNavigate();
-
-	useEffect(() => {
-	  
-	}, [avatarUrl])
-	
 	
 	return (
 		<>
