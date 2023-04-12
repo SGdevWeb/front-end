@@ -11,7 +11,7 @@ export default Yup.object({
     .max(new Date(), "Doit être antérieur à la date d'aujourd'hui")
     .min(new Date('1980-01-01'),"Doit être superieure au 1er janvier 1980"),
     date_end : Yup.date()
-    .when('date_start',(date_start, schema) => (date_start && schema.min(date_start,"la date de fin doit etre superieur à la date de début"))),
+    .when('date_start',(date_start, schema) => (date_start && schema.min(date_start,"La date de fin doit être postérieure à la date du début"))),
     place : Yup.string()
     .min(3,'3 caractère minimum')
     .required('obligatoire')
