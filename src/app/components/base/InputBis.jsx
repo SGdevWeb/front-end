@@ -14,7 +14,7 @@ export default function InputBis({
   return (
     <>
       <input
-        className={`border-2 border-gradient-v rounded-lg ${className}`}
+        className={`bg-gray-1 text-gray-700 border-none py-1 rounded-2xl ${className}`}
         type={type}
         placeholder={placeholder}
         name={name}
