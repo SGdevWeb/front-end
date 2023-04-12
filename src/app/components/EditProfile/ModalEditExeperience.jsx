@@ -138,7 +138,7 @@ export default function ModalEditExperience(props) {
                                                         name="description"
                                                         className="border-2 border-gradient-v rounded-lg my-2 w-full h-20 resize-none"
                                                         placeholder='Description'
-                                                        maxLength="500"
+                                                        maxLength="501"
                                                         minLength="50"
                                                         
                                                     />
