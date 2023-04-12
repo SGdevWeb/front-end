@@ -17,7 +17,7 @@ export default function ModalEditExperience(props) {
         place: props.place ? props.place : "",
         description: props.description ? props.description : ""
     })
-    }, [])
+    }, [props])
     
 
     const isoDateToInputFormat = (isoDate) => {
@@ -48,7 +48,7 @@ export default function ModalEditExperience(props) {
             {showModal ? (
                 <Formik
                     initialValues={initial}
-                    onSubmit={async (values, actions, initialValues) => {
+                    onSubmit={async (values, actions) => {
                         values.name = values.name.trim();
                         values.place = values.place.trim();
                         values.description = values.description.trim();
@@ -56,6 +56,8 @@ export default function ModalEditExperience(props) {
                         initialEqualCurrent(initial,values) ? null : 
                             await updateExperience(values).then((res) => {
                             props.handleUpdate(res.data.result);
+                            console.log(actions)
+                            actions.resetForm();
                             setShowModal(false);
                         }).catch((err) => {
                             if (err) {

@@ -37,25 +37,36 @@ export default function EditProfile() {
     fetchData();
   }, [uuid]);
 
+const arrayDateSort = (tab) => {
+    const sortedArray = tab.sort((a, b) => {
+      // Si la date de fin est vide, considérez la date de début comme la date de fin
+      const aEnd = a.date_end || a.date_start;
+      const bEnd = b.date_end || b.date_start;
+      // Trier en ordre décroissant de date de fin
+      if (aEnd > bEnd) {
+        return -1;
+      } else if (aEnd < bEnd) {
+        return 1;
+      } else {
+        // Si la date de fin est la même, trier en ordre décroissant de date de début
+        if (a.date_start > b.date_start) {
+          return -1;
+        } else if (a.date_start < b.date_start) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    });    
+    return sortedArray;
+  }
+
   const handleDeleteExperience = (uuid) => {
     const currentUserData = user;
     const foundExperience = currentUserData.experience.findIndex((exp) => exp.uuid === uuid);
     if (foundExperience >= 0) {
       currentUserData.experience.splice(foundExperience, 1);
-      currentUserData.experience.sort((a,b) => {
-        if(a.date_end === null && b.date_end === null){
-          return new Date(a.date_start).valueOf() > new Date(b.date_start).valueOf() ? -1 : 1;
-        }
-        if(a.date_end === null) {
-          if( new Date(a.date_start).valueOf() === new Date(b.date_end).valueOf() ){return -1}
-          return new Date(a.date_start).valueOf() > new Date(b.date_end).valueOf() ? -1 : 1
-        }
-        if(b.date_end === null) {
-          if(new Date(a.date_end).valueOf() === new Date(b.date_start).valueOf() ){return 1}
-          return new Date(a.date_end).valueOf() > new Date(b.date_start).valueOf() ? -1 : 1
-        }
-        return new Date(a.date_end).valueOf() > new Date(b.date_end).valueOf() ? -1 : 1;
-      })
+      currentUserData.experience = arrayDateSort(currentUserData.experience)
       setUser(currentUserData);
       setExperiences([...currentUserData.experience]);
     }
@@ -64,22 +75,8 @@ export default function EditProfile() {
   const handleAddExperience = (exp) => {
     const currentUserData = user;
     currentUserData.experience.push(exp);
-    console.log(currentUserData.experience);
-    currentUserData.experience.sort((a,b) => {
-      if(a.date_end === null && b.date_end === null){
-        return new Date(a.date_start).valueOf() > new Date(b.date_start).valueOf() ? -1 : 1;
-      }
-      if(a.date_end === null) {
-        if( new Date(a.date_start).valueOf() === new Date(b.date_end).valueOf() ){return -1}
-        return new Date(a.date_start).valueOf() > new Date(b.date_end).valueOf() ? -1 : 1
-      }
-      if(b.date_end === null) {
-        if(new Date(a.date_end).valueOf() === new Date(b.date_start).valueOf() ){return 1}
-        return new Date(a.date_end).valueOf() > new Date(b.date_start).valueOf() ? -1 : 1
-      }
-      return new Date(a.date_end).valueOf() > new Date(b.date_end).valueOf() ? -1 : 1;
-    })
-    console.log(currentUserData.experience);
+    currentUserData.experience = arrayDateSort(currentUserData.experience)
+    console.log(currentUserData.experience)
     setUser(currentUserData);
     setExperiences([...currentUserData.experience]);
   }

@@ -18,7 +18,7 @@ export default Yup.object({
     .trim('ne peut contenir que des espaces')
     .matches(
         LASTNAME,
-        "Le lieux doit contenir uniquement des lettres, des accents et les espaces"
+        "Le lieu doit contenir uniquement des lettres, des accents et des espaces"
       ),
     description : Yup.string()
     .min(50,'50 caractères minimum').

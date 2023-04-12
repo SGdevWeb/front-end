@@ -27,6 +27,7 @@ export default function ModalNewSoftSkills(props) {
                         values.description = values.description.trim();
                         await postSoftSkill(values).then((res) => {
                             props.handleAdd(res.data.result)
+                            actions.resetForm({});
                             setShowModal(false);
                         }).catch((err) => {
                             if (err) {

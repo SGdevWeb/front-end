@@ -31,6 +31,7 @@ export default function ModalNewExperience(props) {
                         values.description = values.description.trim();
                         await postExperience(values).then((res) => {
                             props.handleAdd(res.data.result)
+                            actions.resetForm({});
                             setShowModal(false);
                         }).catch((err) => {
                             if (err) {
