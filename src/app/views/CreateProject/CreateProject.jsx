@@ -395,8 +395,8 @@ export default function CreateProject({ isEditMode }) {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="flex mx-auto "
-            title={isEditMode ? "Modifier le projet" : "Valider la céation du projet"}
+            className="flex mx-auto"
+            title={isEditMode ? "Modifier le projet" : "Valider la création du projet"}
           />
         </div>
       </form>
