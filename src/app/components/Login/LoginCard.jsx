@@ -65,7 +65,7 @@ function LoginCard() {
       .then((res) => {
         const { token, avatar } = res.data;
         if (res.status === 200 && token) {
-          if(avatar){
+          if(avatar !== null){
             dispatch(storeAvatar(`data:${avatar.contentType};base64,${avatar.data}`))
           }
           dispatch(signIn(token));

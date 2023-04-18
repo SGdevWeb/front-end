@@ -32,7 +32,9 @@ export default function EditProfile() {
         });
         setExperiences(response.data.user.experience ? response.data.user.experience : []);
         setSoft_skills(response.data.user.soft_skill ? response.data.user.soft_skill : []);
-        setAvatar(`data:${response.data.avatar.contentType};base64,${response.data.avatar.data}`)
+        if(response.data.avatar !== null){
+          setAvatar(`data:${response.data.avatar.contentType};base64,${response.data.avatar.data}`)
+        }
       } catch (error) {
         console.log(error);
       }

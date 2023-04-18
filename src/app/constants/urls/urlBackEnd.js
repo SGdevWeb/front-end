@@ -35,3 +35,4 @@ export const URL_BACK_GET_PROJECT_LOGGED = "/project/getprojectlogged/";
 
 //URL AVATAR
 export const URL_BACK_POST_AVATAR = "/postavatar/image/"
+export const URL_BACK_DELETE_AVATAR = "/deleteavatar/"

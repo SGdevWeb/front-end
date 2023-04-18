@@ -136,7 +136,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                                             }
                                         }}
                                     />
-                                    <ModalEditAvatar avatar={avatar} handleAvatar={handleAvatar} />
+                                    <ModalEditAvatar avatar={avatar} uuid={uuid} handleAvatar={handleAvatar} />
                                 </div>
                                 <div className="flex flex-col items-center w-3/4 ml-2">
                                     <Field

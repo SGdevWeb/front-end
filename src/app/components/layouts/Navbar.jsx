@@ -27,7 +27,7 @@ const Navbar = () => {
 						{isLoggued ? (
 							<div className="flex items-center gap-3">
 								<h5>{user.username}</h5>
-								{avatarUrl ?
+								{avatarUrl !== null ?
 								<img
 									className="bg-white rounded-full border-gradient-v shadow-sm hover:shadow-inner shadow-dark cursor-pointer"
 									src={avatarUrl}

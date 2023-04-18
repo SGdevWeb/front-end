@@ -1,5 +1,5 @@
 import { getPayloadToken, isTokenValid, setToken } from "./..//services/tokenServices";
-import {setAvatarUrl} from './..//services/avatarServices';
+import {setAvatarUrl,removeAvatarUrl} from './..//services/avatarServices';
 
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -35,19 +35,22 @@ export const authenticationSlice = createSlice({
     signOut: (state) => {
       localStorage.clear();
       sessionStorage.clear();
-      (state.token = null),
-      (state.user = null),
-      (state.isAuthenticated = false),
+      (state.token = null);
+      (state.user = null);
+      (state.isAuthenticated = false);
       (state.avatarUrl = null);
     },
     storeAvatar: (state, action) => {
-      state.avatarUrl = action.payload
-      setAvatarUrl(action.payload)
+      state.avatarUrl = action.payload;
+      setAvatarUrl(action.payload);
+    },
+    removeAvatar :() => {
+      removeAvatarUrl();
     }
   },
 });
 
-export const { signIn, signOut, storeAvatar } = authenticationSlice.actions;
+export const { signIn, signOut, storeAvatar, removeAvatar } = authenticationSlice.actions;
 
 export const selectIsLogged = (state) => state.auth.isAuthenticated;
 export const selectUser = (state) => state.auth.user;
