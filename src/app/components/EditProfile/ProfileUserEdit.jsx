@@ -127,7 +127,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                                         name="work"
                                         type="text"
                                         value={props.values.work}
-                                        placeholder={props.values.work ? props.values.work : "work"}
+                                        placeholder={work ? work : 'work'}
                                         onChange={(event) => {
                                             const value = event.target.value.trim();
                                             props.handleChange(event);
@@ -144,7 +144,7 @@ const ProfileUser = ({ firstname, lastname, username, email, work, date_birth, d
                                         id="description"
                                         name="description"
                                         component="textarea"
-                                        placeholder={props.values.description ? props.values.description : "Courte description de l'utilisateur"}
+                                        placeholder={description ? description : "Courte description de l'utilisateur"}
                                         onChange={(event) => {
                                             const value = event.target.value.trim();
                                             props.handleChange(event);

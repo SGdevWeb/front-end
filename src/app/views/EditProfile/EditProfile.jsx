@@ -47,6 +47,28 @@ export default function EditProfile() {
     setAvatar(avatarUrl);
     setAvatarUrl(avatarUrl)
 
+const arrayDateSort = (tab) => {
+    const sortedArray = tab.sort((a, b) => {
+      // Si la date de fin est vide, considérez la date de début comme la date de fin
+      const aEnd = a.date_end || a.date_start;
+      const bEnd = b.date_end || b.date_start;
+      // Trier en ordre décroissant de date de fin
+      if (aEnd > bEnd) {
+        return -1;
+      } else if (aEnd < bEnd) {
+        return 1;
+      } else {
+        // Si la date de fin est la même, trier en ordre décroissant de date de début
+        if (a.date_start > b.date_start) {
+          return -1;
+        } else if (a.date_start < b.date_start) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    });    
+    return sortedArray;
   }
 
   const handleDeleteExperience = (uuid) => {
@@ -54,15 +76,7 @@ export default function EditProfile() {
     const foundExperience = currentUserData.experience.findIndex((exp) => exp.uuid === uuid);
     if (foundExperience >= 0) {
       currentUserData.experience.splice(foundExperience, 1);
-      currentUserData.experience.sort((a,b) => {
-        console.log(a.date_end)
-        if(a.date_end === null && b.date_end === null){
-          return a.date_start > b.date_start ? -1 : 1;
-        }
-        if(a.date_end === null) {return -1;}
-        if(b.date_end === null) {return 1;}
-        return a.date_end > b.date_end ? -1 : 1;
-      })
+      currentUserData.experience = arrayDateSort(currentUserData.experience)
       setUser(currentUserData);
       setExperiences([...currentUserData.experience]);
     }
@@ -71,15 +85,8 @@ export default function EditProfile() {
   const handleAddExperience = (exp) => {
     const currentUserData = user;
     currentUserData.experience.push(exp);
-    currentUserData.experience.sort((a,b) => {
-      console.log(a.date_end)
-      if(a.date_end === null && b.date_end === null){
-        return a.date_start > b.date_start ? -1 : 1;
-      }
-      if(a.date_end === null) {return -1;}
-      if(b.date_end === null) {return 1;}
-      return a.date_end > b.date_end ? -1 : 1;
-    })
+    currentUserData.experience = arrayDateSort(currentUserData.experience)
+    console.log(currentUserData.experience)
     setUser(currentUserData);
     setExperiences([...currentUserData.experience]);
   }
@@ -152,15 +159,11 @@ export default function EditProfile() {
           )
         })}
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center pb-4">
         {soft_skills.length < 10 ? (
           <ModalNewSoftSkills handleAdd={handleAddSoft_skill} />
         ) : <p>10/10 soft skills</p>}
 
-      </div>
-      <div className="pb-5">
-        <p className="text-center my-5">Mes projets</p>
-        {/* <ProfileProject /> */}
       </div>
     </div>
   )

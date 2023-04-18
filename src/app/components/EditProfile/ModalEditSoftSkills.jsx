@@ -15,7 +15,7 @@ export default function ModalEditSoftSkills(props) {
         name: props.name ? props.name : "",
         description: props.description ? props.description : ""
     })
-    }, [])
+    }, [props])
 
     const initialEqualCurrent = (initial, current) => {
         const keysInitial = Object.keys(initial);
@@ -46,6 +46,7 @@ export default function ModalEditSoftSkills(props) {
                         initialEqualCurrent(initial, values) ? null :
                         await updateSoftSkill(values).then((res) => {
                             props.handleUpdate(res.data.result);
+                            actions.resetForm({});
                             setShowModal(false);
                         }).catch((err) => {
                             if (err) {

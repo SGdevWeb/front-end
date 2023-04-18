@@ -7,6 +7,7 @@ import ConfirmDelete2 from "../../components/Project/ConfirmDelete2";
 import InputBis from "../../components/base/InputBis";
 import { ModalAdd } from "../../components/Project/ModalAdd";
 import OwnerCard from "../../components/Project/OwnerCard";
+import Select from "../../components/base/Select";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
@@ -20,6 +21,7 @@ export default function CreateProject({ isEditMode }) {
   const [error, setError] = useState();
   const { uuid } = useParams();
   const token = getToken();
+  const [typeList, setTypeList] = useState([]);
   //dave
   const [showModal, setShowModal] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState(new Set());
@@ -109,7 +111,7 @@ export default function CreateProject({ isEditMode }) {
       }
       apiGateway
         .get("/project/" + uuid, config)
-        .then(({ data: { name, date_start, date_end, description } }) => {
+        .then(({ data: { name, date_start, date_end, description, type } }) => {
           const dateStart = date_start.slice(0, date_start.indexOf("T"));
           const dateEnd = date_end
             ? date_end.slice(0, date_end.indexOf("T"))
@@ -119,16 +121,27 @@ export default function CreateProject({ isEditMode }) {
             date_start: dateStart,
             date_end: dateEnd,
             description,
+            uuid_type: type?.uuid,
           });
         });
     }
   }, [selectedUsers, setExistingCollaborators, isEditMode, uuid]);
+
+  useEffect(async () => {
+    try {
+      const response = await apiGateway.get("/project_type", config);
+      setTypeList(response.data);
+    } catch (error) {
+      setError(error.response.data?.message || error.message);
+    }
+  },[]);
 
   const initialValues = {
     name: "",
     date_start: "",
     date_end: "",
     description: "",
+    uuid_type: "",
   };
 
   const onSubmit = async (formValues) => {
@@ -161,8 +174,6 @@ export default function CreateProject({ isEditMode }) {
       return;
     }
     try {
-      /*   ? await apiGateway.put(`/project/update/${uuid}`, formValues, config)*/
-      //   : await apiGateway.post("/project/create/", formValues, config);
       if (isEditMode) {
         let response = await apiGateway.put(
           `/project/update/${uuid}`,
@@ -200,7 +211,7 @@ export default function CreateProject({ isEditMode }) {
           "Il est impossible de modifier un projet dont vous n'êtes pas le propriétaire"
         );
       } else {
-        setError(error.response ? error.response.data.message : error.message);
+        setError(error.response ? error.response.data.message || error.response.data.error : error.message);
       }
     }
   };
@@ -223,11 +234,6 @@ export default function CreateProject({ isEditMode }) {
 
   
   const userConect = useSelector(selectUser);
-  // useEffect(() => {
-  //   if (userConect.uuid) {
-     
-  //   }
-  // }, [userConect]);
   
   const collaboratorsWithoutOwners = collaborators.filter(
     (collaborator) =>
@@ -237,112 +243,164 @@ export default function CreateProject({ isEditMode }) {
 
   return (
     <Fragment>
-      <form className="p-3 bg-gray-1" onSubmit={handleSubmit}>
-        <div className="flex justify-between my-3 pt-3">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="name">Nom du projet</label>
-            <InputBis
-              type="text"
-              placeholder={isEditMode ? values.name : "Nom du projet"}
-              name="name"
-              value={values.name.replace(/\s+/g, " ")}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {touched.name && errors.name && (
+      <form className="p-3" onSubmit={handleSubmit}>
+        {/* image, nom du projet, type de projet, date de début, date de fin */}
+        <div className="flex w-full my-5 flex-wrap">
+          <div className="w-1/3 my-3">
+          </div>
+          <div className="flex flex-col justify-center w-1/3 my-3 gap-7">
+            <div className="flex flex-col w-72 mx-auto">
+              <label htmlFor="name">Nom du projet</label>
+              <InputBis
+                type="text"
+                placeholder={isEditMode ? values.name : "Indiquez le nom du projet"}
+                name="name"
+                value={values.name.replace(/\s+/g, " ")}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.name && errors.name && (
               <small className="error">{errors.name}</small>
-            )}
+              )}
+            </div>
+            <div className="flex flex-col w-72 mx-auto">
+              <label htmlFor="uuid_type">Type de projet</label>
+              <Select
+                label="Type de projet" 
+                name="uuid_type" 
+                dataList={typeList} 
+                onChange={handleChange} 
+                value={values.uuid_type}
+              />
+              {touched.uuid_type && errors.uuid_type && (
+                <small className="error">{errors.uuid_type}</small>
+              )}
+            </div>
           </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="date_start">Date de début</label>
-            <InputBis
-              type="date"
-              name="date_start"
-              value={values.date_start}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {touched.date_start && errors.date_start && (
-              <small className="error">{errors.date_start}</small>
-            )}
-            <label htmlFor="date_end">Date de fin</label>
-            <InputBis
-              type="date"
-              name="date_end"
-              value={values.date_end}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {touched.date_end && errors.date_end && (
-              <small className="error">{errors.date_end}</small>
-            )}
+          <div className="flex flex-col justify-center w-1/3 my-3 gap-7">
+            <div className="flex flex-col w-60 mx-auto">
+              <label htmlFor="date_start">Date de début</label>
+              <InputBis
+                type="date"
+                name="date_start"
+                value={values.date_start}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.date_start && errors.date_start && (
+                <small className="error">{errors.date_start}</small>
+              )}
+            </div>
+            <div className="flex flex-col w-60 mx-auto">
+              <label htmlFor="date_end">Date de fin</label>
+              <InputBis
+                type="date"
+                name="date_end"
+                value={values.date_end}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.date_end && errors.date_end && (
+                <small className="error">{errors.date_end}</small>
+              )}
+            </div>
           </div>
         </div>
-        <button
-          type="button"
-          className="w-full sm:w-3/5 md:w-3/5 lg:w-2/6 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2"
-          title="Ajouter des collaborateurs"
-          onClick={() => setShowModal(true)}
-        >
-          Ajouter des collaborateurs
-        </button>
+        
+        <hr />
 
-        <div className="containerCollaboratorCreate overflow-x-auto">
-          {owners.map((item, index) => (
-            <OwnerCard
-              key={item.user.uuid}
-              firstname={item.user.firstname}
-              username={item.user.username}
-              lastname={item.user.lastname}
-              descripcion={item.user.profile.descripcion}
-            />
-          ))}
+        {/* collaborateurs */}
+        <div className="my-5">
+          <Button
+            type="button"
+            title="Ajouter des collaborateurs"
+            onClick={() => setShowModal(true)}
+          >
+            Ajouter des collaborateurs
+          </Button>
 
-          {collaboratorsWithoutOwners.map((item, index) => (
-            <CollaboratorCard
-              key={item.user.uuid}
-              firstname={item.user.firstname}
-              lastname={item.user.lastname}
-              username={item.user.username}
-              onDelete={() => handleShowConfirmationModal(index)}
-              descripcion={item.user.profile.descripcion}
+          <div className="containerCollaboratorCreate overflow-x-auto">
+            {owners.map((item, index) => (
+              <OwnerCard
+                key={item.user.uuid}
+                firstname={item.user.firstname}
+                username={item.user.username}
+                lastname={item.user.lastname}
+                descripcion={item.user.profile.descripcion}
+              />
+            ))}
+
+            {collaboratorsWithoutOwners.map((item, index) => (
+              <CollaboratorCard
+                key={item.user.uuid}
+                firstname={item.user.firstname}
+                lastname={item.user.lastname}
+                username={item.user.username}
+                onDelete={() => handleShowConfirmationModal(index)}
+                descripcion={item.user.profile.descripcion}
+              />
+            ))}
+          </div>
+          
+          {showConfirmationModal && (
+            <ConfirmDelete2
+              setShowConfirmationModal={setShowConfirmationModal}
+              handleDeleteCollaborator={handleDeleteCollaborator}
             />
-          ))}
+          )}
         </div>
-        {showConfirmationModal && (
-          <ConfirmDelete2
-            setShowConfirmationModal={setShowConfirmationModal}
-            handleDeleteCollaborator={handleDeleteCollaborator}
+        
+        <hr />
+        
+        {/* description */}
+        <div className="my-5 px-10">
+          <label htmlFor="">Description</label>
+          <TextArea
+            placeholder={
+              isEditMode ? values.description : "Description du projet"
+            }
+            className="w-full"
+            rows={"10"}
+            name="description"
+            value={values.description.replace(/\s+/g, " ")}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-        )}
+          {touched.description && errors.description && (
+            <small className="error">{errors.description}</small>
+          )}
+          {error && (
+            <p className="error p-5 m-1 border-2 border-red-700 bg-white">
+              {error}
+            </p>
+          )}
+        </div>
+        
+        <hr />
+        
+        {/* les technologies */}
+        <div className="my-5 h-32">
+          {/* penser retire le h-32 quand on aura les technologies */}
+        </div>
 
-        <TextArea
-          placeholder={
-            isEditMode ? values.description : "Description du projet"
-          }
-          className="w-full"
-          rows={"10"}
-          name="description"
-          value={values.description.replace(/\s+/g, " ")}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.description && errors.description && (
-          <small className="error">{errors.description}</small>
-        )}
-        {error && (
-          <p className="error p-5 m-1 border-2 border-red-700 bg-white">
-            {error}
-          </p>
-        )}
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="flex mx-auto mt-3"
-          title={isEditMode ? "Modifier le projet" : "Créer le projet"}
-        />
+        <hr />
+
+        {/* liens du projet et le boutons d'envoie*/}
+        <div>
+          <div className="flex justify-between h-20">
+             {/* liens du projet */}
+             {/* retire le h-20 quand on aura les liens */}
+          </div>
+          
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="flex mx-auto "
+            title={isEditMode ? "Modifier le projet" : "Valider la céation du projet"}
+          />
+        </div>
       </form>
-      {userConect.uuid && (
+      {userConect && userConect.uuid && (
         <ModalAdd
           isVisible={showModal}
           onClose={() => setShowModal(false)}

@@ -42,7 +42,7 @@ const ListProject = () => {
 
 	return (
 		<div className="flex flex-wrap justify-center content-start overflow-y-auto h-full gap-10" onScroll={(e) => scrolled(e.target)}>
-			<div className="border-gradient-v rounded-3xl p-3 h-fit">
+			<div className="border-gradient-v rounded-3xl p-3 h-fit w-full text-center">
 				<p>Tree-Up vous permets de partager et d’échanger sur les divers projets d’actualité postés par nos jeunes développeurs !</p>
 				<p>N’hésitez pas à faire un tour sur nos projets récents et de partager votre avis dans la section commentaires !</p>
 				<Link to={URL_CREATEPROJECT} className="text-primary-light">
