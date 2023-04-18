@@ -7,7 +7,7 @@ import ModalNewSoftSkills from "../../components/EditProfile/ModalNewSoftSkill";
 import { URL_BACK_GET_PROFILE } from "../../constants/urls/urlBackEnd";
 import apiGateway from '../../api/backend/apiGateway';
 import { getProfileEdit } from '../../api/backend/profile';
-import {setAvatarUrl} from '../../services/avatarServices'
+import { setAvatarUrl } from '../../services/avatarServices'
 
 export default function EditProfile() {
   const expTitle = "Ajouter une expérience ";
@@ -32,7 +32,7 @@ export default function EditProfile() {
         });
         setExperiences(response.data.user.experience ? response.data.user.experience : []);
         setSoft_skills(response.data.user.soft_skill ? response.data.user.soft_skill : []);
-        if(response.data.avatar !== null){
+        if (response.data.avatar !== null) {
           setAvatar(`data:${response.data.avatar.contentType};base64,${response.data.avatar.data}`)
         }
       } catch (error) {
@@ -43,11 +43,12 @@ export default function EditProfile() {
   }, [uuid]);
 
   const handleChangeAvatar = (avatarUrl) => {
-    console.log(avatarUrl); 
+    console.log(avatarUrl);
     setAvatar(avatarUrl);
     setAvatarUrl(avatarUrl)
+  }
 
-const arrayDateSort = (tab) => {
+  const arrayDateSort = (tab) => {
     const sortedArray = tab.sort((a, b) => {
       // Si la date de fin est vide, considérez la date de début comme la date de fin
       const aEnd = a.date_end || a.date_start;
@@ -67,7 +68,7 @@ const arrayDateSort = (tab) => {
           return 0;
         }
       }
-    });    
+    });
     return sortedArray;
   }
 
