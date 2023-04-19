@@ -7,6 +7,7 @@ import {
 } from "../../redux-store/authenticationSlice";
 
 import Button from "../../components/Base/ButtonBis";
+import { ChatAltIcon } from "@heroicons/react/solid";
 import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
 import CommentsContainer from "../../components/Project/CommentsContainer";
 import ConfirmPopup from "../../components/base/ConfirmPopup";
@@ -100,58 +101,79 @@ function Project() {
   };
 
   return (
-    <div className="items-center gap-4 p-2 bg-gray-1 rounded-md">
-      <div className="flex justify-between">
+    <div className="flex flex-col gap-5 p-2 rounded-md">
+      <div className="flex justify-between">   
         <div>
-          <h1 className="text-2xl">{project.name}</h1>
-          <h2 className="text-xl text-gray-500">{project.type?.name}</h2>
-          <h3 className="text-xs">
+          <h1 className="text-2xl font-semibold">{project.name}</h1>
+          <h2 className="text-xl font-medium mt-1">{project.type?.name}</h2>
+        </div>
+        
+        <div className="text-end font-medium">
+          <h3 className="text-xl">
+            Début :&nbsp;
             {project.date_start.slice(0, project.date_start.indexOf("T"))}
-            {project.date_end
-              ? " - " +
-                project.date_end.slice(0, project.date_start.indexOf("T"))
-              : ""}
+          </h3>
+          <h3 className="text-xl mt-1">
+            Fin :&nbsp;
+            {project.date_end && 
+              project.date_end.slice(0, project.date_start.indexOf("T"))
+            }
           </h3>
         </div>
-        <div>
+      </div>
+
+      <div className="fixed top-1/3 right-0 w-36 flex flex-col gap-2">
           <LikeButton
             isLogged={isLoggued}
             project={project}
             setProject={setProject}
           />
+          <div 
+            path={`/project/${uuid}#comments`} 
+            onClick={() => {document.querySelector(".overflow-y-auto").scroll({top: document.scrollingElement.scrollHeight, behavior: 'smooth'})}}
+            className="bg-gray-200 text-center text-sm hover:font-medium flex items-center gap-2 py-1 px-3 rounded-md cursor-pointer"
+          >
+            <ChatAltIcon className="w-10" />
+            <p>Mettre un commentaire</p>
+          </div>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-medium">Collaborateur(s) du projet :</h3>
+        <div className="containerCollaboratorProject overflow-x-auto">
+          {owners.map((item) => (
+            <CollaboratorCard2
+              key={item.user.uuid}
+              uuid={item.user.uuid}
+              firstname={item.user.firstname}
+              lastname={item.user.lastname}
+              username={item.user.username}
+              descripcion={item.user.profile.descripcion}
+            />
+            
+          ))}
+
+          {collaboratorsWithoutOwners.map((item) => (
+            <CollaboratorCard2
+              key={item.user.uuid}
+              uuid={item.user.uuid}
+              firstname={item.user.firstname}
+              lastname={item.user.lastname}
+              username={item.user.username}
+              descripcion={item.user.profile.descripcion}
+            />
+          ))}
         </div>
       </div>
+      
       <div>
-        <h2 className="text-2xl underline">Description du projet</h2>
-        <p className="text-base break-words">{project.description}</p>
+        <h2 className="text-xl font-medium">Description du projet :</h2>
+        <p className="text-base break-words mt-1">{project.description}</p>
       </div>
-      <div className="containerCollaboratorProject  overflow-x-auto">
-        {owners.map((item) => (
-          <CollaboratorCard2
-            key={item.user.uuid}
-            uuid={item.user.uuid}
-            firstname={item.user.firstname}
-            lastname={item.user.lastname}
-            username={item.user.username}
-            descripcion={item.user.profile.descripcion}
-          />
-          
-        ))}
-
-        {collaboratorsWithoutOwners.map((item) => (
-          <CollaboratorCard2
-            key={item.user.uuid}
-            uuid={item.user.uuid}
-            firstname={item.user.firstname}
-            lastname={item.user.lastname}
-            username={item.user.username}
-            descripcion={item.user.profile.descripcion}
-          />
-        ))}
-      </div>
-
+      
       <CommentsContainer uuid_project={uuid} />
-      {isLoggued && owners[0]?.user.uuid === user?.uuid ? (
+      
+      {isLoggued && owners[0]?.user.uuid === user?.uuid && (
         <div className="flex justify-center">
           <Button 
             title="Demande de suppression" 
@@ -162,9 +184,8 @@ function Project() {
             <Button title="Mettre à jour"></Button>
           </Link>
         </div>
-      ) : (
-        ""
       )}
+      
       <ConfirmPopup 
         body={
           <>
