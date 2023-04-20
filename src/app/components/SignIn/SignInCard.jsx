@@ -27,6 +27,14 @@ function SignInCard() {
 
   const captchagoogle = useRef(null);
 
+  const handleCopy = (e) => {
+    e.preventDefault();
+  }
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+  }
+
   const onChange = () => {
     if (captchagoogle.current.getValue()) {
       setcaptchaValidate(true);
@@ -161,13 +169,15 @@ function SignInCard() {
             {touched.password && errors.password && (
               <small className="error">{errors.password}</small>
             )}
-            <Input
+            <InputPassword
               type="password"
               placeholder="********"
               name="passwordConfirmation"
               value={values.passwordConfirmation || ""}
               onChange={handleChange}
               onBlur={handleBlur}
+              onCopy={handleCopy}
+              onPaste={handlePaste}
             />
             {touched.passwordConfirmation && errors.passwordConfirmation && (
               <small className="error">{errors.passwordConfirmation}</small>
