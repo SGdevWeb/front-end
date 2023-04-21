@@ -1,11 +1,12 @@
-import React, {useState,useEffect} from "react";
-import { HeartIcon as HeartIconfull } from "@heroicons/react/solid";
-import { HeartIcon as HeartIconEmpty } from "@heroicons/react/outline";
+import React, {useEffect, useState} from "react";
+
+import { ThumbUpIcon as HeartIconEmpty } from "@heroicons/react/outline";
+import { ThumbUpIcon as HeartIconfull } from "@heroicons/react/solid";
 import {postLike} from '../../api/backend/like'
 
 function LikeButton({ isLogged, project, setProject}) {
 	return (
-        <div className={`border-gradient-v border-2 rounded-lg text-primary px-1 flex flex-wrap justify-center items-center max-w-fit`}>
+        <div className={`bg-gray-200 text-center text-sm hover:font-medium flex items-center gap-2 py-1 px-3 rounded-l-md cursor-pointer ${project.liked ? "bg-zinc-800 text-white" : ""}`}>
             
             {isLogged ? (
                 <button 
@@ -25,15 +26,15 @@ function LikeButton({ isLogged, project, setProject}) {
                     }}
                 > 
                 {project.liked ? (
-                <HeartIconfull className='h-5 w-5 my-1'/>
+                <HeartIconfull className='h-7 w-7 my-1'/>
                 ) : (
-                <HeartIconEmpty className='h-5 w-5 my-1'/>
+                <HeartIconEmpty className='h-7 w-7 my-1'/>
                 )}
 			    
 		        </button>
-            ) : <HeartIconEmpty className='h-5 w-5 my-1 mr-1'/>
+            ) : <HeartIconEmpty className='h-7 w-7 my-1 mr-1'/>
             }
-            {`${project.countLikes}`}
+            {project.liked ? "Vous avez like ce projet" : "Ajouter un like"}
         </div>
 		
 	);

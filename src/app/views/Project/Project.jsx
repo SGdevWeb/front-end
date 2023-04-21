@@ -122,7 +122,7 @@ function Project() {
         </div>
       </div>
 
-      <div className="fixed top-1/3 right-0 w-36 flex flex-col gap-2">
+      <div className="fixed top-1/3 right-0 w-40 flex flex-col gap-2">
           <LikeButton
             isLogged={isLoggued}
             project={project}
@@ -131,7 +131,7 @@ function Project() {
           <div 
             path={`/project/${uuid}#comments`} 
             onClick={() => {document.querySelector(".overflow-y-auto").scroll({top: document.scrollingElement.scrollHeight, behavior: 'smooth'})}}
-            className="bg-gray-200 text-center text-sm hover:font-medium flex items-center gap-2 py-1 px-3 rounded-md cursor-pointer"
+            className="bg-gray-200 text-center text-sm hover:font-medium flex items-center gap-2 py-1 px-3 rounded-l-md cursor-pointer"
           >
             <ChatAltIcon className="w-10" />
             <p>Mettre un commentaire</p>
