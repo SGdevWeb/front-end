@@ -4,20 +4,16 @@ import { commentPost } from "../../api/backend/comment";
 
 function NewComment({ addComment, uuid_project }) {
   const [inputValue, setInputValue] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [charCount, setCharCount] = useState(0);
   const [isTextareaFocused, setIsTextareaFocused] = useState(false);
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    if (inputValue.length === 0 && error !== null) {
+    if (inputValue.trim().length === 0 && isTextareaFocused) {
       setError(true);
-    }
-    if (inputValue.length > 0) {
+    } else {
       setError(false);
-    }
-    if (!isTextareaFocused) {
-      setError(null);
     }
     setCharCount(inputValue.length);
   }, [inputValue, isTextareaFocused]);
@@ -25,19 +21,21 @@ function NewComment({ addComment, uuid_project }) {
   function handleSubmit(e) {
     e.preventDefault();
     textareaRef.current.focus();
-    const value = inputValue;
+    const value = inputValue.trim();
     if (!value) {
-      return setError(true);
+      setError(true);
+      return;
     }
     const newComment = {
-      comment: value,
+      comment: value.replace(/\s+/g, " "),
       uuid_project,
     };
     commentPost(newComment)
-      .then((response) => {
-        setError(null);
+      .then(() => {
+        setError(false);
         setInputValue("");
         addComment();
+        textareaRef.current.blur();
       })
       .catch((error) => console.log(error));
   }
@@ -68,7 +66,7 @@ function NewComment({ addComment, uuid_project }) {
           type="submit"
           onClick={handleSubmit}
         >
-          <span className="text-3xl font-bold text- text-transparent bg-clip-text gradient mr-1">
+          <span className="3xl font-bold text- text-transparent bg-clip-text gradient mr-1">
             {">"}
           </span>
         </button>
@@ -77,9 +75,7 @@ function NewComment({ addComment, uuid_project }) {
         <p className="text-red-600 text-base mt-1">
           {error ? "Message vide !" : ""}
         </p>
-        <small>
-          {charCount}/250 caractère<span>{charCount > 0 && "s"}</span>
-        </small>
+        <small className="mr-2">{charCount}/250 caractères</small>
       </div>
     </div>
   );

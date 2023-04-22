@@ -65,9 +65,9 @@ export function isTokenValid(token) {
 }
 
 /**
- * t
- * To put the token in the request headers to secure the api calls
- * @returns {object} headers of the request
+ *
+ * To put the token on the request headers to secure the calls to the API
+ * @return {object} headers of the request
  */
 export function configHeaders() {
   const token = getToken();

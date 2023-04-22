@@ -10,6 +10,7 @@ const CardProject = ({ uuid, name, type, description, collaborator, technologies
 				<div className="flex flex-col w-full  justify-between align-super p-3">
 					<div>
 						<h4 className="text-2xl">{name}</h4>
+						<h5 className="text-sm text-gray-500">{type?.name}</h5>
 					</div>
 					<div>
 						<h5 className="text-sm font-bold">Description</h5>

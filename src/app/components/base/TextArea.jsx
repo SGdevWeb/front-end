@@ -15,7 +15,7 @@ export default function TextArea({
     <>
       <textarea
         name={name}
-        className={`border-2 border-gradient-v rounded-lg ${className}`}
+        className={`bg-gray-1 text-gray-700 border-none rounded-2xl ${className}`}
         placeholder={placeholder}
         value={value}
         cols={cols}
