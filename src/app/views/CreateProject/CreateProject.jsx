@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../components/Base/ButtonBis";
-import CollaboratorCard from "../../components/Project/CollaboratorCard";
-import ConfirmDelete2 from "../../components/Project/ConfirmDelete2";
+import CollaboratorCard from "../../components/Project/CollaboratorCardEdit";
+import ConfirmPopup from "../../components/base/ConfirmPopup";
 import InputBis from "../../components/base/InputBis";
 import { ModalAdd } from "../../components/Project/ModalAdd";
 import OwnerCard from "../../components/Project/OwnerCard";
@@ -311,21 +311,20 @@ export default function CreateProject({ isEditMode }) {
 
         {/* collaborateurs */}
         <div className="my-5">
-          <Button
-            type="button"
-            title="Ajouter des collaborateurs"
-            onClick={() => setShowModal(true)}
-          >
-            Ajouter des collaborateurs
-          </Button>
-
-          <div className="containerCollaboratorCreate overflow-x-auto">
+          <div className="flex gap-5 items-center overflow-x-auto">
+            <button
+              type="button"
+              title="Ajouter des collaborateurs"
+              onClick={() => setShowModal(true)}
+              className="border-2 border-gray-1 text-gray-400 underline bg-white py-6 px-4 rounded-xl hover:text-gray-500 hover:border-gray-500"
+            >
+              Ajouter des collaborateurs
+            </button>
+            
             {owners.map((item, index) => (
               <OwnerCard
                 key={item.user.uuid}
-                firstname={item.user.firstname}
-                username={item.user.username}
-                lastname={item.user.lastname}
+                {...item.user}
                 descripcion={item.user.profile.descripcion}
               />
             ))}
@@ -333,28 +332,26 @@ export default function CreateProject({ isEditMode }) {
             {collaboratorsWithoutOwners.map((item, index) => (
               <CollaboratorCard
                 key={item.user.uuid}
-                firstname={item.user.firstname}
-                lastname={item.user.lastname}
-                username={item.user.username}
+                {...item.user}
                 onDelete={() => handleShowConfirmationModal(index)}
-                descripcion={item.user.profile.descripcion}
               />
             ))}
           </div>
           
-          {showConfirmationModal && (
-            <ConfirmDelete2
-              setShowConfirmationModal={setShowConfirmationModal}
-              handleDeleteCollaborator={handleDeleteCollaborator}
-            />
-          )}
+          <ConfirmPopup
+            title="Supprimer un collaborateur"
+            show={showConfirmationModal}
+            body="Êtes-vous sûr de vouloir supprimer ce collaborateur ?"
+            yesAction={() => handleDeleteCollaborator()}
+            noAction={() => setShowConfirmationModal(false)}
+          />
         </div>
         
         <hr />
         
         {/* description */}
         <div className="my-5 px-10">
-          <label htmlFor="">Description</label>
+          <label htmlFor="description">Description</label>
           <TextArea
             placeholder={
               isEditMode ? values.description : "Description du projet"

@@ -1,139 +1,140 @@
 import React, { useEffect, useState } from "react";
-import { getUser, getUsers } from "../../api/backend/account";
 
-import Button from "../base/Button";
+import Button from "../base/ButtonBis";
 import CheckBox from "../base/CheckBox";
+import CollaboratorCard from "./CollaboratorCardView";
 import { SearchIcon } from "@heroicons/react/solid";
-import avatar from "../../assets/img/icons/avatar.svg";
+import { getUsers } from "../../api/backend/account";
 
-export const ModalAdd = ({ isVisible, onClose, onClose1, children, userConecte, userAdd}) => {
-console.log(userAdd)
-  
-  if (!isVisible) return null;
-  
-  const handleClose = (e) => {
-    if (e.target.id === "wrapper") onClose();
-  };
+export const ModalAdd = ({
+	isVisible,
+	onClose,
+	onClose1,
+	children,
+	userConecte,
+	userAdd,
+}) => {
+	if (!isVisible) return null;
 
-  const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
+	const handleClose = (e) => {
+		if (e.target.id === "wrapper") onClose();
+	};
 
-  const showData = async () => {
-    const response = await getUsers();
-    const filteredUsers = response.data.users.filter(user => user.uuid !== userConecte);
+	const [search, setSearch] = useState("");
+	const [users, setUsers] = useState([]);
+	const [loader, setLoader] = useState(false);
+	const [error, setError] = useState(false);
 
-    setUsers(filteredUsers);
-  };
-  //
+	const showData = async () => {
+		try {
+			setLoader(true);
+			const response = await getUsers();
+			const filteredUsers = response.data.users.filter(
+				(user) => user.uuid !== userConecte
+			);
+			setUsers(filteredUsers);
+		} catch (error) {
+			setError("Erreur lors du chargement de la liste des utilisateurs");
+		}
+		setLoader(false);
+	};
 
-  //funtion de busqueda
+	//funtion de busqueda => merci captain obvious
+	const searcher = (e) => {
+		setSearch(e.target.value);
+	};
 
-  const searcher = (e) => {
-    setSearch(e.target.value);
-  };
+	const results = !search
+		? users.filter(
+				(dato) => !userAdd.includes(dato.uuid) && dato.uuid !== userConecte
+		)
+		: users.filter((dato) => {
+				const searchTerms = search.toLowerCase().split(" ");
+				const firstName = dato.firstname.toLowerCase();
+				const lastName = dato.lastname.toLowerCase();
+				return (
+					searchTerms.every(
+						(term) => firstName.includes(term) || lastName.includes(term)
+					) &&
+					!userAdd.includes(dato.uuid) &&
+					dato.uuid !== userConecte
+				);
+		});
 
- 
+	useEffect(() => {
+		showData();
+	}, []);
 
-  const results = !search
-  ? users.filter((dato) => !userAdd.includes(dato.uuid) && dato.uuid !== userConecte)
-  : users.filter((dato) => {
-      const searchTerms = search.toLowerCase().split(" ");
-      const firstName = dato.firstname.toLowerCase();
-      const lastName = dato.lastname.toLowerCase();
-      return (
-        searchTerms.every((term) =>
-          firstName.includes(term) || lastName.includes(term)
-        ) &&
-        !userAdd.includes(dato.uuid) &&
-        dato.uuid !== userConecte
-      );
-    });
+	const [selectedUsers, setSelectedUsers] = useState([]);
 
-  useEffect(() => {
-    showData();
-  }, []);
+	const handleUserSelection = (id, checked) => {
+		if (checked) {
+			setSelectedUsers([...selectedUsers, id]);
+		} else {
+			setSelectedUsers(selectedUsers.filter((userId) => userId !== id));
+		}
+	};
 
-  const [selectedUsers, setSelectedUsers] = useState([]);
+	const handleSubmit = () => {
+		onClose1(selectedUsers);
+	};
 
-  const handleUserSelection = (id, checked) => {
-    if (checked) {
-      setSelectedUsers([...selectedUsers, id]);
-    } else {
-      setSelectedUsers(selectedUsers.filter((userId) => userId !== id));
-    }
-  };
+	return (
+		<div
+			className="fixed inset-0 backdrop-blur-sm bg-gray-600 bg-opacity-50 flex justify-center items-center"
+			id="wrapper"
+			onClick={handleClose}
+		>
+			<div className="container mx-auto max-w-2xl bg-gray-50 p-3 rounded-md border-2 border-gray-1">
+				<div className="flex flex-col gap-3">
+					<div className="flex justify-between">
+						<div className="flex items-center rounded-lg bg-gray-1">
+							<SearchIcon className="h-6 w-6 m-1 " />
+							<input
+								value={search}
+								onChange={searcher}
+								type="text"
+								placeholder="Rechercher un utilisateur"
+								className="border-0 bg-gray-1 rounded-lg"
+								name=""
+								id=""
+							/>
+						</div>
+						<button className="font-bold px-3" onClick={onClose}>
+							X
+						</button>
+					</div>
+					{/* User list */}
+					<div className="flex flex-col gap-1 h-[600px] overflow-y-auto">
+						{results &&
+							results.map((user) => (
+								<div
+									key={user.uuid}
+									className="flex items-center bg-gray-1 p-2 rounded-lg"
+								>
+									<CollaboratorCard {...user} className="w-full" disabled={true} />
+									<CheckBox
+										id={user.uuid}
+										onChange={(e) =>
+											handleUserSelection(user.uuid, e.target.checked)
+										}
+									/>
+								</div>
+							))
+						}
+						{loader && "Chargement..."}
+						{error}
+					</div>
 
-  const handleSubmit = () => {
-    onClose1(selectedUsers);
-  };
-
-  return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-25  flex justify-center items-center"
-      id="wrapper"
-      onClick={handleClose}
-    >
-      <div className="w-[600px]  h-[700px] md:h-[650px] lg:h-[680px] xl:h-[600px] flex flex-col bg-gray-100 border_gray rounded-lg p-8 ">
-        <button className="text-red bg-gray-200 px-2 mb-1  border-gradient-v rounded-md text-xl place-self-end" onClick={onClose}>
-          X
-        </button>
-        <div className="flex items-center border-gradient-v border-2 rounded-lg">
-          <SearchIcon className="h-6 w-6 m-1 border-0 active:border-2  rounded-lg" />
-          <input
-            value={search}
-            onChange={searcher}
-            type="text"
-            placeholder="Rechercher un utilisateur"
-            className="w-full border-0  py-1"
-            name=""
-            id=""
-          />
-        </div>
-        {/* afichar los elementos */}
-        <div className=" p-2 my-3 rounded-xl h-[600px] overflow-y-auto ">
-          {results.length ? (
-            results.map((user) => (
-              <div
-                key={user.uuid}
-                className="w-full h-[90px] mb-2 p-3 bg-white border_gray flex justify-around rounded-lg"
-              >
-                <img className="avatarcoll2"
-                  src={avatar}
-                  alt="Logo de TreeUp"
-                   />
-                <div className="grow flex flex-col ml-2 my-auto justify-evenly divColl_14_modal ">
-                  <div className="divColl_12_modal ">
-                    {user.firstname} {user.lastname}
-                  </div>
-                  <div className="divColl_13_modal">{user.username} </div>
-                </div>
-                <div className="m-auto">
-                  <CheckBox
-                    text=""
-                    id={user.uuid}
-                    onChange={(e) =>
-                      handleUserSelection(user.uuid, e.target.checked)
-                    }
-                  />
-                </div>
-              </div>
-            ))
-          ) : (
-            <p></p>
-          )}
-        </div>
-        
-        <button
-          className="w-full sm:w-4/5 md:w-4/5 lg:w-3/5 my-3 border-gradient-v border-4 rounded-lg text-primary hover:text-white px-3 py-2 m-auto "
-          // onClick={handleSubmit}
-          onClick={() => {
-            handleSubmit();
-            onClose();
-          }}
-        >
-          Ajouter les utilisateurs sélectionnés
-        </button>
-      </div>
-    </div>
-  );
+					<Button
+						title={"Ajouter les utilisateurs sélectionnés"}
+						onClick={() => {
+							handleSubmit();
+							onClose();
+						}}
+					/>
+				</div>
+			</div>
+		</div>
+	);
 };

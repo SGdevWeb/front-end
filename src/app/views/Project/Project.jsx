@@ -8,7 +8,7 @@ import {
 
 import Button from "../../components/Base/ButtonBis";
 import { ChatAltIcon } from "@heroicons/react/solid";
-import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
+import CollaboratorCardView from "../../components/Project/CollaboratorCardView";
 import CommentsContainer from "../../components/Project/CommentsContainer";
 import ConfirmPopup from "../../components/base/ConfirmPopup";
 import LikeButton from "../../components/Project/LikeButton";
@@ -140,27 +140,24 @@ function Project() {
 
       <div>
         <h3 className="text-xl font-medium">Collaborateur(s) du projet :</h3>
-        <div className="containerCollaboratorProject overflow-x-auto">
+        <div className="flex justify-center gap-3 overflow-x-auto">
           {owners.map((item) => (
-            <CollaboratorCard2
+            <CollaboratorCardView
               key={item.user.uuid}
-              uuid={item.user.uuid}
-              firstname={item.user.firstname}
-              lastname={item.user.lastname}
-              username={item.user.username}
+              {...item.user}
               descripcion={item.user.profile.descripcion}
+              owner={true}
+              className="w-52"
             />
             
           ))}
 
           {collaboratorsWithoutOwners.map((item) => (
-            <CollaboratorCard2
+            <CollaboratorCardView
               key={item.user.uuid}
-              uuid={item.user.uuid}
-              firstname={item.user.firstname}
-              lastname={item.user.lastname}
-              username={item.user.username}
+              {...item.user}
               descripcion={item.user.profile.descripcion}
+              className="w-52"
             />
           ))}
         </div>
