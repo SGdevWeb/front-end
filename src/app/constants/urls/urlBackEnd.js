@@ -36,3 +36,21 @@ export const URL_BACK_GET_PROJECT_LOGGED = "/project/getprojectlogged/";
 //URL AVATAR
 export const URL_BACK_POST_AVATAR = "/postavatar/image/"
 export const URL_BACK_DELETE_AVATAR = "/deleteavatar/"
+
+//Technos
+
+export const URL_BACK_TECHNOS = '/techno';
+
+export const URL_BACK_TECHNOS_ADD = '/techno/add';
+
+export const URL_BACK_TECHNOS_PUT = '/techno/put';
+
+export const URL_BACK_TECHNOS_DELETE = '/techno/delete';
+
+//Technos et projects
+
+export const URL_BACK_TECHNOS_PROJECT = '/techno_project';
+
+export const URL_BACK_TECHNOS_PROJECT_ADD = '/techno_project';
+
+export const URL_BACK_TECHNOS_PROJECT_DELETE = '/deleteTechno_project';
