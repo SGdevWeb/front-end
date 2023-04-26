@@ -85,8 +85,8 @@ export const ModalAdd = ({
 			id="wrapper"
 			onClick={handleClose}
 		>
-			<div className="container mx-auto max-w-2xl bg-gray-50 p-3 rounded-md border-2 border-gray-1">
-				<div className="flex flex-col gap-3">
+			<div className="container mx-auto max-w-2xl bg-gray-50 p-3 rounded-md border-2 border-gray-1 h-[600px] max-h-screen">
+				<div className="flex flex-col gap-3 h-full">
 					<div className="flex justify-between">
 						<div className="flex items-center rounded-lg bg-gray-1">
 							<SearchIcon className="h-6 w-6 m-1 " />
@@ -105,7 +105,7 @@ export const ModalAdd = ({
 						</button>
 					</div>
 					{/* User list */}
-					<div className="flex flex-col gap-1 h-[600px] overflow-y-auto">
+					<div className="flex flex-col gap-1 h-full overflow-y-auto">
 						{results &&
 							results.map((user) => (
 								<div
