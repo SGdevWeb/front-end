@@ -368,7 +368,6 @@ const removeTech = (id) => {
               isEditMode ? values.description : "Description du projet"
             }
             className="w-full"
-            rows={"10"}
             name="description"
             value={values.description.replace(/\s+/g, " ")}
             onChange={handleChange}
