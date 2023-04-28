@@ -332,10 +332,11 @@ const removeTech = (id) => {
             </button>
             
             {owners.map((item, index) => (
-              <OwnerCard
+              <CollaboratorCard
                 key={item.user.uuid}
                 {...item.user}
                 descripcion={item.user.profile.descripcion}
+                owner={true}
               />
             ))}
 
