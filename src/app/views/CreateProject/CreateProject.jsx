@@ -387,14 +387,14 @@ const removeTech = (id) => {
         
         {/* les technologies */}
         <div className="flex justity-start my-5 h-32">
-          {/* <button 
+          <button 
             className=" flex flex-row m-auto justify-center items-center p-24px p-15px gap-10px  w-[206px] h-[65px] border-2 border-gray-300 rounded-10px"
             type="button"
             onClick={() => setShowModalTechno(true)}
             >Ajouter une technologie</button>
           <div className="w-[80%] h-[100%] p-4 overflow-x-auto">
             <Techno_project technosSelect={selectCurrentTechos} onTechnoSelect={removeTech} />
-          </div> */}
+          </div>
           
           {/* penser retire le h-32 quand on aura les technologies */}
         </div>
@@ -425,7 +425,7 @@ const removeTech = (id) => {
           userAdd= {uuidsAdd}
         />
       )}
-      {/* {userConect && userConect.uuid && (
+      {userConect && userConect.uuid && (
         <TechnoModal 
           isVisible={showModalTechno}
           onClose={() => setShowModalTechno(false)}
@@ -433,7 +433,7 @@ const removeTech = (id) => {
           technosSelect = {selectCurrentTechos}
           
         />
-      )} */}
+      )}
     </Fragment>
   );
 }
