@@ -37,7 +37,7 @@ function LikeButton({ isLogged, project, setProject }) {
 			<button type="button" onClick={like} className="flex items-center gap-2">
 				<HeartIconfull
 					className="h-6 w-6 my-1"
-					color={project.liked && "white"}
+					color={project.liked ? "white": "black"}
 				/>
 				{project.liked ? "Vous avez like ce projet" : "Ajouter un like"}
 			</button>
