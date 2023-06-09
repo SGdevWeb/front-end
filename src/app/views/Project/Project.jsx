@@ -8,12 +8,14 @@ import {
 
 import Button from "../../components/Base/ButtonBis";
 import { ChatAltIcon } from "@heroicons/react/solid";
-import CollaboratorCard2 from "../../components/Project/CollaboratorCard2";
+import CollaboratorCardView from "../../components/Project/CollaboratorCardView";
 import CommentsContainer from "../../components/Project/CommentsContainer";
 import ConfirmPopup from "../../components/base/ConfirmPopup";
 import LikeButton from "../../components/Project/LikeButton";
+import TechnoCardProject from "../../components/Project/TechnoCardProject";
 import { URL_BACK_PROJECT } from "../../constants/urls/urlBackEnd";
 import apiGateway from "../../api/backend/apiGateway";
+import asana_icon from "../../assets/img/icons/technos/Asana 1.svg";
 import { getProjectLogged } from "../../api/backend/project.js";
 import { getToken } from "../../services/tokenServices";
 import { useSelector } from "react-redux";
@@ -41,6 +43,7 @@ function Project() {
   const [owners, setOwners] = useState([]);
   const [ownersID, setOwnersID] = useState([]);
   const [collaboratorsID, setCollaboratorsID] = useState([]);
+  const [technologies, setTechnologies] = useState([]);
 
   const token = getToken();
   const config = {
@@ -82,8 +85,21 @@ function Project() {
         });
       })
       .catch(() => nav(URL_HOME));
-  }, []);
 
+      apiGateway
+      .get("/techno_project/" + uuid)
+      .then(({ data }) => setTechnologies(data.technos_project))
+      .catch(() => console.log("Failed to fetch technologies"));
+  
+  }, []);
+  
+console.log( "technos", technologies) 
+console.log( "technos_uuid", technologies[1]) ;
+console.log("owner", collaborators)
+technologies.forEach((tech) => {
+  console.log("proyect_uuid:", tech.proyect_uuid);
+});
+  
   const collaboratorsWithoutOwners = collaborators.filter(
     (collaborator) =>
       !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
@@ -140,27 +156,24 @@ function Project() {
 
       <div>
         <h3 className="text-xl font-medium">Collaborateur(s) du projet :</h3>
-        <div className="containerCollaboratorProject overflow-x-auto">
+        <div className="flex justify-center gap-3 overflow-x-auto">
           {owners.map((item) => (
-            <CollaboratorCard2
+            <CollaboratorCardView
               key={item.user.uuid}
-              uuid={item.user.uuid}
-              firstname={item.user.firstname}
-              lastname={item.user.lastname}
-              username={item.user.username}
+              {...item.user}
               descripcion={item.user.profile.descripcion}
+              owner={true}
+              className="w-52"
             />
             
           ))}
 
           {collaboratorsWithoutOwners.map((item) => (
-            <CollaboratorCard2
+            <CollaboratorCardView
               key={item.user.uuid}
-              uuid={item.user.uuid}
-              firstname={item.user.firstname}
-              lastname={item.user.lastname}
-              username={item.user.username}
+              {...item.user}
               descripcion={item.user.profile.descripcion}
+              className="w-52"
             />
           ))}
         </div>
@@ -170,6 +183,27 @@ function Project() {
         <h2 className="text-xl font-medium">Description du projet :</h2>
         <p className="text-base break-words mt-1">{project.description}</p>
       </div>
+      {/* les technologies */}
+      <div>
+        <h3 className="text-xl font-medium mb-1">Collaborateur(s) du projet :</h3>
+        <div className="flex justify-center gap-3 overflow-x-auto">
+            {/* <Techno_project technosSelecte={technosSelecte} /> */}
+            {technologies.map((technology) => (
+            <div  key={technology.technologie_uuid} className= "w-[80px] h-[90px] ">
+               <div className="flex flex-row justify-center  mx-auto items-center  gap-2 w-[70%] h-[70%] bg-white shadow-sm rounded-md flex-none order-1" >
+                <img className="w-5 h-5 flex-none order-1" src={asana_icon} alt="" />
+              </div>
+              <div className="w-[100%] h-3 mt-3 flex font-normal  text-xs items-center justify-center text-black text-center">
+                <p>{technology.name}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+          
+          {/* penser retire le h-32 quand on aura les technologies */}
+      </div>
+
+        <hr />
       
       <CommentsContainer uuid_project={uuid} />
       

@@ -2,12 +2,14 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "../../components/Base/ButtonBis";
-import CollaboratorCard from "../../components/Project/CollaboratorCard";
-import ConfirmDelete2 from "../../components/Project/ConfirmDelete2";
+import CollaboratorCard from "../../components/Project/CollaboratorCardEdit";
+import ConfirmPopup from "../../components/base/ConfirmPopup";
 import InputBis from "../../components/base/InputBis";
 import { ModalAdd } from "../../components/Project/ModalAdd";
 import OwnerCard from "../../components/Project/OwnerCard";
 import Select from "../../components/base/Select";
+import TechnoModal from "../../components/Project/TechnoModal";
+import Techno_project from "../../components/Project/Techno_project";
 import TextArea from "../../components/base/TextArea";
 import apiGateway from "../../api/backend/apiGateway";
 import { getToken } from "../../services/tokenServices";
@@ -240,7 +242,15 @@ export default function CreateProject({ isEditMode }) {
       !owners.some((owner) => owner.user.uuid === collaborator.user.uuid)
   );
   const uuidsAdd = collaboratorsWithoutOwners.map(collaborator => collaborator.user.uuid);
+//technos
+  
 
+const [showModalTechno, setShowModalTechno] = useState(null);
+
+const [selectCurrentTechos, setSelectCurrentTechnos ] = useState([]);
+const removeTech = (id) => {
+  setSelectCurrentTechnos(selectCurrentTechos.filter(technoId => technoId != id))
+}
   return (
     <Fragment>
       <form className="p-3" onSubmit={handleSubmit}>
@@ -311,56 +321,53 @@ export default function CreateProject({ isEditMode }) {
 
         {/* collaborateurs */}
         <div className="my-5">
-          <Button
-            type="button"
-            title="Ajouter des collaborateurs"
-            onClick={() => setShowModal(true)}
-          >
-            Ajouter des collaborateurs
-          </Button>
-
-          <div className="containerCollaboratorCreate overflow-x-auto">
+          <div className="flex gap-5 items-center overflow-x-auto">
+            <button
+              type="button"
+              title="Ajouter des collaborateurs"
+              onClick={() => setShowModal(true)}
+              className="border-2 border-gray-1 text-gray-400 underline bg-white py-6 px-4 rounded-xl hover:text-gray-500 hover:border-gray-500"
+            >
+              Ajouter des collaborateurs
+            </button>
+            
             {owners.map((item, index) => (
-              <OwnerCard
+              <CollaboratorCard
                 key={item.user.uuid}
-                firstname={item.user.firstname}
-                username={item.user.username}
-                lastname={item.user.lastname}
+                {...item.user}
                 descripcion={item.user.profile.descripcion}
+                owner={true}
               />
             ))}
 
             {collaboratorsWithoutOwners.map((item, index) => (
               <CollaboratorCard
                 key={item.user.uuid}
-                firstname={item.user.firstname}
-                lastname={item.user.lastname}
-                username={item.user.username}
+                {...item.user}
                 onDelete={() => handleShowConfirmationModal(index)}
-                descripcion={item.user.profile.descripcion}
               />
             ))}
           </div>
           
-          {showConfirmationModal && (
-            <ConfirmDelete2
-              setShowConfirmationModal={setShowConfirmationModal}
-              handleDeleteCollaborator={handleDeleteCollaborator}
-            />
-          )}
+          <ConfirmPopup
+            title="Supprimer un collaborateur"
+            show={showConfirmationModal}
+            body="Êtes-vous sûr de vouloir supprimer ce collaborateur ?"
+            yesAction={() => handleDeleteCollaborator()}
+            noAction={() => setShowConfirmationModal(false)}
+          />
         </div>
         
         <hr />
         
         {/* description */}
         <div className="my-5 px-10">
-          <label htmlFor="">Description</label>
+          <label htmlFor="description">Description</label>
           <TextArea
             placeholder={
               isEditMode ? values.description : "Description du projet"
             }
             className="w-full"
-            rows={"10"}
             name="description"
             value={values.description.replace(/\s+/g, " ")}
             onChange={handleChange}
@@ -379,7 +386,16 @@ export default function CreateProject({ isEditMode }) {
         <hr />
         
         {/* les technologies */}
-        <div className="my-5 h-32">
+        <div className="flex justity-start my-5 h-32">
+          <button 
+            className=" flex flex-row m-auto justify-center items-center p-24px p-15px gap-10px  w-[206px] h-[65px] border-2 border-gray-300 rounded-10px"
+            type="button"
+            onClick={() => setShowModalTechno(true)}
+            >Ajouter une technologie</button>
+          <div className="w-[80%] h-[100%] p-4 overflow-x-auto">
+            <Techno_project technosSelect={selectCurrentTechos} onTechnoSelect={removeTech} />
+          </div>
+          
           {/* penser retire le h-32 quand on aura les technologies */}
         </div>
 
@@ -407,6 +423,15 @@ export default function CreateProject({ isEditMode }) {
           onClose1={handleModalClose}
           userConecte={userConect.uuid}
           userAdd= {uuidsAdd}
+        />
+      )}
+      {userConect && userConect.uuid && (
+        <TechnoModal 
+          isVisible={showModalTechno}
+          onClose={() => setShowModalTechno(false)}
+          onTechnosSelect = {setSelectCurrentTechnos}
+          technosSelect = {selectCurrentTechos}
+          
         />
       )}
     </Fragment>
